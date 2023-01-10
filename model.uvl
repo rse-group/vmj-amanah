@@ -1,0 +1,55 @@
+namespace AISCO
+
+imports
+	interfaces.Volunteers as vl
+
+features
+	AISCO {abstract}	
+		mandatory
+			Program {abstract}	
+				mandatory
+					Activity
+
+				optional
+					Operational
+					WithVolunteer
+			FinancialReport {abstract}	
+				mandatory
+					Income
+
+				optional
+					Expense
+					Frequency
+					JournalReport {abstract}	
+						optional
+							PSAK45 {abstract}	
+								optional
+									ArusKasReport
+									FinancialPosition
+									ActivityReport
+							Summary
+
+		optional
+			Donation {abstract}	
+				optional
+					Confirmation
+			vl.Volunteers
+
+		mandatory
+			OrganizationInfo {abstract}	
+				mandatory
+					AboutUs
+					Contacts
+
+				optional
+					Maps
+
+				mandatory
+					BankAccount
+
+				optional
+					Partner
+
+constraints
+	PSAK45 => Income & Expense
+	WithVolunteer => vl.Volunteer
