@@ -15,15 +15,12 @@ import aisco.program.core.ProgramResourceComponent;
 import aisco.program.core.Program;
 import aisco.program.core.ProgramDecorator;
 
-import prices.auth.vmj.annotations.Restricted;
-
 public class ProgramResourceImpl extends ProgramResourceDecorator {
 
     public ProgramResourceImpl(ProgramResourceComponent record) {
         super(record);
     }
 
-    @Restricted(permissionName="CreateOperational")
     @Route(url = "call/operational/save")
     public List<HashMap<String, Object>> saveProgram(VMJExchange vmjExchange) {
         List<String> keys = new ArrayList<String>(Arrays.asList("name", "description"));
@@ -46,7 +43,6 @@ public class ProgramResourceImpl extends ProgramResourceDecorator {
         return programOperational;
     }
 
-    @Restricted(permissionName="UpdateOperational")
     @Route(url = "call/operational/update")
     public HashMap<String, Object> updateProgram(VMJExchange vmjExchange) {
         List<String> keys = new ArrayList<String>(Arrays.asList("id"));
@@ -86,8 +82,7 @@ public class ProgramResourceImpl extends ProgramResourceDecorator {
 
         return resultList;
     }
-    
-    @Restricted(permissionName="DeleteOperational")
+
     @Route(url = "call/operational/delete")
     public List<HashMap<String, Object>> deleteProgram(VMJExchange vmjExchange) {
         List<String> keys = new ArrayList<String>(Arrays.asList("id"));

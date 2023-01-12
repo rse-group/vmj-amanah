@@ -9,8 +9,6 @@ import aisco.automaticreport.core.AutomaticReportResourceDecorator;
 import aisco.automaticreport.core.AutomaticReportResourceComponent;
 import aisco.financialreport.core.FinancialReportComponent;
 
-import prices.auth.vmj.annotations.Restricted;
-
 public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorator {
 
     protected RepositoryUtil<AutomaticReportPeriodic> automaticReportPeriodicRepository;
@@ -21,7 +19,6 @@ public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorato
             new RepositoryUtil<AutomaticReportPeriodic>(aisco.automaticreport.periodic.AutomaticReportPeriodicComponent.class);
     }
 
-    @Restricted(permissionName="CreateArusKas")
     @Route(url="call/automatic-report-periodic-model/save")
     public HashMap<String,Object> saveAutomaticReportPeriodic(VMJExchange vmjExchange) {
         AutomaticReportPeriodic automaticReportPeriodic = createAutomaticReportPeriodic(vmjExchange);
@@ -38,7 +35,6 @@ public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorato
         return automaticReportPeriodic;
     }
 
-    @Restricted(permissionName="UpdateArusKas")
     @Route(url="call/automatic-report-periodic-model/update")
     public HashMap<String,Object> updateAutomaticReportPeriodic(VMJExchange vmjExchange) {
         String idStr = (String) vmjExchange.getRequestBodyForm("id");
@@ -121,7 +117,6 @@ public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorato
         return coaSheets;
     }
 
-    @Restricted(permissionName="DeleteArusKas")
     @Route(url="call/automatic-report-periodic-model/delete")
     public HashMap<String,Object> deleteAutomaticReportPeriodic(VMJExchange vmjExchange) {
         String idStr = (String) vmjExchange.getRequestBodyForm("id");

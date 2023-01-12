@@ -14,7 +14,7 @@ import prices.auth.vmj.annotations.Restricted;
 
 public class FinancialReportResourceImpl extends FinancialReportResourceComponent {
 
-    @Restricted(permissionName="CreateFinancialReport")
+    @Restricted(permissionName="ModifyFinancialReportImpl")
     @Route(url="call/financialreport/save")
     public List<HashMap<String,Object>> saveFinancialReport(VMJExchange vmjExchange) {
         FinancialReport financialReport = createFinancialReport(vmjExchange);
@@ -65,7 +65,7 @@ public class FinancialReportResourceImpl extends FinancialReportResourceComponen
         return financialReport;
     }
 
-    @Restricted(permissionName="UpdateFinancialReport")
+    @Restricted(permissionName="ModifyFinancialReportImpl")
     @Route(url="call/financialreport/update")
     public HashMap<String, Object> updateFinancialReport(VMJExchange vmjExchange) {
         String idStr = (String) vmjExchange.getRequestBodyForm("id");
@@ -112,6 +112,7 @@ public class FinancialReportResourceImpl extends FinancialReportResourceComponen
         return transformFinancialReportListToHashMap(financialReportList);
     }
 
+    // TODO: bisa dimasukin ke kelas util
     public List<HashMap<String,Object>> transformFinancialReportListToHashMap(List<FinancialReport> financialReportList) {
         List<HashMap<String,Object>> resultList = new ArrayList<HashMap<String,Object>>();
         for(int i = 0; i < financialReportList.size(); i++) {
@@ -121,7 +122,7 @@ public class FinancialReportResourceImpl extends FinancialReportResourceComponen
         return resultList;
     }
 
-    @Restricted(permissionName="DeleteFinancialReport")
+    @Restricted(permissionName="ModifyFinancialReportImpl")
     @Route(url="call/financialreport/delete")
     public List<HashMap<String,Object>> deleteFinancialReport(VMJExchange vmjExchange) {
         String idStr = (String) vmjExchange.getRequestBodyForm("id");

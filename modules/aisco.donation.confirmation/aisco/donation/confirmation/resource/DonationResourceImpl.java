@@ -29,6 +29,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         super(record);
     }
 
+    // @Restricted(permissionName="ModifyDonationReportImpl")
     @Route(url = "call/confirmation/save-full")
     public List<HashMap<String, Object>> saveDonation(VMJExchange vmjExchange) {
         Donation donation = createDonation(vmjExchange);
@@ -109,7 +110,6 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         return donationConfirmation;
     }
 
-    @Restricted(permissionName="UpdateCOD")
     @Route(url = "call/confirmation/list-status")
     public List<HashMap<String, Object>> listStatus(VMJExchange vmjExchange) {
         List<HashMap<String, Object>> listStatus = new ArrayList<HashMap<String, Object>>();
@@ -122,7 +122,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         return listStatus;
     }
 
-    @Restricted(permissionName="UpdateCOD")
+    // @Restricted(permissionName="ModifyDonationReportImpl")
     @Route(url = "call/confirmation/updatestatus")
     public HashMap<String, Object> updateStatusDonation(VMJExchange vmjExchange) {
         List<String> keys = new ArrayList<String>(Arrays.asList("id", "status"));
@@ -153,7 +153,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         return savedDonation;
     }
 
-    @Restricted(permissionName="UpdateCOD")
+    // @Restricted(permissionName="ModifyDonationReportImpl")
     @Route(url = "call/confirmation/update")
     public HashMap<String, Object> updateDonation(VMJExchange vmjExchange) {
         Map<String, Object> payload = vmjExchange.getPayload();
@@ -170,7 +170,6 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         return super.getDonation(vmjExchange);
     }
 
-    // @Restricted(permissionName="ReadCOD")
     @Route(url = "call/confirmation/list")
     public List<HashMap<String, Object>> getAllDonation(VMJExchange vmjExchange) {
         List<Donation> donationList = donationDao.getAllObject("donation_confirmation");
@@ -187,7 +186,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         return resultList;
     }
 
-    @Restricted(permissionName="DeleteCOD")
+    // @Restricted(permissionName="ModifyDonationReportImpl")
     @Route(url = "call/confirmation/delete")
     public List<HashMap<String, Object>> deleteDonation(VMJExchange vmjExchange) {
         Map<String, Object> payload = vmjExchange.getPayload();

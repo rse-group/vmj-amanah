@@ -7,6 +7,4 @@ module aisco.automaticreport.periodic {
     requires aisco.financialreport.core;
 
     requires vmj.hibernate.integrator;
-
-    requires prices.auth.vmj;
 }

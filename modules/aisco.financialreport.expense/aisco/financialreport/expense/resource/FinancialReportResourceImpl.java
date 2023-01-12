@@ -18,7 +18,7 @@ public class FinancialReportResourceImpl extends FinancialReportResourceDecorato
         super(record);
     }
 
-    @Restricted(permissionName="CreateExpense")
+    @Restricted(permissionName="ModifyFinancialReportImpl")
     @Route(url="call/expense/save")
     public List<HashMap<String,Object>> saveFinancialReport(VMJExchange vmjExchange) {
         FinancialReport financialReport = createFinancialReport(vmjExchange);
@@ -43,7 +43,7 @@ public class FinancialReportResourceImpl extends FinancialReportResourceDecorato
         return financialReportExpense;
     }
 
-    @Restricted(permissionName="UpdateExpense")
+    @Restricted(permissionName="ModifyFinancialReportImpl")
     @Route(url="call/expense/update")
     public HashMap<String, Object> updateFinancialReport(VMJExchange vmjExchange) {
         String idStr = (String) vmjExchange.getRequestBodyForm("id");
@@ -68,7 +68,7 @@ public class FinancialReportResourceImpl extends FinancialReportResourceDecorato
         return transformFinancialReportListToHashMap(financialReportList);
     }
 
-    @Restricted(permissionName="DeleteExpense")
+    @Restricted(permissionName="ModifyFinancialReportImpl")
     @Route(url="call/expense/delete")
     public List<HashMap<String,Object>> deleteFinancialReport(VMJExchange vmjExchange) {
         String idStr = (String) vmjExchange.getRequestBodyForm("id");

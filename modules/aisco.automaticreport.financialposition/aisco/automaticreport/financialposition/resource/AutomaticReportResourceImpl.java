@@ -146,7 +146,7 @@ public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorato
         }
 
         List<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
-        data.add(dataTahun);
+        // data.add(dataTahun);
         data.addAll(getAset(financialPositionLastYear, financialPositionTwoYearsBefore));
         data.addAll(getLiabilitas(financialPositionLastYear, financialPositionTwoYearsBefore));
         data.addAll(getAsetNeto(financialPositionLastYear, financialPositionTwoYearsBefore));
@@ -316,25 +316,25 @@ public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorato
         asetNetoTidakTerikat.put("name", "Tidak Terikat");
         asetNetoTidakTerikat.put("amountLastYear", financialPositionLastYear.getAsetNetoTidakTerikat());
         asetNetoTidakTerikat.put("amountTwoYearsBefore", financialPositionTwoYearsBefore.getAsetNetoTidakTerikat());
-        asetNetoTidakTerikat.put("level", 1);
+        asetNetoTidakTerikat.put("level", 0);
 
         HashMap<String, Object> asetNetoTerikatTemporer = new HashMap<String, Object>();
         asetNetoTerikatTemporer.put("name", "Terikat Temporer");
         asetNetoTerikatTemporer.put("amountLastYear", financialPositionLastYear.getAsetNetoTerikatTemporer());
         asetNetoTerikatTemporer.put("amountTwoYearsBefore", financialPositionTwoYearsBefore.getAsetNetoTerikatTemporer());
-        asetNetoTerikatTemporer.put("level", 1);
+        asetNetoTerikatTemporer.put("level", 0);
 
         HashMap<String, Object> asetNetoTerikatPermanen = new HashMap<String, Object>();
         asetNetoTerikatPermanen.put("name", "Terikat Permanen");
         asetNetoTerikatPermanen.put("amountLastYear", financialPositionLastYear.getAsetNetoTerikatPermanen());
         asetNetoTerikatPermanen.put("amountTwoYearsBefore", financialPositionTwoYearsBefore.getAsetNetoTerikatPermanen());
-        asetNetoTerikatPermanen.put("level", 1);
+        asetNetoTerikatPermanen.put("level", 0);
 
         HashMap<String, Object> jumlahAsetNeto = new HashMap<String, Object>();
         jumlahAsetNeto.put("name", "Jumlah Aset Neto");
         jumlahAsetNeto.put("amountLastYear", financialPositionLastYear.getJumlahAsetNeto());
         jumlahAsetNeto.put("amountTwoYearsBefore", financialPositionTwoYearsBefore.getJumlahAsetNeto());
-        jumlahAsetNeto.put("level", 1);
+        jumlahAsetNeto.put("level", 0);
 
         dataAsetNeto.add(header);
         dataAsetNeto.add(asetNetoTidakTerikat);

@@ -13,7 +13,7 @@ import prices.auth.vmj.annotations.Restricted;
 
 public class ProgramResourceImpl extends ProgramResourceComponent {
 
-    @Restricted(permissionName="CreateProgram")
+    @Restricted(permissionName="ModifyProgramImpl")
     @Route(url="call/activity/save")
     public List<HashMap<String,Object>> saveProgram(VMJExchange vmjExchange) {
         Program program = createProgram(vmjExchange);
@@ -33,7 +33,7 @@ public class ProgramResourceImpl extends ProgramResourceComponent {
         return program;
     }
 
-    @Restricted(permissionName="UpdateProgram")
+    @Restricted(permissionName="ModifyProgramImpl")
     @Route(url="call/activity/update")
     public HashMap<String, Object> updateProgram(VMJExchange vmjExchange) {
         String idStr = (String) vmjExchange.getRequestBodyForm("id");
@@ -80,7 +80,7 @@ public class ProgramResourceImpl extends ProgramResourceComponent {
         return resultList;
     }
 
-    @Restricted(permissionName="DeleteProgram")
+    @Restricted(permissionName="ModifyProgramImpl")
     @Route(url="call/activity/delete")
     public List<HashMap<String,Object>> deleteProgram(VMJExchange vmjExchange) {
         String idStr = (String) vmjExchange.getRequestBodyForm("id");

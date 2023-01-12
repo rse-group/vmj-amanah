@@ -103,7 +103,6 @@ public class DonationResourceImpl extends DonationResourceComponent {
         }
     }
 
-    @Restricted(permissionName="ModifyDonationReportImpl")
     @Route(url = "call/donation/list")
     public List<HashMap<String, Object>> getAllDonation(VMJExchange vmjExchange) {
         List<Donation> donationList = donationDao.getAllObject("donation_impl");
