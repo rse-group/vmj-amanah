@@ -3,8 +3,8 @@
     <feature
         menulabel="Program"
         menupath="#"
-        routename="programRoutes"
-        routefilepath="program/routes"
+        routename=""
+        routefilepath=""
         name="Program"
     />
     <feature
@@ -27,6 +27,13 @@
         routename="periodsRoutes"
         routefilepath="periods/routes"
         name="Periods"
+    />
+    <feature
+        menulabel="Periodik"
+        menupath="/periodic"
+        routename="periodicRoutes"
+        routefilepath="periodic/routes.js"
+        name="Periodic"
     />
     <feature
         menulabel="Laporan Keuangan"
@@ -65,9 +72,9 @@
     />
     <feature
         menulabel="Jurnal Keuangan"
-        menupath="/report"
-        routename="journalReportRoutes"
-        routefilepath="journalReport/routes"
+        menupath="#"
+        routename=""
+        routefilepath=""
         name="JournalReport"
     />
     <feature
@@ -103,13 +110,13 @@
         menupath="/summary"
         routename="summaryRoutes"
         routefilepath="summary/routes"
-        name="SummaryReport"
+        name="Summary"
     />
     <feature
         menulabel="Donasi"
         menupath="#"
-        routename="donationRoutes"
-        routefilepath="donation/routes"
+        routename=""
+        routefilepath=""
         name="Donation"
     />
     <feature
@@ -143,44 +150,43 @@
     <feature
         menulabel="Info Organisasi"
         menupath="#"
-        routename="staticPageRoutes"
-        routefilepath="staticPage/routes"
+        routename=""
+        routefilepath=""
         name="OrganizationInfo"
     />
     <feature
         menulabel="Tentang Kami"
         menupath="/about"
-        routename=""
-        routefilepath=""
+        routename="staticPageRoutes"
+        routefilepath="staticPage/routes"
         name="AboutUs"
     />
     <feature
         menulabel="Kontak"
         menupath="/contact"
-        routename=""
-        routefilepath=""
+        routename="staticPageRoutes"
+        routefilepath="staticPage/routes"
         name="Contacts"
     />
     <feature
         menulabel="Mitra Kami"
         menupath="/partners"
-        routename=""
-        routefilepath=""
+        routename="staticPageRoutes"
+        routefilepath="staticPage/routes"
         name="Partners"
     />
     <feature
         menulabel="Lokasi"
         menupath="/maps"
-        routename=""
-        routefilepath=""
+        routename="staticPageRoutes"
+        routefilepath="staticPage/routes"
         name="Location"
     />
     <feature
         menulabel="Rekening Donasi"
         menupath="/bank-account"
-        routename=""
-        routefilepath=""
+        routename="staticPageRoutes"
+        routefilepath="staticPage/routes"
         name="BankAccount"
     />
 </featuremap>
-
