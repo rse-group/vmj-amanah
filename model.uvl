@@ -4,47 +4,54 @@ imports
 	interfaces.Volunteers as vl
 
 features
-	AISCO {abstract true}
+	AISCO {abstract}	
 		mandatory
-			Program {abstract true}
-				or
+			Program {abstract}	
+				mandatory
 					Activity
+
+				optional
 					Operational
-					Periods
 					WithVolunteer
-			FinancialReport {abstract true}
+			FinancialReport {abstract}	
 				mandatory
 					Income
+
 				optional
 					Expense
 					Category
 					Frequency
-					JournalReport {abstract true}
+					JournalReport {abstract}	
 						optional
-							PSAK45 {abstract true}
+							PSAK45 {abstract}	
 								optional
 									ArusKasReport
 									FinancialPosition
 									ActivityReport
 							Summary
+
 		optional
-			Donation {abstract true}
+			Donation {abstract}	
 				optional
-					Online {abstract true}
+					Online {abstract}	
 						alternative
 							ViaWebsite
 							ViaPaymentGateway
 					Confirmation
+
 		mandatory
-			OrganizationInfo {abstract true}
+			OrganizationInfo {abstract}	
 				mandatory
 					AboutUs
 					Contacts
-					Partners
+
 				optional
+					Partners
 					Location
+
 				mandatory
 					BankAccount
+
 		optional
 			vl.Volunteers
 
