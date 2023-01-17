@@ -81,30 +81,30 @@ public class DonationImpl extends DonationDecorator {
     }
 
     public HashMap<String, Object> toHashMap() {
-        HashMap<String, Object> donationMap = new HashMap<String, Object>();
-        donationMap.put("id", record.getId());
-        donationMap.put("name", record.getName());
-        donationMap.put("phone", record.getPhone());
-        donationMap.put("email", record.getEmail());
-        donationMap.put("date", record.getDate());
-        donationMap.put("amount", record.getAmount());
-        donationMap.put("paymentMethod", record.getPaymentMethod());
-        donationMap.put("description", record.getDescription());
-        donationMap.put("idProgram", record.getProgram().getIdProgram());
-        if (record.getIncome() != null)
-            donationMap.put("idIncome", record.getIncome().getId());
+//        HashMap<String, Object> donationMap = new HashMap<String, Object>();
+//        donationMap.put("id", record.getId());
+//        donationMap.put("name", record.getName());
+//        donationMap.put("phone", record.getPhone());
+//        donationMap.put("email", record.getEmail());
+//        donationMap.put("date", record.getDate());
+//        donationMap.put("amount", record.getAmount());
+//        donationMap.put("paymentMethod", record.getPaymentMethod());
+//        donationMap.put("description", record.getDescription());
+//        donationMap.put("idProgram", record.getProgram().getIdProgram());
+//        if (record.getIncome() != null)
+//            donationMap.put("idIncome", record.getIncome().getId());
+//        donationMap.put("id", id);
+//        donationMap.put("proofOfTransfer", getProofOfTransfer());
+//        donationMap.put("senderAccount", getSenderAccount());
+//        donationMap.put("recieverAccount", getRecieverAccount());
+//        donationMap.put("status", getStatus());
+//        donationMap.put("statusId", Status.findStatusByName(getStatus()).getStatusId());
+        HashMap<String, Object> donationMap = record.toHashMap();
         donationMap.put("id", id);
         donationMap.put("proofOfTransfer", getProofOfTransfer());
         donationMap.put("senderAccount", getSenderAccount());
-        donationMap.put("recieverAccount", getRecieverAccount());
+        donationMap.put("receiverAccount", getRecieverAccount());
         donationMap.put("status", getStatus());
-        donationMap.put("statusId", Status.findStatusByName(getStatus()).getStatusId());
-        // HashMap<String, Object> donationMap = record.toHashMap();
-        // donationMap.put("id", id);
-        // donationMap.put("proofOfTransfer", getProofOfTransfer());
-        // donationMap.put("senderAccount", getSenderAccount());
-        // donationMap.put("receiverAccount", getRecieverAccount());
-        // donationMap.put("status", getStatus());
         return donationMap;
     }
 }

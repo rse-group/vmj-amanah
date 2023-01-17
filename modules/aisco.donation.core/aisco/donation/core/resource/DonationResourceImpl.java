@@ -33,7 +33,7 @@ public class DonationResourceImpl extends DonationResourceComponent {
 
         String description = (String) payload.get("description");
         String paymentMethod = (String) payload.get("paymentMethod");
-        String idProgramStr = (String) payload.get("idprogram");
+        String idProgramStr = (String) payload.get("idProgram");
         String date = (String) payload.get("date");
         String amountStr = (String) payload.get("amount");
         long amount = Long.parseLong(amountStr);
