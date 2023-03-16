@@ -1,2 +1,0 @@
-echo SELECT 'CREATE DATABASE aisco_product_charityschool' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'aisco_product_charityschool') \gexec | psql "postgresql://postgres:postgres@localhost"
-java -cp aisco.product.charityschool --module-path aisco.product.charityschool -m aisco.product.charityschool

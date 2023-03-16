@@ -1,10 +1,5 @@
 # WinVMJ Project AMANAH
 This repository consists a FeatureIDE project with WinVMJ composer for AMANAH case study.
-The source code for WinVMJ is copied from https://gitlab.com/RSE-Lab-Fasilkom-UI/PricesIDE/vmj-aisco/-/tree/staging.
-The WinVMJ source code (from directory `src`) is placed in directory `modules`.
-
-The AMANAH product line in this branch is also related to Volunteer product line in
-https://gitlab.com/RSE-Lab-Fasilkom-UI/PricesIDE/vmj-volunteers 
 
 ## Requirements
 Install Eclipse and required plugins to run this project:
@@ -18,13 +13,42 @@ Install Eclipse and required plugins to run this project:
 - Make sure that all requirements installed in your Eclipse
 - Clone this repository (AMANAH project) into your directory
 - Import your directory into Eclipse workspace (do not include the .git folder)
-- Clone Volunteer project from https://gitlab.com/RSE-Lab-Fasilkom-UI/PricesIDE/vmj-volunteers 
-- Import Volunteer Project into Eclipse workspace 
+- Open the project, the structure directory is:
+    ```
+    .
+    ├── src
+    ├── configs
+    ├── external
+    ├── modules
+    ├── src-gen
+    ├── db.properties
+    ├── feature_to_module.json
+    ├── FeatureMapping.xml
+    ├── inter_spl_product.json
+    ├── model.uvl
+    ```
 - Don't forget to edit file `db.properties` in the project with your PostgreSQL credentials
+
+## Development
+WinVMJ framework is designed based on Varibility Modules for Java (VMJ).
+VMJ is an architectural pattern in Java to implement software product lines
+and multi product lines based on Delta Oriented Programming (DOP).
+VMJ combines Java module system and design pattern to implement DOP. 
+
+To implement a new variation:
+1. Add a new feature in the feature diagram (model.uvl)
+2. Develop a module in the directory `module`.
+Naming convention for the folder:
+- core module [productlinename].[modulename].core
+- delta module [productlinename].[coremodulename].[deltamodulename]
+FYI, the core and delta module can be generated from the UML-DOP diagram,
+you can also create/update the UML-DOP diagram and generate the source.
+See this repository: https://gitlab.com/RSE-Lab-Fasilkom-UI/PricesIDE/uml-to-vmj
+3. Define a mapping between feature name and delta name in file `feature_to_module.json`
 
 ## Generate and Run Product
 ### Generate Product
-- Generate product is started with creating a new configuration:
+Generate product is started with creating a new configuration:
 1. The configuration is defined in directory `configs`. 
 2. Right click on the project -> NEW -> OTHER -> FeatureIDE -> Configuration File
 3. Defined the config file's name that represents the product's name
@@ -39,8 +63,8 @@ The generated application is placed in directory `src-gen`
 3. Fill in the working directory by defining the product's directory, e.g.,`${workspace_loc:/aisco-winmvj/src-gen/CharitySchool}`
 4. Click Run
 5. If succeed, the product is ready and a list of avalaible endpoints is printed on the console, for example:
-```
-http://localhost:7776/call/program/list
-```
+    ```
+    http://localhost:7776/call/program/list
+    ```
 6. Seed initial data for ChartOfAccount and Auth from directory `sql`. Add your google
 account to `auth_seed.sql` and grant `Administator` role.

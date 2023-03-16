@@ -24,7 +24,7 @@
 	<feature automatic="selected" name="OrganizationInfo"/>
 	<feature automatic="selected" name="AboutUs"/>
 	<feature automatic="selected" name="Contacts"/>
-	<feature automatic="selected" name="Partners"/>
+	<feature name="Partners"/>
 	<feature name="Location"/>
 	<feature automatic="selected" name="BankAccount"/>
 	<feature name="vl.Volunteers"/>
