@@ -14,71 +14,24 @@ import aisco.chartofaccount.core.ChartOfAccount;
 @MappedSuperclass
 public abstract class FinancialReportDecorator extends FinancialReportComponent {
 
-    @OneToOne(cascade=CascadeType.ALL)
-    protected FinancialReportComponent record;
-
-    public FinancialReportDecorator(FinancialReportComponent record) {
-        this.record = record;
+    public FinancialReportDecorator() {}
+    
+    public FinancialReportDecorator(FinancialReportComponent financialReport) {
         Random r = new Random();
 		this.id = Math.abs(r.nextInt());
+		this.datestamp = financialReport.getDatestamp();
+        this.amount = financialReport.getAmount();
+        this.description = financialReport.getDescription();
+        this.program = financialReport.getProgram();
+        this.coa = financialReport.getCoa();
     }
-
-    public FinancialReportDecorator(int id, FinancialReportComponent record) {
-        this.id = id;
-        this.record = record;
-    }
-
-    public FinancialReportDecorator() {
-        super();
-        this.record = new FinancialReportImpl();
-        Random r = new Random();
-		this.id = Math.abs(r.nextInt());
-    }
-
-    public FinancialReportComponent getRecord() {
-        return this.record;
-    }
-
-    public void setRecord(FinancialReportComponent record) {
-        this.record = record;
-    }
-
-    public String getDatestamp() {
-        return this.record.getDatestamp();
-    }
-    public void setDatestamp(String datestamp) {
-        this.record.setDatestamp(datestamp);
-    }
-
-    public long getAmount() {
-        return this.record.getAmount();
-    }
-    public void setAmount(long amount) {
-        this.record.setAmount(amount);
-    }
-
-    public String getDescription() {
-        return this.record.getDescription();
-    }
-    public void setDescription(String description) {
-        this.record.setDescription(description);
-    }
-
-    public Program getProgram() {
-        return this.record.getProgram();
-    }
-    public void setProgram(Program program) {
-        this.record.setProgram(program);
-    }
-
-    public ChartOfAccount getCoa() {
-        return this.record.getCoa();
-    }
-    public void setCoa(ChartOfAccount coa) {
-        this.record.setCoa(coa);
-    }
-
-    public HashMap<String, Object> toHashMap() {
-        return this.record.toHashMap();
+    
+    public FinancialReportDecorator(int id, FinancialReportComponent financialReport) {
+		this.id = id;
+		this.datestamp = financialReport.getDatestamp();
+        this.amount = financialReport.getAmount();
+        this.description = financialReport.getDescription();
+        this.program = financialReport.getProgram();
+        this.coa = financialReport.getCoa();
     }
 }

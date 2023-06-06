@@ -2,7 +2,6 @@ package aisco.financialreport.core;
 
 import java.util.*;
 
-import aisco.program.core.Program;
 import vmj.routing.route.Route;
 import vmj.routing.route.VMJExchange;
 
@@ -11,18 +10,27 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-import aisco.program.core.Program;
+import aisco.program.core.*;
+import aisco.chartofaccount.core.*;
 
-import aisco.chartofaccount.core.ChartOfAccount;
-
-@Entity
+@Entity(name="financialreport_comp")
 @Table(name="financialreport_comp")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class FinancialReportComponent implements FinancialReport {
 
     @Id
     protected int id;
+    protected String datestamp;
+    protected long amount;
+    protected String description;
+
+    @ManyToOne(targetEntity=aisco.program.core.ProgramComponent.class)
+    protected Program program;
+    @ManyToOne(targetEntity=aisco.chartofaccount.core.ChartOfAccountComponent.class)
+    protected ChartOfAccount coa;
 
     public int getId() {
         return this.id;
@@ -32,20 +40,41 @@ public abstract class FinancialReportComponent implements FinancialReport {
         this.id = id;
     }
 
-    public abstract String getDatestamp();
-    public abstract void setDatestamp(String datestamp);
+    public String getDatestamp() {
+        return this.datestamp;
+    }
+    public void setDatestamp(String datestamp) {
+        this.datestamp = datestamp;
+    }
 
-    public abstract long getAmount();
-    public abstract void setAmount(long amount);
+    public long getAmount() {
+        return this.amount;
+    }
+    public void setAmount(long amount) {
+        this.amount = amount;
+    }
 
-    public abstract String getDescription();
-    public abstract void setDescription(String description);
+    public String getDescription() {
+        return this.description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public abstract Program getProgram();
-    public abstract void setProgram(Program program);
+    public Program getProgram() {
+        return this.program;
+    }
+    public void setProgram(Program program) {
+        this.program = program;
+    }
 
-    public abstract ChartOfAccount getCoa();
-    public abstract void setCoa(ChartOfAccount coa);
+    public ChartOfAccount getCoa() {
+        return this.coa;
+    }
+    
+    public void setCoa(ChartOfAccount coa) {
+        this.coa = coa;
+    }
 
     @Override
     public String toString() {

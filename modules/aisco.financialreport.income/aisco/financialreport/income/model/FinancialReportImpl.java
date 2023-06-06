@@ -16,18 +16,23 @@ import aisco.financialreport.core.FinancialReportComponent;
 public class FinancialReportImpl extends FinancialReportDecorator {
     public String paymentMethod;
 
-    public FinancialReportImpl(FinancialReportComponent record, String paymentMethod) {
-        super(record);
-        this.paymentMethod = paymentMethod;
-    }
-
-    public FinancialReportImpl(int id, FinancialReportComponent record, String paymentMethod) {
-        super(id, record);
-        this.paymentMethod = paymentMethod;
-    }
-
     public FinancialReportImpl(){
         super();
+    }
+    
+    public FinancialReportImpl(String paymentMethod) {
+    	super();
+    	this.paymentMethod = paymentMethod;
+    }
+    
+    public FinancialReportImpl(aisco.financialreport.core.FinancialReportImpl financialReport, String paymentMethod) {
+        super((FinancialReportComponent) financialReport);
+    	this.paymentMethod = paymentMethod;
+    }
+    
+    public FinancialReportImpl(int id, aisco.financialreport.core.FinancialReportImpl financialReport, String paymentMethod) {
+        super(id, (FinancialReportComponent) financialReport);
+    	this.paymentMethod = paymentMethod;
     }
 
     public String getPaymentMethod() {
@@ -43,14 +48,25 @@ public class FinancialReportImpl extends FinancialReportDecorator {
         return "{" +
             " id='" + getId() + "'" +
             " paymentMethod='" + getPaymentMethod() + "'" +
-            ", record='" + getRecord() + "'" +
             "}";
     }
 
     public HashMap<String, Object> toHashMap() {
-        HashMap<String, Object> financialReportMap = record.toHashMap();
+        HashMap<String, Object> financialReportMap = new HashMap<String,Object>();
         financialReportMap.put("id", id);
+        financialReportMap.put("datestamp", getDatestamp());
+        financialReportMap.put("amount", getAmount());
+        financialReportMap.put("description", getDescription());
         financialReportMap.put("paymentMethod", getPaymentMethod());
+        if (getProgram() != null) {
+            financialReportMap.put("idProgram", getProgram().getIdProgram());
+            financialReportMap.put("programName", getProgram().getName());
+        }
+        if (getCoa() != null) {
+            financialReportMap.put("idCoa", getCoa().getId());
+            financialReportMap.put("coaName", getCoa().getName());
+        }
+        
         return financialReportMap;
     }
 }

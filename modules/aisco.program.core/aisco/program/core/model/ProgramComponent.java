@@ -4,64 +4,117 @@ import java.util.*;
 import vmj.routing.route.Route;
 import vmj.routing.route.VMJExchange;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import prices.auth.vmj.annotations.Restricted;
 // import aisco.financialreport.core.*;
 
-@Entity
-@Table(name="program_comp")
+@Entity(name = "program_comp")
+@Table(name = "program_comp")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class ProgramComponent implements Program {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public int idProgram;
+	public String name;
+	public String description;
+	public String target;
+	public String partner;
+	public String logoUrl;
+	public String executionDate;
+	
+	// Default constructor
+	public ProgramComponent() {}
 
-    @Id
-    public int idProgram;
+	public ProgramComponent(String name, String description, String target, String partner, String logoUrl, String executionDate) {
+		this.name = name;
+		this.description = description;
+		this.target = target;
+		this.partner = partner;
+		this.logoUrl = logoUrl;
+		this.executionDate = executionDate;
+	}
 
-    public int getIdProgram() {
-        return this.idProgram;
-    }
+	@Override
+	public void setIdProgram(int idProgram) {
+		this.idProgram = idProgram;
+	}
 
-    public void setIdProgram(int idProgram) {
-        this.idProgram = idProgram;
-    }
+	@Override
+	public int getIdProgram() {
+		return this.idProgram;
+	}
 
-    public abstract String getName();
-    public abstract void setName(String name);
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public abstract String getDescription();
-    public abstract void setDescription(String description);
+	@Override
+	public String getName() {
+		return this.name;
+	}
 
-    public abstract String getTarget();
-    public abstract void setTarget(String target);
+	@Override
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public abstract String getPartner();
-    public abstract void setPartner(String partner);
+	@Override
+	public String getDescription() {
+		return this.description;
+	}
 
-    public abstract String getLogoUrl();
-    public abstract void setLogoUrl(String logoUrl);
+	@Override
+	public void setTarget(String target) {
+		this.target = target;
+	}
 
-    public abstract String getExecutionDate();
-    public abstract void setExecutionDate(String executionDate);
+	@Override
+	public String getTarget() {
+		return this.target;
+	}
 
-    @Override
-    public String toString() {
-        return "Program  [id=" + getIdProgram() + ", name=" + getName() + "]";
-    }
+	@Override
+	public void setPartner(String partner) {
+		this.partner = partner;
+	}
 
-    public HashMap<String, Object> toHashMap() {
-        HashMap<String, Object> programMap = new HashMap<String,Object>();
-        programMap.put("id", getIdProgram());
-        programMap.put("name", getName());
-        programMap.put("description", getDescription());
-        programMap.put("target", getTarget());
-        programMap.put("partner", getPartner());
-        programMap.put("logoUrl", getLogoUrl());
-        programMap.put("executionDate", getExecutionDate());
-        return programMap;
-    }
+	@Override
+	public String getPartner() {
+		return this.partner;
+	}
+
+	@Override
+	public void setLogoUrl(String logoUrl) {
+		this.logoUrl = logoUrl;
+	}
+
+	@Override
+	public String getLogoUrl() {
+		return this.logoUrl;
+	}
+
+	@Override
+	public void setExecutionDate(String executionDate) {
+		this.executionDate = executionDate;
+	}
+
+	@Override
+	public String getExecutionDate() {
+		return this.executionDate;
+	}
+	
+	public HashMap<String, Object> toHashMap() {
+		HashMap<String, Object> programMap = new HashMap<String,Object>();
+		programMap.put("id", getIdProgram());
+		programMap.put("name", getName());
+		programMap.put("description", getDescription());
+		programMap.put("target", getTarget());
+		programMap.put("partner", getPartner());
+		programMap.put("logoUrl", getLogoUrl());
+		programMap.put("executionDate", getExecutionDate());
+		return programMap;
+	}
 }

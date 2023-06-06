@@ -13,6 +13,8 @@ import aisco.financialreport.FinancialReportFactory;
 import prices.auth.vmj.annotations.Restricted;
 
 public class FinancialReportResourceImpl extends FinancialReportResourceDecorator {
+	
+	protected FinancialReportResourceComponent record;
 
     public FinancialReportResourceImpl(FinancialReportResourceComponent record) {
         super(record);
@@ -29,7 +31,7 @@ public class FinancialReportResourceImpl extends FinancialReportResourceDecorato
 
     public FinancialReport createFinancialReport(VMJExchange vmjExchange) {
         String paymentMethod = (String) vmjExchange.getRequestBodyForm("paymentMethod");
-        FinancialReport financialReport = record.createFinancialReport(vmjExchange);
+        FinancialReport financialReport = super.createFinancialReport(vmjExchange);
         FinancialReport financialReportIncome = FinancialReportFactory.createFinancialReport("aisco.financialreport.income.FinancialReportImpl", financialReport, paymentMethod);
 
         return financialReportIncome;
@@ -38,8 +40,8 @@ public class FinancialReportResourceImpl extends FinancialReportResourceDecorato
     public FinancialReport createFinancialReport(VMJExchange vmjExchange, int id) {
         String paymentMethod = (String) vmjExchange.getRequestBodyForm("paymentMethod");
         FinancialReport savedFinancialReport = financialReportRepository.getObject(id);
-        int recordFinancialReportId = (((FinancialReportDecorator) savedFinancialReport).getRecord()).getId();
-        FinancialReport financialReport = record.createFinancialReport(vmjExchange, recordFinancialReportId);
+        int recordFinancialReportId = (((FinancialReportDecorator) savedFinancialReport)).getId();
+        FinancialReport financialReport = super.createFinancialReport(vmjExchange, recordFinancialReportId);
         FinancialReport financialReportIncome = FinancialReportFactory.createFinancialReport("aisco.financialreport.income.FinancialReportImpl", id, financialReport, paymentMethod);
 
         return financialReportIncome;
@@ -59,7 +61,7 @@ public class FinancialReportResourceImpl extends FinancialReportResourceDecorato
 
     @Route(url="call/income/detail")
     public HashMap<String, Object> getFinancialReport(VMJExchange vmjExchange) {
-        return record.getFinancialReport(vmjExchange);
+        return super.getFinancialReport(vmjExchange);
     }
 
     @Route(url="call/income/list")

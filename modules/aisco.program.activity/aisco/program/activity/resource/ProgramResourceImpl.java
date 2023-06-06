@@ -66,7 +66,7 @@ public class ProgramResourceImpl extends ProgramResourceComponent {
 
     @Route(url="call/activity/list")
     public List<HashMap<String,Object>> getAllProgram(VMJExchange vmjExchange) {
-        List<Program> programList = programRepository.getAllObject("program_impl");
+        List<Program> programList = programRepository.getAllObject("program_activity");
 
         return transformProgramListToHashMap(programList);
     }

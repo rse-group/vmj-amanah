@@ -28,7 +28,7 @@ public class FinancialReportResourceImpl extends FinancialReportResourceDecorato
     }
 
     public FinancialReport createFinancialReport(VMJExchange vmjExchange) {
-        FinancialReport financialReport = record.createFinancialReport(vmjExchange);
+        FinancialReport financialReport = super.createFinancialReport(vmjExchange);
         FinancialReport financialReportExpense = FinancialReportFactory.createFinancialReport("aisco.financialreport.expense.FinancialReportImpl", financialReport);
 
         return financialReportExpense;
@@ -36,8 +36,8 @@ public class FinancialReportResourceImpl extends FinancialReportResourceDecorato
 
     public FinancialReport createFinancialReport(VMJExchange vmjExchange, int id) {
         FinancialReport savedFinancialReport = financialReportRepository.getObject(id);
-        int recordFinancialReportId = (((FinancialReportDecorator) savedFinancialReport).getRecord()).getId();
-        FinancialReport financialReport = record.createFinancialReport(vmjExchange, recordFinancialReportId);
+        int recordFinancialReportId = (((FinancialReportDecorator) savedFinancialReport)).getId();
+        FinancialReport financialReport = super.createFinancialReport(vmjExchange, recordFinancialReportId);
         FinancialReport financialReportExpense = FinancialReportFactory.createFinancialReport("aisco.financialreport.expense.FinancialReportImpl", id, financialReport);
 
         return financialReportExpense;
