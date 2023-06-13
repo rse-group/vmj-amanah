@@ -21,6 +21,7 @@ public abstract class ProgramComponent implements Program {
 	public String description;
 	public String target;
 	public String partner;
+	@Column(columnDefinition = "TEXT")
 	public String logoUrl;
 	public String executionDate;
 	
