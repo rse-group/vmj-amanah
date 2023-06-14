@@ -67,4 +67,44 @@ public abstract class ChartOfAccountDecorator extends ChartOfAccountComponent {
 	public void setIsVisible(String isVisible) {
 		this.record.setIsVisible(isVisible);
 	}
+
+	@Override
+	public Integer getParentId() {
+		return this.record.getParentId();
+	}
+
+    @Override
+	public void setParentId(int parentId) {
+		this.record.setParentId(parentId);
+	}
+
+	@Override
+	public Integer getLevel() {
+		return this.record.getLevel();
+	}
+
+    @Override
+	public void setLevel(int level) {
+		this.record.setLevel(level);
+	}
+
+	@Override
+	public boolean getIsRestricted() {
+		return this.record.getIsRestricted();
+	}
+
+    @Override
+	public void setIsRestricted(boolean isRestricted) {
+		this.record.setIsRestricted(isRestricted);
+	}
+
+	@Override
+	public Integer getCashflowType() {
+		return this.record.getCashflowType();
+	}
+
+    @Override
+	public void setCashflowType(int cashflowType) {
+		this.record.setCashflowType(cashflowType);
+	}
 }

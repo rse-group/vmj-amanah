@@ -20,5 +20,17 @@ public interface ChartOfAccount {
 	String getIsVisible();
 	void setIsVisible(String isVisible);
 
+	Integer getParentId();
+	void setParentId(int parentId);
+
+	Integer getLevel();
+	void setLevel(int level);
+
+	boolean getIsRestricted();
+	void setIsRestricted(boolean isRestricted);
+
+	Integer getCashflowType();
+	void setCashflowType(int cashflowType);
+
     HashMap<String, Object> toHashMap();
 }

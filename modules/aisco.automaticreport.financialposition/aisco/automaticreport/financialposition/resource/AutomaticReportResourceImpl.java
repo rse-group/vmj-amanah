@@ -12,11 +12,13 @@ import vmj.routing.route.exceptions.*;
 import aisco.automaticreport.core.AutomaticReportResourceDecorator;
 import aisco.automaticreport.core.AutomaticReportResourceComponent;
 import aisco.automaticreport.periodic.*;
+import aisco.automaticreport.journalentry.JournalEntry;
 import aisco.financialreport.core.FinancialReport;
 
 public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorator {
     protected RepositoryUtil<AutomaticReportFinancialPosition> automaticReportFinancialPositionRepository;
     protected RepositoryUtil<AutomaticReportPeriodic> automaticReportPeriodicRepository;
+    protected RepositoryUtil<JournalEntry> journalEntryRepository;
 
     public AutomaticReportResourceImpl(AutomaticReportResourceComponent record) {
         super(record);
@@ -24,6 +26,8 @@ public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorato
             aisco.automaticreport.financialposition.AutomaticReportFinancialPositionComponent.class);
         this.automaticReportPeriodicRepository = new RepositoryUtil<AutomaticReportPeriodic>(
             aisco.automaticreport.periodic.AutomaticReportPeriodicComponent.class);
+        this.journalEntryRepository = new RepositoryUtil<JournalEntry>(
+            aisco.automaticreport.journalentry.JournalEntryComponent.class);
     }
 
     @Route(url = "call/automatic-report-financialposition/save")
@@ -125,33 +129,66 @@ public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorato
         return automaticReportFinancialPosition;
     }
 
+    // @Route(url = "call/automatic-report-financialposition/current")
+    // public List<HashMap<String, Object>> detailAutomaticReportPeriodic(VMJExchange vmjExchange) {
+    //     AutomaticReportFinancialPosition financialPositionLastYear = checkFinancialPositionReport();
+
+    //     AutomaticReportPeriodic periodic = financialPositionLastYear.getPeriodic();
+    //     String lastYear = Integer.toString(Integer.valueOf(periodic.getName()) - 1);
+    //     String twoYearsBefore = Integer.toString(Integer.valueOf(periodic.getName()) - 2);
+    //     HashMap<String, Object> dataTahun = getTahun(Integer.valueOf(lastYear));
+        
+    //     AutomaticReportFinancialPosition financialPositionTwoYearsBefore = new AutomaticReportFinancialPositionImpl(new AutomaticReportPeriodicImpl(twoYearsBefore));
+
+    //     List<AutomaticReportFinancialPosition> financialPositions = automaticReportFinancialPositionRepository.getAllObject("automaticreport_financialposition_impl");
+        
+    //     for (AutomaticReportFinancialPosition report : financialPositions) {
+    //         if (report.getPeriodic().getName().equals(twoYearsBefore)) {
+    //             financialPositionTwoYearsBefore = report;
+    //             break;
+    //         }
+    //     }
+
+    //     List<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
+    //     data.add(dataTahun);
+    //     data.addAll(getAset(financialPositionLastYear, financialPositionTwoYearsBefore));
+    //     data.addAll(getLiabilitas(financialPositionLastYear, financialPositionTwoYearsBefore));
+    //     data.addAll(getAsetNeto(financialPositionLastYear, financialPositionTwoYearsBefore));
+    //     data.add(getJumlahLiabilitasDanAsetNeto(financialPositionLastYear, financialPositionTwoYearsBefore));
+
+    //     return data;
+    // }
+
     @Route(url = "call/automatic-report-financialposition/current")
     public List<HashMap<String, Object>> detailAutomaticReportPeriodic(VMJExchange vmjExchange) {
         AutomaticReportFinancialPosition financialPositionLastYear = checkFinancialPositionReport();
 
         AutomaticReportPeriodic periodic = financialPositionLastYear.getPeriodic();
+        String currentYear = Integer.toString(Integer.valueOf(periodic.getName()));
         String lastYear = Integer.toString(Integer.valueOf(periodic.getName()) - 1);
-        String twoYearsBefore = Integer.toString(Integer.valueOf(periodic.getName()) - 2);
-        HashMap<String, Object> dataTahun = getTahun(Integer.valueOf(lastYear));
-        
-        AutomaticReportFinancialPosition financialPositionTwoYearsBefore = new AutomaticReportFinancialPositionImpl(new AutomaticReportPeriodicImpl(twoYearsBefore));
+        HashMap<String, Object> header = getTahun(Integer.valueOf(currentYear));
 
-        List<AutomaticReportFinancialPosition> financialPositions = automaticReportFinancialPositionRepository.getAllObject("automaticreport_financialposition_impl");
         
-        for (AutomaticReportFinancialPosition report : financialPositions) {
-            if (report.getPeriodic().getName().equals(twoYearsBefore)) {
-                financialPositionTwoYearsBefore = report;
-                break;
-            }
+        List<JournalEntry> entries = journalEntryRepository.getAllObject("automaticreport_journalentry_impl");
+
+        List<HashMap<String, Object>> journals = new ArrayList<HashMap<String, Object>>();
+        for (JournalEntry entry : entries) {
+            journals.add(entry.toHashMap());
         }
 
-        List<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
-        // data.add(dataTahun);
-        data.addAll(getAset(financialPositionLastYear, financialPositionTwoYearsBefore));
-        data.addAll(getLiabilitas(financialPositionLastYear, financialPositionTwoYearsBefore));
-        data.addAll(getAsetNeto(financialPositionLastYear, financialPositionTwoYearsBefore));
-        data.add(getJumlahLiabilitasDanAsetNeto(financialPositionLastYear, financialPositionTwoYearsBefore));
-        return data;
+        List<HashMap<String, Object>> tb = getPeriodicTrialBalanceFromJournals(journals, lastYear + "-12-31", currentYear + "-12-31", "BALANCESHEET");
+        tb.add(0, header);
+        
+        return tb;
+    }
+
+    @Route(url = "call/financialposition/export", fileName = "report-balancesheet.pdf", mimeType = "application/pdf")
+    public byte[] exportFinancialPositionReportToPdf(VMJExchange vmjExchange) throws Exception {
+        List<HashMap<String, Object>> data = detailAutomaticReportPeriodic(vmjExchange);
+
+        // transform into PDF report generic format
+        
+        return generateTabularPDFReport(data, "BALANCESHEET");
     }
 
     public HashMap<String, Object> getTahun(int tahun) {
@@ -316,25 +353,25 @@ public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorato
         asetNetoTidakTerikat.put("name", "Tidak Terikat");
         asetNetoTidakTerikat.put("amountLastYear", financialPositionLastYear.getAsetNetoTidakTerikat());
         asetNetoTidakTerikat.put("amountTwoYearsBefore", financialPositionTwoYearsBefore.getAsetNetoTidakTerikat());
-        asetNetoTidakTerikat.put("level", 0);
+        asetNetoTidakTerikat.put("level", 1);
 
         HashMap<String, Object> asetNetoTerikatTemporer = new HashMap<String, Object>();
         asetNetoTerikatTemporer.put("name", "Terikat Temporer");
         asetNetoTerikatTemporer.put("amountLastYear", financialPositionLastYear.getAsetNetoTerikatTemporer());
         asetNetoTerikatTemporer.put("amountTwoYearsBefore", financialPositionTwoYearsBefore.getAsetNetoTerikatTemporer());
-        asetNetoTerikatTemporer.put("level", 0);
+        asetNetoTerikatTemporer.put("level", 1);
 
         HashMap<String, Object> asetNetoTerikatPermanen = new HashMap<String, Object>();
         asetNetoTerikatPermanen.put("name", "Terikat Permanen");
         asetNetoTerikatPermanen.put("amountLastYear", financialPositionLastYear.getAsetNetoTerikatPermanen());
         asetNetoTerikatPermanen.put("amountTwoYearsBefore", financialPositionTwoYearsBefore.getAsetNetoTerikatPermanen());
-        asetNetoTerikatPermanen.put("level", 0);
+        asetNetoTerikatPermanen.put("level", 1);
 
         HashMap<String, Object> jumlahAsetNeto = new HashMap<String, Object>();
         jumlahAsetNeto.put("name", "Jumlah Aset Neto");
         jumlahAsetNeto.put("amountLastYear", financialPositionLastYear.getJumlahAsetNeto());
         jumlahAsetNeto.put("amountTwoYearsBefore", financialPositionTwoYearsBefore.getJumlahAsetNeto());
-        jumlahAsetNeto.put("level", 0);
+        jumlahAsetNeto.put("level", 1);
 
         dataAsetNeto.add(header);
         dataAsetNeto.add(asetNetoTidakTerikat);
