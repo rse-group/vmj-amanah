@@ -10,10 +10,12 @@ import aisco.automaticreport.core.AutomaticReportResourceDecorator;
 import aisco.automaticreport.core.AutomaticReportResourceComponent;
 import aisco.automaticreport.periodic.*;
 import aisco.financialreport.core.FinancialReport;
+import aisco.automaticreport.journalentry.JournalEntry;
 
 public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorator {
     protected RepositoryUtil<AutomaticReportActivityReport> AutomaticReportActivityReportRepository;
     protected RepositoryUtil<AutomaticReportPeriodic> automaticReportPeriodicRepository;
+    protected RepositoryUtil<JournalEntry> journalEntryRepository;
 
     public AutomaticReportResourceImpl(AutomaticReportResourceComponent record) {
         super(record);
@@ -21,20 +23,44 @@ public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorato
             aisco.automaticreport.activityreport.AutomaticReportActivityReportComponent.class);
         this.automaticReportPeriodicRepository = new RepositoryUtil<AutomaticReportPeriodic>(
             aisco.automaticreport.periodic.AutomaticReportPeriodicComponent.class);
+        this.journalEntryRepository = new RepositoryUtil<JournalEntry>(
+            aisco.automaticreport.journalentry.JournalEntryComponent.class);
     }
 
     @Route(url = "call/automatic-report-activity")
     public List<HashMap<String, Object>> saveAutomaticReportActivityReport(VMJExchange vmjExchange) {
-        List<AutomaticReportActivityReport> AutomaticReportActivityReport = checkActivityReport();
+        AutomaticReportPeriodic activePeriod = getActivePeriodic();
+        if (activePeriod == null) throw new InternalServerException("Periode aktif tidak ditemukan", 5002);
         
-        return transformListActivityToHashMap(AutomaticReportActivityReport);
+        String currentYear = Integer.toString(Integer.valueOf(activePeriod.getName()));
+        String lastYear = Integer.toString(Integer.valueOf(activePeriod.getName()) - 1);
+
+         List<JournalEntry> entries = journalEntryRepository.getAllObject("automaticreport_journalentry_impl");
+
+        List<HashMap<String, Object>> journals = new ArrayList<HashMap<String, Object>>();
+        for (JournalEntry entry : entries) {
+            journals.add(entry.toHashMap());
+        }
+
+        List<HashMap<String, Object>> trialBalance = getPeriodicTrialBalanceFromJournals(journals, lastYear + "-12-31", currentYear + "-12-31", "PROFITLOSS");
+        List<HashMap<String, Object>> res = transformTrialBalanceToProfitLoss(trialBalance);
+        
+        // Add report header, consists of fiscal year description
+        HashMap<String, Object> header = new HashMap<String, Object>();
+        header.put("name", "TAHUN");
+        header.put("level", 0);
+        header.put("tidakTerikat", currentYear);
+        header.put("terikatTemporer", lastYear);
+
+        res.add(0, header);
+        return res;
     }
 
     private List<AutomaticReportActivityReport> checkActivityReport() {
         AutomaticReportPeriodic activePeriodic = getActivePeriodic();
         if (activePeriodic == null) throw new InternalServerException("Periode aktif tidak ditemukan", 5002);
 
-        List<AutomaticReportActivityReport> activities = AutomaticReportActivityReportRepository.getAllObject("automaticreport_activityrepot_impl");
+        List<AutomaticReportActivityReport> activities = AutomaticReportActivityReportRepository.getAllObject("automaticreport_activityreport_impl");
         List<AutomaticReportActivityReport> activityReport = new ArrayList<AutomaticReportActivityReport>();
 
         for (AutomaticReportActivityReport report : activities) {
@@ -77,7 +103,7 @@ public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorato
 
     private AutomaticReportActivityReport createActivityReportNotBound(AutomaticReportPeriodic periodic) {
         List<FinancialReport> financialReports = financialReportRepository.getAllObject("financialreport_impl");
-        List<AutomaticReportActivityReport> activities = AutomaticReportActivityReportRepository.getAllObject("automaticreport_activity_impl");
+        List<AutomaticReportActivityReport> activities = AutomaticReportActivityReportRepository.getAllObject("automaticreport_activityreport_impl");
         String tahun = Integer.toString(Integer.valueOf(((AutomaticReportPeriodicImpl) periodic).name) - 1);
 
         String pembatasan = "TIDAK TERIKAT";
@@ -144,7 +170,7 @@ public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorato
 
     private AutomaticReportActivityReport createActivityReportTemporarilyBound(AutomaticReportPeriodic periodic) {
         List<FinancialReport> financialReports = financialReportRepository.getAllObject("financialreport_impl");
-        List<AutomaticReportActivityReport> activities = AutomaticReportActivityReportRepository.getAllObject("automaticreport_activity_impl");
+        List<AutomaticReportActivityReport> activities = AutomaticReportActivityReportRepository.getAllObject("automaticreport_activityreport_impl");
         String tahun = Integer.toString(Integer.valueOf(((AutomaticReportPeriodicImpl) periodic).name) - 1);
 
         String pembatasan = "TERIKAT TEMPORER";
@@ -197,7 +223,7 @@ public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorato
 
     private AutomaticReportActivityReport createActivityReportPermanentBound(AutomaticReportPeriodic periodic) {
         List<FinancialReport> financialReports = financialReportRepository.getAllObject("financialreport_impl");
-        List<AutomaticReportActivityReport> activities = AutomaticReportActivityReportRepository.getAllObject("automaticreport_activity_impl");
+        List<AutomaticReportActivityReport> activities = AutomaticReportActivityReportRepository.getAllObject("automaticreport_activityreport_impl");
         String tahun = Integer.toString(Integer.valueOf(((AutomaticReportPeriodicImpl) periodic).name) - 1);
 
         String pembatasan = "TERIKAT PERMANEN";
@@ -254,6 +280,26 @@ public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorato
         AutomaticReportActivityReportRepository.saveObject(AutomaticReportActivityReport);
 
         return AutomaticReportActivityReport;
+    }
+
+    private List<HashMap<String, Object>> transformTrialBalanceToProfitLoss(List<HashMap<String, Object>> accounts) {
+        List<HashMap<String, Object>> res = new ArrayList<HashMap<String, Object>>();
+
+        for (HashMap<String, Object> account : accounts) {
+            HashMap<String, Object> entry = new HashMap<String, Object>(account);
+
+            // TODO: refactor this to make all the financial report structure similar
+            entry.put("tidakTerikat", entry.get("amountLastYear"));
+            entry.put("terikatTemporer", entry.get("amountTwoYearsBefore"));
+            entry.put("terikatPermanen", null);
+            entry.put("jumlah", null);
+            entry.remove("amountTwoYearsBefore");
+            entry.remove("amountLastYear");
+
+            res.add(entry);
+        }
+
+        return res;
     }
 
     private List<HashMap<String, Object>> transformListActivityToHashMap(List<AutomaticReportActivityReport> activities) {
@@ -456,12 +502,15 @@ public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorato
         List<HashMap<String, Object>> dataAsetNeto = new ArrayList<HashMap<String, Object>>();
 
         HashMap<String, Object> perubahanAsetNeto = new HashMap<String, Object>();
+        perubahanAsetNeto.put("name", "Aset Neto");
+        perubahanAsetNeto.put("level", 0);
+
         perubahanAsetNeto.put("name", "Perubahan Aset Neto");
         perubahanAsetNeto.put("tidakTerikat", notBound.sumbangan + notBound.jasaLayanan + notBound.penghasilanInvestasiJangkaPanjang + notBound.penghasilanInvestasiLain + notBound.penghasilanNetoTerealisasikanDanBelumTerealisasikanDariIJP + notBound.lainLain - (notBound.bebanDanKerugianProgram + notBound.bebanDanKerugianPencarianDana + notBound.bebanDanKerugianManajemendanUmum + notBound.kerugianAktuarialDanKewajibanTahunan));
         perubahanAsetNeto.put("terikatTemporer", temporarilyBound.sumbangan + temporarilyBound.jasaLayanan + temporarilyBound.penghasilanInvestasiJangkaPanjang + temporarilyBound.penghasilanInvestasiLain + temporarilyBound.penghasilanNetoTerealisasikanDanBelumTerealisasikanDariIJP + temporarilyBound.lainLain - (temporarilyBound.bebanDanKerugianProgram + temporarilyBound.bebanDanKerugianPencarianDana + temporarilyBound.bebanDanKerugianManajemendanUmum + temporarilyBound.kerugianAktuarialDanKewajibanTahunan));
         perubahanAsetNeto.put("terikatPermanen", permanentBound.sumbangan + permanentBound.jasaLayanan + permanentBound.penghasilanInvestasiJangkaPanjang + permanentBound.penghasilanInvestasiLain + permanentBound.penghasilanNetoTerealisasikanDanBelumTerealisasikanDariIJP + permanentBound.lainLain - (permanentBound.bebanDanKerugianProgram + permanentBound.bebanDanKerugianPencarianDana + permanentBound.bebanDanKerugianManajemendanUmum + permanentBound.kerugianAktuarialDanKewajibanTahunan));
         perubahanAsetNeto.put("jumlah", (Integer) perubahanAsetNeto.get("tidakTerikat") + (Integer) perubahanAsetNeto.get("terikatTemporer") + (Integer) perubahanAsetNeto.get("terikatPermanen"));
-        perubahanAsetNeto.put("level", 0);
+        perubahanAsetNeto.put("level", 1);
 
         HashMap<String, Object> asetNetoAwalTahun = new HashMap<String, Object>();
         asetNetoAwalTahun.put("name", "Aset Neto Awal Tahun");
@@ -469,7 +518,7 @@ public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorato
         asetNetoAwalTahun.put("terikatTemporer", temporarilyBound.asetNetoAwalTahun);
         asetNetoAwalTahun.put("terikatPermanen", permanentBound.asetNetoAwalTahun);
         asetNetoAwalTahun.put("jumlah", (Integer) asetNetoAwalTahun.get("tidakTerikat") + (Integer) asetNetoAwalTahun.get("terikatTemporer") + (Integer) asetNetoAwalTahun.get("terikatPermanen"));
-        asetNetoAwalTahun.put("level", 0);
+        asetNetoAwalTahun.put("level", 1);
 
         HashMap<String, Object> asetNetoAkhirTahun = new HashMap<String, Object>();
         asetNetoAkhirTahun.put("name", "Aset Neto Akhir Tahun");
@@ -477,7 +526,7 @@ public class AutomaticReportResourceImpl extends AutomaticReportResourceDecorato
         asetNetoAkhirTahun.put("terikatTemporer", (Integer) perubahanAsetNeto.get("terikatTemporer") - temporarilyBound.asetNetoAwalTahun);
         asetNetoAkhirTahun.put("terikatPermanen", (Integer) perubahanAsetNeto.get("terikatPermanen") - permanentBound.asetNetoAwalTahun);
         asetNetoAkhirTahun.put("jumlah", (Integer) asetNetoAkhirTahun.get("tidakTerikat") + (Integer) asetNetoAkhirTahun.get("terikatTemporer") + (Integer) asetNetoAkhirTahun.get("terikatPermanen"));
-        asetNetoAkhirTahun.put("level", 0);
+        asetNetoAkhirTahun.put("level", 1);
 
         dataAsetNeto.add(perubahanAsetNeto);
         dataAsetNeto.add(asetNetoAwalTahun);

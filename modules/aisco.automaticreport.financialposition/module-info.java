@@ -7,6 +7,7 @@ module aisco.automaticreport.financialposition {
     requires transitive aisco.automaticreport.core;
     requires aisco.financialreport.core;
     requires aisco.automaticreport.periodic;
+    requires aisco.automaticreport.journalentry;
 
     requires vmj.hibernate.integrator;
 

@@ -40,10 +40,23 @@ public abstract class ChartOfAccountComponent implements ChartOfAccount {
 	public abstract String getIsVisible();
 	public abstract void setIsVisible(String isVisible);
 
+	public abstract Integer getParentId();
+	public abstract void setParentId(int parentId);
+	
+	public abstract Integer getLevel();
+	public abstract void setLevel(int level);
+
+	public abstract boolean getIsRestricted();
+	public abstract void setIsRestricted(boolean isRestricted);
+
+	public abstract Integer getCashflowType();
+	public abstract void setCashflowType(int cashflowType);
+
 	@Override
 	public String toString() {
 		return "ChartOfAccount [id=" + getId() + ", name=" + getName() + ", description=" + getDescription() + ", isVisible="
-				+ getIsVisible() + "]";
+				+ getIsVisible() + ", level="
+				+ getLevel() + ", ]";
 	}
 
 	public HashMap<String, Object> toHashMap() {
@@ -54,6 +67,8 @@ public abstract class ChartOfAccountComponent implements ChartOfAccount {
         chartOfAccountMap.put("name", getName());
         chartOfAccountMap.put("description", getDescription());
         chartOfAccountMap.put("isVisible", getIsVisible());
+		chartOfAccountMap.put("isRestricted", getIsRestricted());
+		chartOfAccountMap.put("cashflowType", getCashflowType());
         return chartOfAccountMap;
     }
 }

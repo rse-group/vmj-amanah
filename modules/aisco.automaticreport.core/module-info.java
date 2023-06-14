@@ -7,4 +7,5 @@ module aisco.automaticreport.core {
     requires java.logging;
     requires vmj.routing.route;
     requires vmj.hibernate.integrator;
+    requires com.github.librepdf.openpdf;
 }

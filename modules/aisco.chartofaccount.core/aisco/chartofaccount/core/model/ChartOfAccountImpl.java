@@ -16,6 +16,10 @@ public class ChartOfAccountImpl extends ChartOfAccountComponent {
     public String name;
     public String description;
     public String isVisible;
+	public Integer parentId;
+	public Integer level;
+	public boolean isRestricted;
+	public Integer cashflowType;
 
     public ChartOfAccountImpl(int code, String name, String description, String isVisible) {
 		Random r = new Random();
@@ -74,4 +78,37 @@ public class ChartOfAccountImpl extends ChartOfAccountComponent {
 	public void setIsVisible(String isVisible) {
 		this.isVisible = isVisible;
 	}
+
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
+	}
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public boolean getIsRestricted() {
+		return isRestricted;
+	}
+
+	public void setIsRestricted(boolean isRestricted) {
+		this.isRestricted = isRestricted;
+	}
+
+	public Integer getCashflowType() {
+		return cashflowType;
+	}
+
+	public void setCashflowType(int cashflowType) {
+		this.cashflowType = cashflowType;
+	}
+
 }

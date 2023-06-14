@@ -6,7 +6,7 @@
 	"Income": ["aisco.financialreport.income"],
 	"Expense": ["aisco.financialreport.expense"],
 	"JournalReport": ["aisco.automaticreport.core","aisco.chartofaccount.core"],
-	"PSAK45": ["aisco.automaticreport.twolevel", "aisco.automaticreport.periodic"],
+	"PSAK45": ["aisco.automaticreport.journalentry", "aisco.automaticreport.twolevel", "aisco.automaticreport.periodic"],
 	"FinancialPosition": ["aisco.automaticreport.financialposition"],
 	"ActivityReport": ["aisco.automaticreport.activityreport"],
 	"Periodic": ["aisco.automaticreport.periodic"],
