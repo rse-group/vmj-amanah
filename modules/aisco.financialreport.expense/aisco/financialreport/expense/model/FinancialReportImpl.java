@@ -16,10 +16,12 @@ public class FinancialReportImpl extends FinancialReportDecorator {
 
     public FinancialReportImpl(){
         super();
+        this.objectName = FinancialReportImpl.class.getName();
     }
     
     public FinancialReportImpl(aisco.financialreport.core.FinancialReportImpl financialReport) {
-        super((FinancialReportComponent) financialReport);
+        super((FinancialReportComponent) financialReport, FinancialReportImpl.class.getName());
+        this.objectName = FinancialReportImpl.class.getName();
     }
     
     public FinancialReportImpl(int id, aisco.financialreport.core.FinancialReportImpl financialReport) {

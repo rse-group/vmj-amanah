@@ -29,6 +29,7 @@ public class FinancialReportImpl extends FinancialReportComponent {
         this.description = description;
         this.program = program;
         this.coa = coa;
+        this.objectName = FinancialReportImpl.class.getName();
     }
 
     public FinancialReportImpl(int id, String datestamp, long amount, String description, Program program, ChartOfAccount coa) {
@@ -38,6 +39,7 @@ public class FinancialReportImpl extends FinancialReportComponent {
         this.description = description;
         this.program = program;
         this.coa = coa;
+        this.objectName = FinancialReportImpl.class.getName();
     }
 
     public FinancialReportImpl() {
@@ -46,5 +48,6 @@ public class FinancialReportImpl extends FinancialReportComponent {
         this.datestamp = "";
         this.amount = 0;
         this.description = "";
+        this.objectName = FinancialReportImpl.class.getName();
     }
 }

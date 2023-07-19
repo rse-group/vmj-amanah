@@ -18,6 +18,10 @@ import aisco.program.core.ProgramDecorator;
 import prices.auth.vmj.annotations.Restricted;
 
 public class ProgramResourceImpl extends ProgramResourceDecorator {
+	
+	public ProgramResourceImpl(ProgramResourceComponent record) {
+        super(record);
+    }
 
     @Restricted(permissionName="CreateOperational")
     @Route(url = "call/operational/save")
@@ -37,7 +41,7 @@ public class ProgramResourceImpl extends ProgramResourceDecorator {
         String partner = "";
         String logoUrl = "";
         String executionDate = "";
-        Program program = ProgramFactory.createProgram("aisco.program.activity.ProgramImpl", name, description, target, partner, logoUrl, executionDate);
+        Program program = ProgramFactory.createProgram("aisco.program.core.ProgramImpl", name, description, target, partner, logoUrl, executionDate);
         Program programOperational = ProgramFactory.createProgram("aisco.program.operational.ProgramImpl", program);
         return programOperational;
     }
@@ -95,4 +99,5 @@ public class ProgramResourceImpl extends ProgramResourceDecorator {
         programRepository.deleteObject(id);
         return getAllProgram(vmjExchange);
     }
+
 }

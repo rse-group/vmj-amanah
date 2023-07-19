@@ -31,6 +31,8 @@ public abstract class FinancialReportComponent implements FinancialReport {
     protected Program program;
     @ManyToOne(targetEntity=aisco.chartofaccount.core.ChartOfAccountComponent.class)
     protected ChartOfAccount coa;
+    
+    protected String objectName = FinancialReportComponent.class.getName();
 
     public int getId() {
         return this.id;
