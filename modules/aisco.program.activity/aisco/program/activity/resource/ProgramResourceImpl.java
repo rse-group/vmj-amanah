@@ -37,14 +37,14 @@ public class ProgramResourceImpl extends ProgramResourceComponent {
     @Route(url="call/activity/update")
     public HashMap<String, Object> updateProgram(VMJExchange vmjExchange) {
         String idStr = (String) vmjExchange.getRequestBodyForm("id");
-        int id = Integer.parseInt(idStr);
+        UUID id = UUID.fromString(idStr);
         Program program = programRepository.getObject(id);
         program = updateProgram(vmjExchange, id);
         programRepository.updateObject(program);
         return program.toHashMap();
     }
 
-    public Program updateProgram(VMJExchange vmjExchange, int id) {
+    public Program updateProgram(VMJExchange vmjExchange, UUID id) {
         Program program = programRepository.getObject(id);
         program.setName((String) vmjExchange.getRequestBodyForm("name"));
         program.setDescription((String) vmjExchange.getRequestBodyForm("description"));
@@ -58,7 +58,7 @@ public class ProgramResourceImpl extends ProgramResourceComponent {
     @Route(url="call/activity/detail")
     public HashMap<String, Object> getProgram(VMJExchange vmjExchange) {
         String idStr = vmjExchange.getGETParam("id");
-        int id = Integer.parseInt(idStr);
+        UUID id = UUID.fromString(idStr);
         Program program = programRepository.getObject(id);
         System.out.println(program);
         return program.toHashMap();
@@ -84,7 +84,7 @@ public class ProgramResourceImpl extends ProgramResourceComponent {
     @Route(url="call/activity/delete")
     public List<HashMap<String,Object>> deleteProgram(VMJExchange vmjExchange) {
         String idStr = (String) vmjExchange.getRequestBodyForm("id");
-        int id = Integer.parseInt(idStr);
+        UUID id = UUID.fromString(idStr);
         programRepository.deleteObject(id);
         return getAllProgram(vmjExchange);
     }

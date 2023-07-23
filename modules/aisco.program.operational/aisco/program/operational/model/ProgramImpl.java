@@ -28,7 +28,7 @@ public class ProgramImpl extends ProgramDecorator {
         this.objectName = ProgramImpl.class.getName();
     }
 
-    public ProgramImpl(int id, ProgramComponent record) {
+    public ProgramImpl(UUID id, ProgramComponent record) {
         super(id, record);
     }
 

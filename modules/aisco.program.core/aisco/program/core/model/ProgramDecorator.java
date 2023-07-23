@@ -14,19 +14,17 @@ public abstract class ProgramDecorator extends ProgramComponent{
     public ProgramDecorator(ProgramComponent record, String objectName) {
         this.record = record;
         this.record.objectName = objectName;
-        Random r = new Random();
-		this.idProgram = Math.abs(r.nextInt());
+		this.idProgram = UUID.randomUUID();
     }
 
-    public ProgramDecorator(int idProgram, ProgramComponent record) {
+    public ProgramDecorator(UUID idProgram, ProgramComponent record) {
         this.idProgram = idProgram;
         this.record = record;
     }
 
     public ProgramDecorator() {
         super();
-        Random r = new Random();
-		this.idProgram = Math.abs(r.nextInt());
+        this.idProgram = UUID.randomUUID();
     }
 
     public String getName() {

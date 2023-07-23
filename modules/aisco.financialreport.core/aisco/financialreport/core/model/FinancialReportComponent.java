@@ -22,7 +22,7 @@ import aisco.chartofaccount.core.*;
 public abstract class FinancialReportComponent implements FinancialReport {
 
     @Id
-    protected int id;
+    protected UUID id;
     protected String datestamp;
     protected long amount;
     protected String description;
@@ -34,11 +34,11 @@ public abstract class FinancialReportComponent implements FinancialReport {
     
     protected String objectName = FinancialReportComponent.class.getName();
 
-    public int getId() {
+    public UUID getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -8,8 +8,18 @@ import javax.persistence.Table;
 @Table(name = "program_impl")
 public class ProgramImpl extends ProgramComponent {
 	public ProgramImpl(String name, String description, String target, String partner, String logoUrl, String executionDate) {
-        Random r = new Random();
-		this.idProgram = Math.abs(r.nextInt());
+		this.idProgram = UUID.randomUUID();
+        this.name = name;
+        this.description = description;
+        this.target = target;
+        this.partner = partner;
+        this.logoUrl = logoUrl;
+        this.executionDate = executionDate;
+        this.objectName = ProgramImpl.class.getName();
+    }
+	
+	public ProgramImpl(UUID idProgram, String name, String description, String target, String partner, String logoUrl, String executionDate) {
+		this.idProgram = idProgram;
         this.name = name;
         this.description = description;
         this.target = target;
@@ -20,8 +30,7 @@ public class ProgramImpl extends ProgramComponent {
     }
 
     public ProgramImpl() {
-    	Random r = new Random();
-		this.idProgram = Math.abs(r.nextInt());
+    	this.idProgram = UUID.randomUUID();
         this.name = "";
         this.description = "";
         this.target = "";

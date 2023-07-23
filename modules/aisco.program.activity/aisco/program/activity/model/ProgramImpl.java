@@ -17,8 +17,7 @@ import javax.persistence.Column;
 public class ProgramImpl extends ProgramComponent {
 	
 	public ProgramImpl(String name, String description, String target, String partner, String logoUrl, String executionDate) {
-		Random r = new Random();
-		this.idProgram = Math.abs(r.nextInt());
+		this.idProgram = UUID.randomUUID();
         this.name = name;
         this.description = description;
         this.target = target;
@@ -29,8 +28,7 @@ public class ProgramImpl extends ProgramComponent {
     }
 
     public ProgramImpl() {
-    	Random r = new Random();
-		this.idProgram = Math.abs(r.nextInt());
+    	this.idProgram = UUID.randomUUID();
         this.name = "";
         this.description = "";
         this.target = "";

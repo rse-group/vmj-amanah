@@ -15,7 +15,7 @@ import javax.persistence.Table;
 public abstract class ProgramComponent implements Program {
 	
 	@Id
-	public int idProgram;
+	public UUID idProgram;
 	public String name;
 	public String description;
 	public String target;
@@ -25,12 +25,12 @@ public abstract class ProgramComponent implements Program {
 	public String objectName;
 
 	@Override
-	public void setIdProgram(int idProgram) {
+	public void setIdProgram(UUID idProgram) {
 		this.idProgram = idProgram;
 	}
 
 	@Override
-	public int getIdProgram() {
+	public UUID getIdProgram() {
 		return this.idProgram;
 	}
 

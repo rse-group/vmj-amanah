@@ -19,12 +19,11 @@ public abstract class FinancialReportDecorator extends FinancialReportComponent 
 
     public FinancialReportDecorator(FinancialReportComponent record, String objectName) {
         this.record = record;
-        Random r = new Random();
-		this.id = Math.abs(r.nextInt());
+		this.id = UUID.randomUUID();
 		this.record.objectName = objectName;
     }
 
-    public FinancialReportDecorator(int id, FinancialReportComponent record) {
+    public FinancialReportDecorator(UUID id, FinancialReportComponent record) {
         this.id = id;
         this.record = record;
     }
@@ -32,8 +31,7 @@ public abstract class FinancialReportDecorator extends FinancialReportComponent 
     public FinancialReportDecorator() {
         super();
         this.record = new FinancialReportImpl();
-        Random r = new Random();
-		this.id = Math.abs(r.nextInt());
+        this.id = UUID.randomUUID();
     }
 
     public FinancialReportComponent getRecord() {
