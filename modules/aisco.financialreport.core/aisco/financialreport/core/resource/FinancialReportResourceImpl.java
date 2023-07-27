@@ -108,7 +108,7 @@ public class FinancialReportResourceImpl extends FinancialReportResourceComponen
 
     @Route(url="call/financialreport/list")
     public List<HashMap<String,Object>> getAllFinancialReport(VMJExchange vmjExchange) {
-        List<FinancialReport> financialReportList = financialReportRepository.getAllObject("financialreport_impl");
+        List<FinancialReport> financialReportList = financialReportRepository.getAllObject("financialreport_impl", FinancialReportImpl.class.getName());
         return transformFinancialReportListToHashMap(financialReportList);
     }
 
