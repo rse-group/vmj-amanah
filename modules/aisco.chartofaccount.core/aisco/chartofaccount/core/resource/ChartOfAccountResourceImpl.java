@@ -63,7 +63,7 @@ public class ChartOfAccountResourceImpl extends ChartOfAccountResourceComponent 
 
     @Route(url="call/chart-of-account/list")
     public List<HashMap<String,Object>> getAllChartOfAccount(VMJExchange vmjExchange) {
-        List<ChartOfAccount> chartOfAccountList = chartOfAccountRepository.getAllObject("chartofaccount_impl", ChartOfAccount.class.getName());
+        List<ChartOfAccount> chartOfAccountList = chartOfAccountRepository.getAllObject("chartofaccount_impl", ChartOfAccountImpl.class.getName());
         return transformChartOfAccountListToHashMap(chartOfAccountList);
     }
 
