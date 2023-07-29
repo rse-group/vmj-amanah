@@ -23,7 +23,7 @@ public class DonationResourceImpl extends DonationResourceComponent {
     @Route(url = "call/donation/save")
     public List<HashMap<String, Object>> saveDonation(VMJExchange vmjExchange) {
         Donation donation = createDonation(vmjExchange);
-        donationDao.saveObject(donation);
+        donationRepository.saveObject(donation);
         System.out.println(donation);
         return getAllDonation(vmjExchange);
     }
@@ -40,21 +40,25 @@ public class DonationResourceImpl extends DonationResourceComponent {
 
         Program program = null;
         if (idProgramStr != null) {
-            int idProgram = Integer.parseInt(idProgramStr);
-            program = donationDao.getProxyObject(ProgramComponent.class, idProgram);
+        	UUID idProgram = UUID.fromString(idProgramStr);
+            program = donationRepository.getProxyObject(ProgramComponent.class, idProgram);
         }
-        ChartOfAccount coa = donationDao.getProxyObject(ChartOfAccountComponent.class, DONATION_COA_CODE);
+        ChartOfAccount coa = donationRepository.getProxyObject(ChartOfAccountComponent.class, DONATION_COA_CODE);
 
 		FinancialReport financialReport = FinancialReportFactory.createFinancialReport("aisco.financialreport.core.FinancialReportImpl", date, amount, description, program, coa);
 		FinancialReport income = FinancialReportFactory.createFinancialReport("aisco.financialreport.income.FinancialReportImpl", financialReport, paymentMethod);
 		return income;
 	}
-
+    
     public Donation createDonation(VMJExchange vmjExchange) {
-        return createDonation(vmjExchange, (new Random()).nextInt());
+        return createDonation(vmjExchange, UUID.randomUUID());
     }
 
-    public Donation createDonation(VMJExchange vmjExchange, int id) {
+    public Donation createDonation(VMJExchange vmjExchange, String objectName) {
+        return createDonation(vmjExchange, UUID.randomUUID(), objectName);
+    }
+
+    public Donation createDonation(VMJExchange vmjExchange, UUID id, String objectName) {
         Map<String, Object> payload = vmjExchange.getPayload();
         String name = (String) payload.get("name");
         String email = (String) payload.get("email");
@@ -64,8 +68,32 @@ public class DonationResourceImpl extends DonationResourceComponent {
         String idProgramStr = (String) payload.get("idprogram");
         Program program = null;
         if (idProgramStr != null) {
-            int idProgram = Integer.parseInt(idProgramStr);
-            program = donationDao.getProxyObject(ProgramComponent.class, idProgram);
+        	UUID idProgram = UUID.fromString(idProgramStr);
+            program = donationRepository.getProxyObject(ProgramComponent.class, idProgram);
+        }
+        String date = (String) payload.get("date");
+        String amountStr = (String) payload.get("amount");
+        long amount = Long.parseLong(amountStr);
+        if (amount < 0) {
+            throw new FieldValidationException("Nilai amount harus lebih besar dari 0");
+        }
+        Donation donation = DonationFactory.createDonation("aisco.donation.core.DonationImpl", id, name, email, phone,
+                amount, paymentMethod, date, program, description, objectName);
+        return donation;
+    }
+    
+    public Donation createDonation(VMJExchange vmjExchange, UUID id) {
+        Map<String, Object> payload = vmjExchange.getPayload();
+        String name = (String) payload.get("name");
+        String email = (String) payload.get("email");
+        String phone = (String) payload.get("phone");
+        String description = (String) payload.get("description");
+        String paymentMethod = (String) payload.get("paymentMethod");
+        String idProgramStr = (String) payload.get("idprogram");
+        Program program = null;
+        if (idProgramStr != null) {
+        	UUID idProgram = UUID.fromString(idProgramStr);
+            program = donationRepository.getProxyObject(ProgramComponent.class, idProgram);
         }
         String date = (String) payload.get("date");
         String amountStr = (String) payload.get("amount");
@@ -82,17 +110,17 @@ public class DonationResourceImpl extends DonationResourceComponent {
     @Route(url = "call/donation/update")
     public HashMap<String, Object> updateDonation(VMJExchange vmjExchange) {
         String idStr = (String) vmjExchange.getRequestBodyForm("id");
-        int id = Integer.parseInt(idStr);
+        UUID id = UUID.fromString(idStr);
         Donation donation = createDonation(vmjExchange, id);
-        donationDao.updateObject(donation);
+        donationRepository.updateObject(donation);
         return donation.toHashMap();
     }
 
     @Route(url = "call/donation/detail")
     public HashMap<String, Object> getDonation(VMJExchange vmjExchange) {
         String idStr = vmjExchange.getGETParam("id");
-        int id = Integer.parseInt(idStr);
-        Donation donation = donationDao.getObject(id);
+        UUID id = UUID.fromString(idStr);
+        Donation donation = donationRepository.getObject(id);
         System.out.println(donation);
         try {
             return donation.toHashMap();
@@ -105,7 +133,7 @@ public class DonationResourceImpl extends DonationResourceComponent {
 
     @Route(url = "call/donation/list")
     public List<HashMap<String, Object>> getAllDonation(VMJExchange vmjExchange) {
-        List<Donation> donationList = donationDao.getAllObject("donation_impl");
+        List<Donation> donationList = donationRepository.getAllObject("donation_impl", DonationImpl.class.getName());
         return transformDonationListToHashMap(donationList);
     }
 
@@ -123,8 +151,8 @@ public class DonationResourceImpl extends DonationResourceComponent {
     @Route(url = "call/donation/delete")
     public List<HashMap<String, Object>> deleteDonation(VMJExchange vmjExchange) {
         String idStr = (String) vmjExchange.getRequestBodyForm("id");
-        int id = Integer.parseInt(idStr);
-        donationDao.deleteObject(id);
+        UUID id = UUID.fromString(idStr);
+        donationRepository.deleteObject(id);
         return getAllDonation(vmjExchange);
     }
 }

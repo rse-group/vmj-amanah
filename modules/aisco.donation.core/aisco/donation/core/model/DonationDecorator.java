@@ -4,6 +4,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.MappedSuperclass;
 
 import java.util.Random;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 
@@ -17,16 +18,16 @@ public abstract class DonationDecorator extends DonationComponent {
 	
 	public DonationDecorator ()
     {
-        this.id = (new Random()).nextInt();
+        this.id = UUID.randomUUID();
     }
 
-    public DonationDecorator(int id, DonationComponent record) {
+    public DonationDecorator(UUID id, DonationComponent record) {
         this.id = id;
         this.record = record;
     }
 	
 	public DonationDecorator(DonationComponent record) {
-        this(( new Random()).nextInt(), record);
+        this(UUID.randomUUID(), record);
     }
 	
 	public DonationComponent getRecord() { return this.record; }

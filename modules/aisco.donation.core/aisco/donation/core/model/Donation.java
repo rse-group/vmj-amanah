@@ -6,8 +6,8 @@ import aisco.financialreport.core.FinancialReportComponent;
 import java.util.*;
 
 public interface Donation {
-    public int getId();
-    public void setId(int id);
+    public UUID getId();
+    public void setId(UUID id);
 	
 	public String getName();
     public void setName(String name);
