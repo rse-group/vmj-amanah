@@ -20,6 +20,7 @@ public class DonationImpl extends DonationComponent {
     protected long amount;
     protected String paymentMethod;
 	protected String date;
+	protected String objectName;
 	
 	@ManyToOne
 	protected ProgramComponent program;
@@ -31,7 +32,7 @@ public class DonationImpl extends DonationComponent {
 	
 	public DonationImpl ()
     {
-        this.id = (new Random()).nextInt();
+        this.id = UUID.randomUUID();
 		this.name = "";
         this.email = "";
         this.phone = "";
@@ -41,9 +42,10 @@ public class DonationImpl extends DonationComponent {
 		this.program = null;
 		this.income = null;
 		this.description = "";
+		this.objectName = DonationImpl.class.getName();
     }
-
-    public DonationImpl (int id, String name, String email, String phone, long amount, String paymentMethod, String date, ProgramComponent program, String description)
+    
+    public DonationImpl (UUID id, String name, String email, String phone, long amount, String paymentMethod, String date, ProgramComponent program, String description, String objectName)
     {
         this.id = id;
 		this.name = name;
@@ -55,11 +57,17 @@ public class DonationImpl extends DonationComponent {
 		this.income = null; // will be added later on
 		this.program = program;
 		this.description = description;
+		this.objectName = objectName;
     }
 	
 	public DonationImpl (String name, String email, String phone, long amount, String paymentMethod, String date, ProgramComponent program, String description)
     {
-        this((new Random()).nextInt(), name, email, phone, amount, paymentMethod, date, program, description);
+        this(UUID.randomUUID(), name, email, phone, amount, paymentMethod, date, program, description, DonationImpl.class.getName());
+    }
+	
+	public DonationImpl (String name, String email, String phone, long amount, String paymentMethod, String date, ProgramComponent program, String description, String objectName)
+    {
+        this(UUID.randomUUID(), name, email, phone, amount, paymentMethod, date, program, description, objectName);
     }
 	
     public String getName() { return name; }

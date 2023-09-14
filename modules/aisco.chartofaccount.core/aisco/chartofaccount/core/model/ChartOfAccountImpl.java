@@ -16,6 +16,7 @@ public class ChartOfAccountImpl extends ChartOfAccountComponent {
     public String name;
     public String description;
     public String isVisible;
+    public String objectName;
 
     public ChartOfAccountImpl(int code, String name, String description, String isVisible) {
 		Random r = new Random();
@@ -24,6 +25,17 @@ public class ChartOfAccountImpl extends ChartOfAccountComponent {
         this.name = name;
         this.description = description;
         this.isVisible = isVisible;
+        this.objectName = ChartOfAccountImpl.class.getName();
+    }
+    
+    public ChartOfAccountImpl(int code, String name, String description, String isVisible, String objectName) {
+		Random r = new Random();
+		this.id = Math.abs(r.nextInt());
+		this.code = code;
+        this.name = name;
+        this.description = description;
+        this.isVisible = isVisible;
+        this.objectName = objectName;
     }
 
 	public ChartOfAccountImpl(int id, int code, String name, String description, String isVisible) {
@@ -41,6 +53,7 @@ public class ChartOfAccountImpl extends ChartOfAccountComponent {
         this.name = "";
         this.description = "";
         this.isVisible = "";
+        this.objectName = ChartOfAccountImpl.class.getName();
     }
 
     public int getCode() {

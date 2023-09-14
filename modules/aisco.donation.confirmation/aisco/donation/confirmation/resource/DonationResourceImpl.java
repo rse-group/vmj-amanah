@@ -33,7 +33,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
     @Route(url = "call/confirmation/save-full")
     public List<HashMap<String, Object>> saveDonation(VMJExchange vmjExchange) {
         Donation donation = createDonation(vmjExchange);
-        donationDao.saveObject(donation);
+        donationRepository.saveObject(donation);
         System.out.println(donation);
         return getAllDonation(vmjExchange);
     }
@@ -46,7 +46,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
                 Arrays.asList(new HashMap<String, byte[]>(), "", "", "", "", "", new Integer(0), "", ""));
         vmjExchange.payloadChecker(keys, types, false);
         Donation donation = createDonation(vmjExchange);
-        donationDao.saveObject(donation);
+        donationRepository.saveObject(donation);
         System.out.println(donation);
         return donation.toHashMap();
     }
@@ -73,14 +73,43 @@ public class DonationResourceImpl extends DonationResourceDecorator {
             throw new FileNotFoundException();
         }
 
-        Donation donation = record.createDonation(vmjExchange);
+        Donation donation = record.createDonation(vmjExchange, DonationImpl.class.getName());
         Donation donationConfirmation = DonationFactory.createDonation(
                 "aisco.donation.confirmation.DonationImpl", donation, proofOfTransfer, senderAccount,
                 recieverAccount, status);
         return donationConfirmation;
     }
+    
+    public Donation createDonation(VMJExchange vmjExchange, String objectName) {
+        Map<String, Object> payload = vmjExchange.getPayload();
+        String status = "PENDING";
+        String senderAccount = "";
+        String recieverAccount = "";
+        String proofOfTransfer = "";
 
-    public Donation createDonation(VMJExchange vmjExchange, int id) {
+        Map<String, byte[]> uploadedFile = (HashMap<String, byte[]>) payload.get("proofoftransfer");
+        proofOfTransfer = "data:" + (new String(uploadedFile.get("type"))).split(" ")[1].replaceAll("\\s+", "")
+                + ";base64," + Base64.getEncoder().encodeToString(uploadedFile.get("content"));
+        int fileSize = uploadedFile.get("content").length;
+        if (fileSize > 4000000)
+            throw new FileSizeException(4.0, ((double) fileSize) / 1000000, "megabyte");
+        try {
+            String type = URLConnection
+                    .guessContentTypeFromStream(new ByteArrayInputStream(uploadedFile.get("content")));
+            if (type == null || !type.startsWith("image"))
+                throw new FileTypeException("image");
+        } catch (IOException e) {
+            throw new FileNotFoundException();
+        }
+
+        Donation donation = record.createDonation(vmjExchange, DonationImpl.class.getName());
+        Donation donationConfirmation = DonationFactory.createDonation(
+                "aisco.donation.confirmation.DonationImpl", donation, proofOfTransfer, senderAccount,
+                recieverAccount, status, objectName);
+        return donationConfirmation;
+    }
+
+    public Donation createDonation(VMJExchange vmjExchange, UUID id) {
         Map<String, Object> payload = vmjExchange.getPayload();
         String status = "PENDING";
         String senderAccount = "";
@@ -101,12 +130,42 @@ public class DonationResourceImpl extends DonationResourceDecorator {
             throw new FileNotFoundException();
         }
 
-        Donation savedDonation = donationDao.getObject(id);
-        int recordId = (((DonationDecorator) savedDonation).getRecord()).getId();
+        Donation savedDonation = donationRepository.getObject(id);
+        UUID recordId = (((DonationDecorator) savedDonation).getRecord()).getId();
         Donation donation = record.createDonation(vmjExchange, recordId);
         Donation donationConfirmation = DonationFactory.createDonation(
                 "aisco.donation.confirmation.DonationImpl", id, donation, proofOfTransfer,
-                senderAccount, recieverAccount, status);
+                senderAccount, recieverAccount, status, DonationImpl.class.getName());
+        return donationConfirmation;
+    }
+    
+    public Donation createDonation(VMJExchange vmjExchange, UUID id, String objectName) {
+        Map<String, Object> payload = vmjExchange.getPayload();
+        String status = "PENDING";
+        String senderAccount = "";
+        String recieverAccount = "";
+        String proofOfTransfer = "";
+
+        Map<String, byte[]> uploadedFile = (HashMap<String, byte[]>) payload.get("proofoftransfer");
+        proofOfTransfer = Base64.getEncoder().encodeToString(uploadedFile.get("content"));
+        int fileSize = uploadedFile.get("content").length;
+        if (fileSize > 4000000)
+            throw new FileSizeException(4.0, ((double) fileSize) / 1000000, "megabyte");
+        try {
+            String type = URLConnection
+                    .guessContentTypeFromStream(new ByteArrayInputStream(uploadedFile.get("content")));
+            if (!type.startsWith("image"))
+                throw new FileTypeException("image");
+        } catch (IOException e) {
+            throw new FileNotFoundException();
+        }
+
+        Donation savedDonation = donationRepository.getObject(id);
+        UUID recordId = (((DonationDecorator) savedDonation).getRecord()).getId();
+        Donation donation = record.createDonation(vmjExchange, recordId);
+        Donation donationConfirmation = DonationFactory.createDonation(
+                "aisco.donation.confirmation.DonationImpl", id, donation, proofOfTransfer,
+                senderAccount, recieverAccount, status, objectName);
         return donationConfirmation;
     }
 
@@ -129,20 +188,20 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         List<Object> types = new ArrayList<Object>(Arrays.asList("", ""));
         vmjExchange.payloadChecker(keys, types, false);
         Donation donation = updateStatusConfirmationDonation(vmjExchange);
-        donationDao.updateObject(donation);
+        donationRepository.updateObject(donation);
         return donation.toHashMap();
     }
 
     private Donation updateStatusConfirmationDonation(VMJExchange vmjExchange) {
         Map<String, Object> payload = vmjExchange.getPayload();
         String idStr = (String) payload.get("id");
-        int id = Integer.parseInt(idStr);
+        UUID id = UUID.fromString(idStr);
         String idStatusStr = (String) payload.get("status");
         int idStatus = Integer.parseInt(idStatusStr);
         Status status = Status.findStatusById(idStatus);
         if (status == null)
             throw new ExchangeException("Status dengan id " + idStatus + " tidak ditemukan");
-        Donation savedDonation = donationDao.getObject(id);
+        Donation savedDonation = donationRepository.getObject(id);
         if (savedDonation.getIncome() != null)
             throw new ExchangeException("Konfirmasi donasi dengan id " + id + " sudah mempunyai income");
         if (status.getStatusName().equals("BERHASIL")) {
@@ -158,10 +217,10 @@ public class DonationResourceImpl extends DonationResourceDecorator {
     public HashMap<String, Object> updateDonation(VMJExchange vmjExchange) {
         Map<String, Object> payload = vmjExchange.getPayload();
         String idStr = (String) payload.get("id");
-        int id = Integer.parseInt(idStr);
-        Donation donation = donationDao.getObject(id);
+        UUID id = UUID.fromString(idStr);
+        Donation donation = donationRepository.getObject(id);
         donation = createDonation(vmjExchange, id);
-        donationDao.updateObject(donation);
+        donationRepository.updateObject(donation);
         return donation.toHashMap();
     }
 
@@ -172,7 +231,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
 
     @Route(url = "call/confirmation/list")
     public List<HashMap<String, Object>> getAllDonation(VMJExchange vmjExchange) {
-        List<Donation> donationList = donationDao.getAllObject("donation_confirmation");
+        List<Donation> donationList = donationRepository.getAllObject("donation_confirmation");
         return transformDonationListToHashMap(donationList);
     }
 
@@ -191,8 +250,8 @@ public class DonationResourceImpl extends DonationResourceDecorator {
     public List<HashMap<String, Object>> deleteDonation(VMJExchange vmjExchange) {
         Map<String, Object> payload = vmjExchange.getPayload();
         String idStr = (String) payload.get("id");
-        int id = Integer.parseInt(idStr);
-        donationDao.deleteObject(id);
+        UUID id = UUID.fromString(idStr);
+        donationRepository.deleteObject(id);
         return getAllDonation(vmjExchange);
     }
 }

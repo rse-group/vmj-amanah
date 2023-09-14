@@ -3,8 +3,8 @@ import java.util.*;
 import vmj.routing.route.VMJExchange;
 
 public interface Program {
-    int getIdProgram();
-    void setIdProgram(int idProgram);
+    UUID getIdProgram();
+    void setIdProgram(UUID idProgram);
 
     String getName();
     void setName(String name);

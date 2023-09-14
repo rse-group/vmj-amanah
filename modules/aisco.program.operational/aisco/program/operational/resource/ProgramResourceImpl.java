@@ -18,6 +18,10 @@ import aisco.program.core.ProgramDecorator;
 import prices.auth.vmj.annotations.Restricted;
 
 public class ProgramResourceImpl extends ProgramResourceDecorator {
+	
+	public ProgramResourceImpl(ProgramResourceComponent record) {
+        super(record);
+    }
 
     @Restricted(permissionName="CreateOperational")
     @Route(url = "call/operational/save")
@@ -37,8 +41,23 @@ public class ProgramResourceImpl extends ProgramResourceDecorator {
         String partner = "";
         String logoUrl = "";
         String executionDate = "";
-        Program program = ProgramFactory.createProgram("aisco.program.activity.ProgramImpl", name, description, target, partner, logoUrl, executionDate);
+        Program program = ProgramFactory.createProgram("aisco.program.core.ProgramImpl", name, description, target, partner, logoUrl, executionDate);
         Program programOperational = ProgramFactory.createProgram("aisco.program.operational.ProgramImpl", program);
+        return programOperational;
+    }
+    
+    public Program createProgram(VMJExchange vmjExchange, UUID id) {
+        Program savedProgram = programRepository.getObject(id);
+        UUID recordProgramId = (((ProgramDecorator) savedProgram).getRecord()).getIdProgram();
+        String name = (String) vmjExchange.getRequestBodyForm("name");
+        String description = (String) vmjExchange.getRequestBodyForm("description");
+        String target = "";
+        String partner = "";
+        String logoUrl = "";
+        String executionDate = "";
+        Program program = ProgramFactory.createProgram("aisco.program.core.ProgramImpl", recordProgramId, name, description, target, partner, logoUrl, executionDate);
+        Program programOperational = ProgramFactory.createProgram("aisco.program.operational.ProgramImpl", id, program);
+
         return programOperational;
     }
 
@@ -51,11 +70,10 @@ public class ProgramResourceImpl extends ProgramResourceDecorator {
 
         Map<String, Object> payload = vmjExchange.getPayload();
         String idStr = (String) payload.get("id");
-        int id = Integer.parseInt(idStr);
+        UUID id = UUID.fromString(idStr);
         
         Program savedProgram = programRepository.getObject(id);
-        savedProgram = createProgram(vmjExchange);
-        savedProgram.setIdProgram(id);
+        savedProgram = createProgram(vmjExchange, id);
         programRepository.updateObject(savedProgram);
         return savedProgram.toHashMap();
     }
@@ -63,7 +81,7 @@ public class ProgramResourceImpl extends ProgramResourceDecorator {
     @Route(url = "call/operational/detail")
     public HashMap<String, Object> getProgram(VMJExchange vmjExchange) {
         String idStr = vmjExchange.getGETParam("id");
-        int id = Integer.parseInt(idStr);
+        UUID id = UUID.fromString(idStr);
         Program program = programRepository.getObject(id);
         return program.toHashMap();
     }
@@ -91,8 +109,9 @@ public class ProgramResourceImpl extends ProgramResourceDecorator {
         vmjExchange.payloadChecker(keys, types, false);
         Map<String, Object> payload = vmjExchange.getPayload();
         String idStr = (String) payload.get("id");
-        int id = Integer.parseInt(idStr);
+        UUID id = UUID.fromString(idStr);
         programRepository.deleteObject(id);
         return getAllProgram(vmjExchange);
     }
+
 }
