@@ -12,15 +12,14 @@ import aisco.financialreport.FinancialReportFactory;
 
 import prices.auth.vmj.annotations.Restricted;
 
+
 public class FinancialReportResourceImpl extends FinancialReportResourceDecorator {
-	
-	protected FinancialReportResourceComponent record;
 
     public FinancialReportResourceImpl(FinancialReportResourceComponent record) {
         super(record);
     }
 
-    @Restricted(permissionName="ModifyFinancialReportImpl")
+    @Restricted(permissionName="CreateIncome")
     @Route(url="call/income/save")
     public List<HashMap<String,Object>> saveFinancialReport(VMJExchange vmjExchange) {
         FinancialReport financialReport = createFinancialReport(vmjExchange);
@@ -31,27 +30,27 @@ public class FinancialReportResourceImpl extends FinancialReportResourceDecorato
 
     public FinancialReport createFinancialReport(VMJExchange vmjExchange) {
         String paymentMethod = (String) vmjExchange.getRequestBodyForm("paymentMethod");
-        FinancialReport financialReport = super.createFinancialReport(vmjExchange);
+        FinancialReport financialReport = record.createFinancialReport(vmjExchange);
         FinancialReport financialReportIncome = FinancialReportFactory.createFinancialReport("aisco.financialreport.income.FinancialReportImpl", financialReport, paymentMethod);
 
         return financialReportIncome;
     }
 
-    public FinancialReport createFinancialReport(VMJExchange vmjExchange, int id) {
+    public FinancialReport createFinancialReport(VMJExchange vmjExchange, UUID id) {
         String paymentMethod = (String) vmjExchange.getRequestBodyForm("paymentMethod");
         FinancialReport savedFinancialReport = financialReportRepository.getObject(id);
-        int recordFinancialReportId = (((FinancialReportDecorator) savedFinancialReport)).getId();
-        FinancialReport financialReport = super.createFinancialReport(vmjExchange, recordFinancialReportId);
+        UUID recordFinancialReportId = (((FinancialReportDecorator) savedFinancialReport).getRecord()).getId();
+        FinancialReport financialReport = record.createFinancialReport(vmjExchange, recordFinancialReportId);
         FinancialReport financialReportIncome = FinancialReportFactory.createFinancialReport("aisco.financialreport.income.FinancialReportImpl", id, financialReport, paymentMethod);
 
         return financialReportIncome;
     }
 
-    @Restricted(permissionName="ModifyFinancialReportImpl")
+    @Restricted(permissionName="UpdateIncome")
     @Route(url="call/income/update")
     public HashMap<String, Object> updateFinancialReport(VMJExchange vmjExchange) {
         String idStr = (String) vmjExchange.getRequestBodyForm("id");
-        int id = Integer.parseInt(idStr);
+        UUID id = UUID.fromString(idStr);
         FinancialReport financialReport = financialReportRepository.getObject(id);
         financialReport = createFinancialReport(vmjExchange, id);
         financialReportRepository.updateObject(financialReport);
@@ -61,21 +60,22 @@ public class FinancialReportResourceImpl extends FinancialReportResourceDecorato
 
     @Route(url="call/income/detail")
     public HashMap<String, Object> getFinancialReport(VMJExchange vmjExchange) {
-        return super.getFinancialReport(vmjExchange);
+        return record.getFinancialReport(vmjExchange);
     }
 
     @Route(url="call/income/list")
     public List<HashMap<String,Object>> getAllFinancialReport(VMJExchange vmjExchange) {
         List<FinancialReport> financialReportList = financialReportRepository.getAllObject("financialreport_income");
-        return transformFinancialReportListToHashMap(financialReportList);
+        return record.transformFinancialReportListToHashMap(financialReportList);
     }
 
-    @Restricted(permissionName="ModifyFinancialReportImpl")
+    @Restricted(permissionName="DeleteIncome")
     @Route(url="call/income/delete")
     public List<HashMap<String,Object>> deleteFinancialReport(VMJExchange vmjExchange) {
         String idStr = (String) vmjExchange.getRequestBodyForm("id");
-        int id = Integer.parseInt(idStr);
+        UUID id = UUID.fromString(idStr);
         financialReportRepository.deleteObject(id);
         return getAllFinancialReport(vmjExchange);
     }
 }
+

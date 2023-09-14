@@ -1,23 +1,25 @@
-package aisco.program.activity;
+package aisco.program.core;
 
-import java.lang.Math;
 import java.util.*;
-import vmj.routing.route.Route;
-import vmj.routing.route.VMJExchange;
-
-import aisco.program.core.ProgramComponent;
-import aisco.program.core.ProgramDecorator;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Column;
 
-@Entity(name="program_activity")
-@Table(name="program_activity")
+@Entity(name = "program_impl")
+@Table(name = "program_impl")
 public class ProgramImpl extends ProgramComponent {
-	
 	public ProgramImpl(String name, String description, String target, String partner, String logoUrl, String executionDate) {
 		this.idProgram = UUID.randomUUID();
+        this.name = name;
+        this.description = description;
+        this.target = target;
+        this.partner = partner;
+        this.logoUrl = logoUrl;
+        this.executionDate = executionDate;
+        this.objectName = ProgramImpl.class.getName();
+    }
+	
+	public ProgramImpl(UUID idProgram, String name, String description, String target, String partner, String logoUrl, String executionDate) {
+		this.idProgram = idProgram;
         this.name = name;
         this.description = description;
         this.target = target;

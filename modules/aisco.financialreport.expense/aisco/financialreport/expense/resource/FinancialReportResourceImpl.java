@@ -14,11 +14,11 @@ import prices.auth.vmj.annotations.Restricted;
 
 public class FinancialReportResourceImpl extends FinancialReportResourceDecorator {
 
-    public FinancialReportResourceImpl(FinancialReportResourceComponent record) {
+	public FinancialReportResourceImpl(FinancialReportResourceComponent record) {
         super(record);
     }
 
-    @Restricted(permissionName="ModifyFinancialReportImpl")
+    @Restricted(permissionName="CreateExpense")
     @Route(url="call/expense/save")
     public List<HashMap<String,Object>> saveFinancialReport(VMJExchange vmjExchange) {
         FinancialReport financialReport = createFinancialReport(vmjExchange);
@@ -28,26 +28,26 @@ public class FinancialReportResourceImpl extends FinancialReportResourceDecorato
     }
 
     public FinancialReport createFinancialReport(VMJExchange vmjExchange) {
-        FinancialReport financialReport = super.createFinancialReport(vmjExchange);
+        FinancialReport financialReport = record.createFinancialReport(vmjExchange);
         FinancialReport financialReportExpense = FinancialReportFactory.createFinancialReport("aisco.financialreport.expense.FinancialReportImpl", financialReport);
 
         return financialReportExpense;
     }
 
-    public FinancialReport createFinancialReport(VMJExchange vmjExchange, int id) {
+    public FinancialReport createFinancialReport(VMJExchange vmjExchange, UUID id) {
         FinancialReport savedFinancialReport = financialReportRepository.getObject(id);
-        int recordFinancialReportId = (((FinancialReportDecorator) savedFinancialReport)).getId();
-        FinancialReport financialReport = super.createFinancialReport(vmjExchange, recordFinancialReportId);
+        UUID recordFinancialReportId = (((FinancialReportDecorator) savedFinancialReport).getRecord()).getId();
+        FinancialReport financialReport = record.createFinancialReport(vmjExchange, recordFinancialReportId);
         FinancialReport financialReportExpense = FinancialReportFactory.createFinancialReport("aisco.financialreport.expense.FinancialReportImpl", id, financialReport);
 
         return financialReportExpense;
     }
 
-    @Restricted(permissionName="ModifyFinancialReportImpl")
+    @Restricted(permissionName="UpdateExpense")
     @Route(url="call/expense/update")
     public HashMap<String, Object> updateFinancialReport(VMJExchange vmjExchange) {
         String idStr = (String) vmjExchange.getRequestBodyForm("id");
-        int id = Integer.parseInt(idStr);
+        UUID id = UUID.fromString(idStr);
         FinancialReport financialReport = financialReportRepository.getObject(id);
         financialReport = createFinancialReport(vmjExchange, id);
         financialReportRepository.updateObject(financialReport);
@@ -59,20 +59,20 @@ public class FinancialReportResourceImpl extends FinancialReportResourceDecorato
 
     @Route(url="call/expense/detail")
     public HashMap<String, Object> getFinancialReport(VMJExchange vmjExchange) {
-        return super.getFinancialReport(vmjExchange);
+        return record.getFinancialReport(vmjExchange);
     }
 
     @Route(url="call/expense/list")
     public List<HashMap<String,Object>> getAllFinancialReport(VMJExchange vmjExchange) {
         List<FinancialReport> financialReportList = financialReportRepository.getAllObject("financialreport_expense");
-        return transformFinancialReportListToHashMap(financialReportList);
+        return record.transformFinancialReportListToHashMap(financialReportList);
     }
 
-    @Restricted(permissionName="ModifyFinancialReportImpl")
+    @Restricted(permissionName="DeleteExpense")
     @Route(url="call/expense/delete")
     public List<HashMap<String,Object>> deleteFinancialReport(VMJExchange vmjExchange) {
         String idStr = (String) vmjExchange.getRequestBodyForm("id");
-        int id = Integer.parseInt(idStr);
+        UUID id = UUID.fromString(idStr);
         financialReportRepository.deleteObject(id);
         return getAllFinancialReport(vmjExchange);
     }

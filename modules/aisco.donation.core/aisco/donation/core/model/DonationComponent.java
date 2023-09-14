@@ -14,13 +14,13 @@ import javax.persistence.Table;
 public abstract class DonationComponent implements Donation
 {
 	@Id
-    protected int id;
+    protected UUID id;
 	
-    public int getId() {
+    public UUID getId() {
         return this.id;
     }
 	
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

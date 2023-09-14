@@ -7,8 +7,8 @@ import vmj.routing.route.VMJExchange;
 import java.util.*;
 
 public interface FinancialReport {
-    int getId();
-    void setId(int id);
+    UUID getId();
+    void setId(UUID id);
 
     String getDatestamp();
     void setDatestamp(String datestamp);

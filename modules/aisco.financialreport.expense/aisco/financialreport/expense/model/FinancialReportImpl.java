@@ -16,38 +16,29 @@ public class FinancialReportImpl extends FinancialReportDecorator {
 
     public FinancialReportImpl(){
         super();
+        this.objectName = FinancialReportImpl.class.getName();
     }
     
-    public FinancialReportImpl(aisco.financialreport.core.FinancialReportImpl financialReport) {
-        super((FinancialReportComponent) financialReport);
+    public FinancialReportImpl(FinancialReportComponent record) {
+        super(record, FinancialReportImpl.class.getName());
+        this.objectName = FinancialReportImpl.class.getName();
     }
     
-    public FinancialReportImpl(int id, aisco.financialreport.core.FinancialReportImpl financialReport) {
-        super(id, (FinancialReportComponent) financialReport);
+    public FinancialReportImpl(UUID id, FinancialReportComponent record) {
+        super(id, record);
     }
 
     @Override
     public String toString() {
         return "{" +
             " id='" + getId() + "'" +
+            ", record='" + getRecord() + "'" +
             "}";
     }
 
     public HashMap<String, Object> toHashMap() {
-        HashMap<String, Object> financialReportMap = new HashMap<String,Object>();
+    	HashMap<String, Object> financialReportMap = record.toHashMap();
         financialReportMap.put("id", id);
-        financialReportMap.put("datestamp", getDatestamp());
-        financialReportMap.put("amount", getAmount());
-        financialReportMap.put("description", getDescription());
-        if (getProgram() != null) {
-            financialReportMap.put("idProgram", getProgram().getIdProgram());
-            financialReportMap.put("programName", getProgram().getName());
-        }
-        if (getCoa() != null) {
-            financialReportMap.put("idCoa", getCoa().getId());
-            financialReportMap.put("coaName", getCoa().getName());
-        }
-        
         return financialReportMap;
     }
 }

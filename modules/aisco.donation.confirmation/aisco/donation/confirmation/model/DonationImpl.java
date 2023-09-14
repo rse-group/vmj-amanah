@@ -30,7 +30,7 @@ public class DonationImpl extends DonationDecorator {
         this.status = "";
     }
 
-    public DonationImpl(int id, DonationComponent record, String proofOfTransfer, String senderAccount,
+    public DonationImpl(UUID id, DonationComponent record, String proofOfTransfer, String senderAccount,
             String recieverAccount, String status) {
         super(id, record);
         this.proofOfTransfer = proofOfTransfer;
