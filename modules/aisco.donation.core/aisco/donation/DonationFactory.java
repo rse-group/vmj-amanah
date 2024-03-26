@@ -18,6 +18,8 @@ public class DonationFactory
         Donation record = null;
 		try {
             Class<?> clz = Class.forName(fullyQualifiedName);
+            System.out.println(fullyQualifiedName);
+            System.out.println(clz);
             Constructor<?>[] constructorList = clz.getDeclaredConstructors();
             Constructor<?> constructor = null;
             for (int i = 0; i < constructorList.length; i++) {

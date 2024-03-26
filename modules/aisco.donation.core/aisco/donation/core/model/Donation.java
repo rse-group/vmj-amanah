@@ -1,7 +1,7 @@
 package aisco.donation.core;
 
-import aisco.program.core.ProgramComponent;
-import aisco.financialreport.core.FinancialReportComponent;
+import aisco.program.core.Program;
+import aisco.financialreport.core.FinancialReport;
 
 import java.util.*;
 
@@ -12,29 +12,29 @@ public interface Donation {
 	public String getName();
     public void setName(String name);
 	
-	String getPhone();
-    void setPhone(String phone);
+	public String getPhone();
+    public void setPhone(String phone);
 	
-	String getEmail();
-    void setEmail(String email);
+	public String getEmail();
+    public void setEmail(String email);
 
-    long getAmount();
-    void setAmount(long amount);
+    public long getAmount();
+    public void setAmount(long amount);
 	
-	String getPaymentMethod();
-	void setPaymentMethod(String paymentMethod);
+	public String getPaymentMethod();
+	public void setPaymentMethod(String paymentMethod);
 	
-	FinancialReportComponent getIncome();
-    void setIncome(FinancialReportComponent income);
+	public FinancialReport getIncome();
+    public void setIncome(FinancialReport income);
 	
-	ProgramComponent getProgram();
-    void setProgram(ProgramComponent program);
+	public Program getProgram();
+    public void setProgram(Program program);
 	
-	String getDate();
-    void setDate(String date);
+	public String getDate();
+    public void setDate(String date);
 	
-	String getDescription();
-    void setDescription(String description);
+	public String getDescription();
+    public void setDescription(String description);
 	
 	HashMap<String, Object> toHashMap();
 }

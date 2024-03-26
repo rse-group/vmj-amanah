@@ -139,6 +139,7 @@ public class DonationResourceImpl extends DonationResourceComponent {
 
     // TODO: bisa dimasukin ke kelas util
     public List<HashMap<String, Object>> transformDonationListToHashMap(List<Donation> donationList) {
+        System.out.println("Masuk transformDonationListToHashMap at DonationResourceImpl at Core");
         List<HashMap<String, Object>> resultList = new ArrayList<HashMap<String, Object>>();
         for (int i = 0; i < donationList.size(); i++) {
             resultList.add(donationList.get(i).toHashMap());

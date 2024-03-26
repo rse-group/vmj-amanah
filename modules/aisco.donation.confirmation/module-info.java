@@ -9,6 +9,7 @@ module aisco.donation.confirmation {
     requires vmj.hibernate.integrator;
     requires vmj.routing.route;
     requires prices.auth.vmj;
+    requires prices.auth.vmj.model;
     
     opens aisco.donation.confirmation to org.hibernate.orm.core, gson;
 }

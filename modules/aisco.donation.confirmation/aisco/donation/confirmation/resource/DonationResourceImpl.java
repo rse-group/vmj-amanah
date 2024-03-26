@@ -6,9 +6,18 @@ import java.net.URLConnection;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import prices.auth.core.AuthPayload;
+import prices.auth.core.StorageStrategy;
+import prices.auth.vmj.storagestrategy.HibernateStrategy;
+import prices.auth.vmj.storagestrategy.PropertiesStrategy;
+import prices.auth.vmj.model.core.*;
+import prices.auth.vmj.model.core.UserComponent;
+
 import vmj.routing.route.Route;
 import vmj.routing.route.VMJExchange;
 import vmj.routing.route.exceptions.*;
+
+import vmj.hibernate.integrator.RepositoryUtil;
 
 import aisco.donation.DonationFactory;
 import aisco.donation.core.DonationResourceDecorator;
@@ -19,6 +28,9 @@ import aisco.financialreport.core.*;
 import aisco.financialreport.FinancialReportFactory;
 import aisco.program.core.*;
 import aisco.chartofaccount.core.*;
+
+
+import aisco.donation.confirmation.DonationImpl;
 
 import aisco.donation.confirmation.validator.ProofOfTransferValidator;
 
@@ -43,7 +55,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         List<String> keys = new ArrayList<String>(Arrays.asList("proofoftransfer", "name", "email", "phone",
                 "description", "paymentMethod", "idprogram", "date", "amount"));
         List<Object> types = new ArrayList<Object>(
-                Arrays.asList(new HashMap<String, byte[]>(), "", "", "", "", "", new Integer(0), "", ""));
+                Arrays.asList(new HashMap<String, byte[]>(), "", "", "", "", "", "", "", ""));
         vmjExchange.payloadChecker(keys, types, false);
         Donation donation = createDonation(vmjExchange);
         donationRepository.saveObject(donation);
@@ -229,21 +241,40 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         return super.getDonation(vmjExchange);
     }
 
+    @Restricted(permissionName="ReadCOD")
     @Route(url = "call/confirmation/list")
     public List<HashMap<String, Object>> getAllDonation(VMJExchange vmjExchange) {
+        System.out.println("Masuk call/confirmation/list at DonationResourceImpl at confirmation");
+        AuthPayload authPayload = vmjExchange.getAuthPayload();
+        System.out.println("====print authPayload====");
+        System.out.println(authPayload);
+        StorageStrategy storagestrategy = new HibernateStrategy();
+        Map<String, Object> userData = storagestrategy.getUserData(authPayload);
+        System.out.println(userData);
+        String email = authPayload.getEmail();
+        System.out.println(email);
+        
+        RepositoryUtil<User> userDao = new RepositoryUtil<User>(prices.auth.vmj.model.core.UserComponent.class);
+        List<User> users = userDao.getListObject("auth_user_impl", "email", email);
+        System.out.println(users);
+        for (User user : users) {
+        	System.out.println(user.getName());
+        	System.out.println(user.getId());
+        }
+        System.out.println("======================");
         List<Donation> donationList = donationRepository.getAllObject("donation_confirmation");
         return transformDonationListToHashMap(donationList);
     }
 
     // TODO: bisa dimasukin ke kelas util
-    public List<HashMap<String, Object>> transformDonationListToHashMap(List<Donation> donationList) {
-        List<HashMap<String, Object>> resultList = new ArrayList<HashMap<String, Object>>();
-        for (int i = 0; i < donationList.size(); i++) {
-            resultList.add(donationList.get(i).toHashMap());
-        }
+    // public List<HashMap<String, Object>> transformDonationListToHashMap(List<Donation> donationList) {
+    //     List<HashMap<String, Object>> resultList = new ArrayList<HashMap<String, Object>>();
+    //     for (int i = 0; i < donationList.size(); i++) {
+    //         resultList.add(donationList.get(i).toHashMap());
+    //     }
 
-        return resultList;
-    }
+    //     return resultList;
+    // }
 
     // @Restricted(permissionName="ModifyDonationReportImpl")
     @Route(url = "call/confirmation/delete")

@@ -82,6 +82,9 @@ public class ProgramImpl extends ProgramDecorator {
     }
 
     public HashMap<String, Object> toHashMap() {
+        System.out.println("====print record operational=======");
+        System.out.println(record.getClass().getName());
+        System.out.println("==================================");
         HashMap<String, Object> programMap = record.toHashMap();
         programMap.put("id", idProgram);
         programMap.remove("target");

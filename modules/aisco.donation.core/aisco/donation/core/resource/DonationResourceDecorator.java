@@ -35,8 +35,8 @@ public abstract class DonationResourceDecorator extends DonationResourceComponen
         return record.getAllDonation(vmjExchange);
     }
 
-     public List<HashMap<String,Object>> transformDonationListToHashMap(List<Donation> financialReportList) {
-         return record.transformDonationListToHashMap(financialReportList);
+     public List<HashMap<String,Object>> transformDonationListToHashMap(List<Donation> donationList) {
+        return record.transformDonationListToHashMap(donationList);
      }
 
     public List<HashMap<String,Object>> deleteDonation(VMJExchange vmjExchange) {
