@@ -24,6 +24,13 @@ public class FinancialReportResourceImpl extends FinancialReportResourceDecorato
     public List<HashMap<String,Object>> saveFinancialReport(VMJExchange vmjExchange) {
         FinancialReport financialReport = createFinancialReport(vmjExchange);
         financialReportRepository.saveObject(financialReport);
+        System.out.println("=======financialReport at saveFinancialReport=======");
+        FinancialReport financialReportSaved = financialReportRepository.getObject(financialReport.getId());
+        System.out.println(financialReport);
+        System.out.println(financialReport.getClass().getName());
+        System.out.println("financialReportSaved: ");
+        System.out.println(financialReportSaved.getId());
+        System.out.println("====================================================");
         System.out.println(financialReport);
         return getAllFinancialReport(vmjExchange);
     }
@@ -32,13 +39,26 @@ public class FinancialReportResourceImpl extends FinancialReportResourceDecorato
         String paymentMethod = (String) vmjExchange.getRequestBodyForm("paymentMethod");
         FinancialReport financialReport = record.createFinancialReport(vmjExchange);
         FinancialReport financialReportIncome = FinancialReportFactory.createFinancialReport("aisco.financialreport.income.FinancialReportImpl", financialReport, paymentMethod);
-
+        System.out.println("========print at CreateFinancialReport==========");
+        System.out.println("financialReport: ");
+        System.out.println(financialReport);
+        System.out.println(financialReport.getClass().getName());
+        System.out.println("");
+        System.out.println("financialReportIncome: ");
+        System.out.println(financialReportIncome);
+        System.out.println(financialReportIncome.getClass().getName());
+        System.out.println("=================================================");
+        
         return financialReportIncome;
     }
 
     public FinancialReport createFinancialReport(VMJExchange vmjExchange, UUID id) {
         String paymentMethod = (String) vmjExchange.getRequestBodyForm("paymentMethod");
         FinancialReport savedFinancialReport = financialReportRepository.getObject(id);
+        System.out.println("=======savedFinancialReport====");
+        System.out.println(savedFinancialReport);
+        System.out.println(savedFinancialReport.getClass().getName());
+        System.out.println("===============================");
         UUID recordFinancialReportId = (((FinancialReportDecorator) savedFinancialReport).getRecord()).getId();
         FinancialReport financialReport = record.createFinancialReport(vmjExchange, recordFinancialReportId);
         FinancialReport financialReportIncome = FinancialReportFactory.createFinancialReport("aisco.financialreport.income.FinancialReportImpl", id, financialReport, paymentMethod);
@@ -52,6 +72,11 @@ public class FinancialReportResourceImpl extends FinancialReportResourceDecorato
         String idStr = (String) vmjExchange.getRequestBodyForm("id");
         UUID id = UUID.fromString(idStr);
         FinancialReport financialReport = financialReportRepository.getObject(id);
+        System.out.println("====financialReport at updateIncome======");
+        System.out.println(financialReport);
+        System.out.println(financialReport.getId());
+        System.out.println(financialReport.getClass().getName());
+        System.out.println("=========================================");
         financialReport = createFinancialReport(vmjExchange, id);
         financialReportRepository.updateObject(financialReport);
         financialReport = financialReportRepository.getObject(id);
@@ -66,6 +91,15 @@ public class FinancialReportResourceImpl extends FinancialReportResourceDecorato
     @Route(url="call/income/list")
     public List<HashMap<String,Object>> getAllFinancialReport(VMJExchange vmjExchange) {
         List<FinancialReport> financialReportList = financialReportRepository.getAllObject("financialreport_income");
+        System.out.print("======financialReportList (at list income)===");
+        for (FinancialReport fin : financialReportList) {
+        	System.out.println(fin.getId());
+        	System.out.println(fin.getClass().getName());
+        	System.out.println("");
+        }
+        System.out.println("toHashMap");
+        System.out.println(record.transformFinancialReportListToHashMap(financialReportList));
+        System.out.print("============================================");
         return record.transformFinancialReportListToHashMap(financialReportList);
     }
 

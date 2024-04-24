@@ -22,6 +22,10 @@ public abstract class DonationResourceDecorator extends DonationResourceComponen
     public Donation createDonation(VMJExchange vmjExchange) {
         return record.createDonation(vmjExchange);
     }
+    
+    public Donation createDonation(VMJExchange vmjExchange, String objectName) {
+    	return record.createDonation(vmjExchange, objectName);
+    }
 
     public HashMap<String, Object> updateDonation(VMJExchange vmjExchange) {
         return record.updateDonation(vmjExchange);

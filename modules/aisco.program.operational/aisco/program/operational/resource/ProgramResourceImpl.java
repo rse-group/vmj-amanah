@@ -17,11 +17,11 @@ import aisco.program.core.ProgramDecorator;
 
 import prices.auth.vmj.annotations.Restricted;
 
-public class ProgramResourceImpl extends ProgramResourceDecorator {
+public class ProgramResourceImpl extends ProgramResourceComponent {
 	
-	public ProgramResourceImpl(ProgramResourceComponent record) {
-        super(record);
-    }
+//	public ProgramResourceImpl(ProgramResourceComponent record) {
+//        super(record);
+//    }
 
     @Restricted(permissionName="CreateOperational")
     @Route(url = "call/operational/save")

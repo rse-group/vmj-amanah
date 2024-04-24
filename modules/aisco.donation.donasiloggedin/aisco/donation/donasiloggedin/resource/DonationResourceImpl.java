@@ -21,6 +21,7 @@ import aisco.donation.core.DonationResourceDecorator;
 import aisco.donation.core.DonationResourceComponent;
 import aisco.donation.core.Donation;
 import aisco.donation.core.DonationDecorator;
+import aisco.donation.core.DonationComponent;
 import aisco.financialreport.core.*;
 import aisco.financialreport.FinancialReportFactory;
 import aisco.program.core.*;
@@ -181,7 +182,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         String idStr = (String) payload.get("id");
         UUID id = UUID.fromString(idStr);
         donationRepository.deleteObject(id);
-        return getAllDonation(vmjExchange);
+        return getAllIndividualDonation(vmjExchange);
 	}
 
 }

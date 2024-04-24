@@ -59,7 +59,15 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         vmjExchange.payloadChecker(keys, types, false);
         Donation donation = createDonation(vmjExchange);
         donationRepository.saveObject(donation);
+        System.out.println("======donation at saveLitDonation (save)============");
         System.out.println(donation);
+        System.out.println(donation.getClass().getName());
+        System.out.println("trying to get saved Donation: ");
+        Donation donationAfterSave = donationRepository.getObject(donation.getId());
+        System.out.println(donationAfterSave);
+        System.out.println(donationAfterSave.getClass().getName());
+        System.out.println(donationAfterSave.getId());
+        System.out.println("=============================================");
         return donation.toHashMap();
     }
 
@@ -86,9 +94,19 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         }
 
         Donation donation = record.createDonation(vmjExchange, DonationImpl.class.getName());
+//        Donation donation = record.createDonation(vmjExchange);
         Donation donationConfirmation = DonationFactory.createDonation(
                 "aisco.donation.confirmation.DonationImpl", donation, proofOfTransfer, senderAccount,
                 recieverAccount, status);
+        System.out.println("==========print at createDonation=============");
+        System.out.println("donation: ");
+        System.out.println(donation);
+        System.out.println(donation.getClass().getName());
+        System.out.println("");
+        System.out.println("donationConfirmation: ");
+        System.out.println(donationConfirmation);
+        System.out.println(donationConfirmation.getClass().getName());
+        System.out.println("==============================================");
         return donationConfirmation;
     }
     
@@ -218,8 +236,19 @@ public class DonationResourceImpl extends DonationResourceDecorator {
             throw new ExchangeException("Konfirmasi donasi dengan id " + id + " sudah mempunyai income");
         if (status.getStatusName().equals("BERHASIL")) {
             FinancialReport income = record.createIncome(vmjExchange);
+            financialReportRepository.saveObject(income);
             savedDonation.setIncome((FinancialReportComponent) income);
         }
+        System.out.println("========record di updatestatus======");
+        System.out.println(status.getStatusName());
+        System.out.println(status.getStatusId());
+        System.out.println("savedDonation: ");
+        System.out.println(savedDonation.getId());
+        System.out.println(savedDonation.getEmail());
+        System.out.println(savedDonation.getAmount());
+        System.out.println(savedDonation);
+        System.out.println(savedDonation.getClass().getName());
+        System.out.println("====================================");
         ((DonationImpl) savedDonation).setStatus(status.getStatusName());
         return savedDonation;
     }
@@ -238,7 +267,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
 
     @Route(url = "call/confirmation/detail")
     public HashMap<String, Object> getDonation(VMJExchange vmjExchange) {
-        return super.getDonation(vmjExchange);
+        return record.getDonation(vmjExchange);
     }
 
     @Restricted(permissionName="ReadCOD")
@@ -263,18 +292,27 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         }
         System.out.println("======================");
         List<Donation> donationList = donationRepository.getAllObject("donation_confirmation");
+        System.out.println("======donationList (at list confirmation)===");
+        for (Donation don : donationList) {
+        	System.out.println(don.getId());
+        	System.out.println(don.getClass().getName());
+        	System.out.println("");
+        }
+        System.out.println("donationList HashMap: ");
+        System.out.print(transformDonationListToHashMap(donationList));
+        System.out.print("============================================");
         return transformDonationListToHashMap(donationList);
     }
 
     // TODO: bisa dimasukin ke kelas util
-    // public List<HashMap<String, Object>> transformDonationListToHashMap(List<Donation> donationList) {
-    //     List<HashMap<String, Object>> resultList = new ArrayList<HashMap<String, Object>>();
-    //     for (int i = 0; i < donationList.size(); i++) {
-    //         resultList.add(donationList.get(i).toHashMap());
-    //     }
+    public List<HashMap<String, Object>> transformDonationListToHashMap(List<Donation> donationList) {
+        List<HashMap<String, Object>> resultList = new ArrayList<HashMap<String, Object>>();
+        for (int i = 0; i < donationList.size(); i++) {
+            resultList.add(donationList.get(i).toHashMap());
+        }
 
-    //     return resultList;
-    // }
+        return resultList;
+    }
 
     // @Restricted(permissionName="ModifyDonationReportImpl")
     @Route(url = "call/confirmation/delete")

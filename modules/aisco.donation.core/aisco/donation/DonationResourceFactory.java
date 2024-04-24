@@ -15,6 +15,12 @@ public class DonationResourceFactory
     }
 
     public static DonationResource createDonationResource(String fullyQualifiedName, Object ... base) {
+    	System.out.println("=======ProgramResourceFactory=========");
+    	System.out.println(fullyQualifiedName);
+    	System.out.println("Base:");
+        for (Object obj : base) {
+            System.out.println(obj);
+        }
         DonationResource record = null;
 		try {
             Class<?> clz = Class.forName(fullyQualifiedName);

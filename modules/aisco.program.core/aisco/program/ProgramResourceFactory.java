@@ -14,6 +14,13 @@ public class ProgramResourceFactory{
 
     public static ProgramResource createProgramResource(String fullyQualifiedName, Object ... base)
     {
+    	System.out.println("=======ProgramResourceFactory=========");
+    	System.out.println(fullyQualifiedName);
+    	System.out.println("Base:");
+        for (Object obj : base) {
+            System.out.println(obj);
+        }
+    	System.out.println("======================================");
         ProgramResource record = null;
         try {
             Class<?> clz = Class.forName(fullyQualifiedName);

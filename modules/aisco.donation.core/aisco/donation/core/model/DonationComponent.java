@@ -77,7 +77,7 @@ public abstract class DonationComponent implements Donation
 
     public HashMap<String, Object> toHashMap() {
         HashMap<String, Object> donationMap = new HashMap<String,Object>();
-        donationMap.put("id", getId());
+        donationMap.put("id", id);
 		donationMap.put("name", getName());
 		donationMap.put("phone", getPhone());
 		donationMap.put("email", getEmail());

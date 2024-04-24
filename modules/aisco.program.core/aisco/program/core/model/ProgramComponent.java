@@ -7,6 +7,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Lob;
 
 
 @Entity(name = "program_comp")
@@ -20,6 +21,8 @@ public abstract class ProgramComponent implements Program {
 	public String description;
 	public String target;
 	public String partner;
+	
+	@Lob
 	public String logoUrl;
 	public String executionDate;
 	public String objectName;

@@ -85,7 +85,7 @@ public class DonationImpl extends DonationDecorator {
 
     public HashMap<String, Object> toHashMap() {
         HashMap<String, Object> donationMap = new HashMap<String, Object>();
-       donationMap.put("id", record.getId());
+       donationMap.put("id", id);
        
        donationMap.put("name", record.getName());
        donationMap.put("phone", record.getPhone());

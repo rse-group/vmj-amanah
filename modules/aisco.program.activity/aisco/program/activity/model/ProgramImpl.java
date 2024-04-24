@@ -14,7 +14,7 @@ import javax.persistence.Column;
 
 @Entity(name="program_activity")
 @Table(name="program_activity")
-public class ProgramImpl extends ProgramComponent {
+public class ProgramImpl extends ProgramDecorator {
 	
 	public ProgramImpl(String name, String description, String target, String partner, String logoUrl, String executionDate) {
 		this.idProgram = UUID.randomUUID();

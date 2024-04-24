@@ -1,9 +1,14 @@
 package aisco.program.activity;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.net.URLConnection;
 import java.util.*;
+import java.lang.RuntimeException;
 
 import vmj.routing.route.Route;
 import vmj.routing.route.VMJExchange;
+import vmj.routing.route.exceptions.*;
 
 import aisco.program.ProgramFactory;
 import aisco.program.core.ProgramResourceComponent;
@@ -23,12 +28,40 @@ public class ProgramResourceImpl extends ProgramResourceComponent {
     }
 
     public Program createProgram(VMJExchange vmjExchange) {
-        String name = (String) vmjExchange.getRequestBodyForm("name");
-        String description = (String) vmjExchange.getRequestBodyForm("description");
-        String target = (String) vmjExchange.getRequestBodyForm("target");
-        String partner = (String) vmjExchange.getRequestBodyForm("partner");
-        String logoUrl = (String) vmjExchange.getRequestBodyForm("logoUrl");
-        String executionDate = (String) vmjExchange.getRequestBodyForm("executionDate");
+    	Map<String, Object> payload = vmjExchange.getPayload();
+   
+    	String name = (String) payload.get("name");
+        String description = (String) payload.get("description");
+        String target = (String) payload.get("target");
+        String partner = (String) payload.get("partner");
+        String logoUrl = "";
+        String executionDate = (String) payload.get("executionDate");
+        
+        Map<String, byte[]> uploadedFile = (HashMap<String, byte[]>) payload.get("logoUrl");
+        logoUrl = "data:" + (new String(uploadedFile.get("type"))).split(" ")[1].replaceAll("\\s+", "")
+                + ";base64," + Base64.getEncoder().encodeToString(uploadedFile.get("content"));
+        int fileSize = uploadedFile.get("content").length;
+        if (fileSize > 4000000)
+            throw new FileSizeException(4.0, ((double) fileSize) / 1000000, "megabyte");
+        try {
+            String type = URLConnection
+                    .guessContentTypeFromStream(new ByteArrayInputStream(uploadedFile.get("content")));
+            if (type == null || !type.startsWith("image"))
+                throw new FileTypeException("image");
+        } catch (IOException e) {
+            throw new FileNotFoundException();
+        }
+//        if (logoUrl.length() > 255) {
+//        	logoUrl = logoUrl.substring(0, Math.min(logoUrl.length(), 255));
+//        }
+        
+//        String executionDate = (String) vmjExchange.getRequestBodyForm("executionDate");
+//        String name = (String) vmjExchange.getRequestBodyForm("name");
+//        String description = (String) vmjExchange.getRequestBodyForm("description");
+//        String target = (String) vmjExchange.getRequestBodyForm("target");
+//        String partner = (String) vmjExchange.getRequestBodyForm("partner");
+//        String logoUrl = (String) vmjExchange.getRequestBodyForm("logoUrl");
+//        String executionDate = (String) vmjExchange.getRequestBodyForm("executionDate");
         Program program = ProgramFactory.createProgram("aisco.program.activity.ProgramImpl", name, description, target, partner, logoUrl, executionDate);
         return program;
     }
@@ -36,7 +69,8 @@ public class ProgramResourceImpl extends ProgramResourceComponent {
     @Restricted(permissionName="UpdateProgram")
     @Route(url="call/activity/update")
     public HashMap<String, Object> updateProgram(VMJExchange vmjExchange) {
-        String idStr = (String) vmjExchange.getRequestBodyForm("id");
+    	Map<String, Object> payload = vmjExchange.getPayload();
+        String idStr = (String) payload.get("id");
         UUID id = UUID.fromString(idStr);
         Program program = programRepository.getObject(id);
         program = updateProgram(vmjExchange, id);
@@ -46,12 +80,15 @@ public class ProgramResourceImpl extends ProgramResourceComponent {
 
     public Program updateProgram(VMJExchange vmjExchange, UUID id) {
         Program program = programRepository.getObject(id);
-        program.setName((String) vmjExchange.getRequestBodyForm("name"));
-        program.setDescription((String) vmjExchange.getRequestBodyForm("description"));
-        program.setTarget((String) vmjExchange.getRequestBodyForm("target"));
-        program.setPartner((String) vmjExchange.getRequestBodyForm("partner"));
-        program.setLogoUrl((String) vmjExchange.getRequestBodyForm("logoUrl"));
-        program.setExecutionDate((String) vmjExchange.getRequestBodyForm("executionDate"));
+        Map<String, Object> payload = vmjExchange.getPayload();
+        System.out.println(payload);
+        program.setName((String) payload.get("name"));
+        program.setDescription((String) payload.get("description"));
+        program.setTarget((String) payload.get("target"));
+        program.setPartner((String) payload.get("partner"));
+        program.setLogoUrl((String) payload.get("logoUrl"));
+        program.setExecutionDate((String) payload.get("executionDate"));
+   
         return program;
     }
 
