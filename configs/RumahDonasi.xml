@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+	<feature automatic="selected" name="AISCO"/>
+	<feature automatic="selected" name="Program"/>
+	<feature automatic="selected" name="Activity"/>
+	<feature manual="selected" name="Operational"/>
+	<feature name="GoodsProgram"/>
+	<feature automatic="selected" name="FinancialReport"/>
+	<feature automatic="selected" name="Income"/>
+	<feature automatic="selected" manual="selected" name="Expense"/>
+	<feature name="Category"/>
+	<feature name="Frequency"/>
+	<feature automatic="selected" manual="selected" name="JournalReport"/>
+	<feature automatic="selected" manual="selected" name="PSAK45"/>
+	<feature manual="selected" name="ArusKasReport"/>
+	<feature manual="selected" name="FinancialPosition"/>
+	<feature manual="selected" name="ActivityReport"/>
+	<feature manual="selected" name="Summary"/>
+	<feature automatic="selected" name="OrganizationInfo"/>
+	<feature automatic="selected" name="AboutUs"/>
+	<feature automatic="selected" name="Contacts"/>
+	<feature automatic="selected" name="BankAccount"/>
+	<feature name="Partners"/>
+	<feature name="Location"/>
+	<feature automatic="selected" manual="selected" name="Donation"/>
+	<feature name="Online"/>
+	<feature name="ViaWebsite"/>
+	<feature name="ViaPaymentGateway"/>
+	<feature name="PG.PaymentGateway"/>
+	<feature name="PG.Vendor"/>
+	<feature name="PG.Flip"/>
+	<feature name="PG.Midtrans"/>
+	<feature name="PG.Oy"/>
+	<feature name="PG.Disbursement"/>
+	<feature name="PG.MoneyTransfer"/>
+	<feature name="PG.FlipMoneyTransfer"/>
+	<feature name="PG.InternationalMoneyTransfer"/>
+	<feature name="PG.FlipInternationalMoneyTransfer"/>
+	<feature name="PG.FacilitatorMoneyTransfer"/>
+	<feature name="PG.FlipFacilitatorMoneyTransfer"/>
+	<feature name="PG.AggregatorMoneyTransfer"/>
+	<feature name="PG.FlipAggregatorMoneyTransfer"/>
+	<feature name="PG.Payment"/>
+	<feature name="PG.PaymentLink"/>
+	<feature name="PG.FlipPaymentLink"/>
+	<feature name="PG.MidtransPaymentLink"/>
+	<feature name="PG.OyPaymentLink"/>
+	<feature name="PG.VirtualAccount"/>
+	<feature name="PG.FlipVirtualAccount"/>
+	<feature name="PG.MidtransVirtualAccount"/>
+	<feature name="PG.OyVirtualAccount"/>
+	<feature name="PG.RetailOutlet"/>
+	<feature name="PG.MidtransRetailOutlet"/>
+	<feature name="PG.OyRetailOutlet"/>
+	<feature name="PG.EWallet"/>
+	<feature name="PG.FlipEWallet"/>
+	<feature name="PG.MidtransEWallet"/>
+	<feature name="PG.OyEWallet"/>
+	<feature name="PG.Invoice"/>
+	<feature name="PG.OyInvoice"/>
+	<feature name="PG.PaymentRouting"/>
+	<feature name="PG.OyPaymentRouting"/>
+	<feature name="PG.CreditCard"/>
+	<feature name="PG.MidtransCreditCard"/>
+	<feature name="PG.DebitCard"/>
+	<feature name="PG.MidtransDebitCard"/>
+	<feature manual="selected" name="Confirmation"/>
+	<feature name="GoodsDonation"/>
+</configuration>

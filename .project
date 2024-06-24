@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>aisco-winmvj</name>
+	<name>winvmj-amanah</name>
 	<comment></comment>
 	<projects>
-		<project>Volunteers</project>
+		<project>PG-Eclipse</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -39,7 +39,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1710249143469</id>
+			<id>0</id>
 			<name></name>
 			<type>30</type>
 			<matcher>

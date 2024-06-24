@@ -6,9 +6,9 @@ import java.net.URLConnection;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import prices.auth.core.AuthPayload;
-import prices.auth.vmj.model.core.*;
-import prices.auth.vmj.model.core.UserComponent;
+import vmj.auth.core.AuthPayload;
+import vmj.auth.model.core.*;
+import vmj.auth.model.core.UserComponent;
 
 import vmj.routing.route.Route;
 import vmj.routing.route.VMJExchange;
@@ -27,7 +27,7 @@ import aisco.financialreport.FinancialReportFactory;
 import aisco.program.core.*;
 import aisco.chartofaccount.core.*;
 
-import prices.auth.vmj.annotations.Restricted;
+import vmj.auth.annotations.Restricted;
 
 
 public class DonationResourceImpl extends DonationResourceDecorator {
@@ -60,7 +60,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         String email = authPayload.getEmail();
         System.out.println(email);
         
-        RepositoryUtil<User> userDao = new RepositoryUtil<User>(prices.auth.vmj.model.core.UserComponent.class);
+        RepositoryUtil<User> userDao = new RepositoryUtil<User>(vmj.auth.model.core.UserComponent.class);
         List<User> users = userDao.getListObject("auth_user_impl", "email", email);
         User user = users.get(0);
 		int donaturId = user.getId();
@@ -77,7 +77,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         String email = authPayload.getEmail();
         System.out.println(email);
         
-        RepositoryUtil<User> userDao = new RepositoryUtil<User>(prices.auth.vmj.model.core.UserComponent.class);
+        RepositoryUtil<User> userDao = new RepositoryUtil<User>(vmj.auth.model.core.UserComponent.class);
         List<User> users = userDao.getListObject("auth_user_impl", "email", email);
         User user = users.get(0);
 		int donaturId = user.getId();
@@ -94,7 +94,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         String email = authPayload.getEmail();
         System.out.println(email);
         
-        RepositoryUtil<User> userDao = new RepositoryUtil<User>(prices.auth.vmj.model.core.UserComponent.class);
+        RepositoryUtil<User> userDao = new RepositoryUtil<User>(vmj.auth.model.core.UserComponent.class);
         List<User> users = userDao.getListObject("auth_user_impl", "email", email);
         User user = users.get(0);
 		int donaturId = user.getId();
@@ -113,7 +113,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         String email = authPayload.getEmail();
         System.out.println(email);
         
-        RepositoryUtil<User> userDao = new RepositoryUtil<User>(prices.auth.vmj.model.core.UserComponent.class);
+        RepositoryUtil<User> userDao = new RepositoryUtil<User>(vmj.auth.model.core.UserComponent.class);
         List<User> users = userDao.getListObject("auth_user_impl", "email", email);
         User user = users.get(0);
 		int donaturId = user.getId();
@@ -157,7 +157,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
 		AuthPayload authPayload = vmjExchange.getAuthPayload();
         String email = authPayload.getEmail();
         
-        RepositoryUtil<User> userDao = new RepositoryUtil<User>(prices.auth.vmj.model.core.UserComponent.class);
+        RepositoryUtil<User> userDao = new RepositoryUtil<User>(vmj.auth.model.core.UserComponent.class);
         List<User> users = userDao.getListObject("auth_user_impl", "email", email);
         User user = users.get(0);
 		int donaturId = user.getId();

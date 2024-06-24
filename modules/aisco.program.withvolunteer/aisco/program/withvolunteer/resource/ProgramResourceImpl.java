@@ -11,7 +11,7 @@ import aisco.program.core.ProgramResourceDecorator;
 import aisco.program.core.Program;
 import volunteers.volunteer.core.*;
 
-import prices.auth.vmj.annotations.Restricted;
+import vmj.auth.annotations.Restricted;
 
 public class ProgramResourceImpl extends ProgramResourceDecorator {
 	
