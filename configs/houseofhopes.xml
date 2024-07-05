@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+	<feature automatic="selected" name="AISCO"/>
+	<feature automatic="selected" name="Program"/>
+	<feature automatic="selected" name="Activity"/>
+	<feature name="Operational"/>
+	<feature automatic="selected" name="FinancialReport"/>
+	<feature automatic="selected" name="Income"/>
+	<feature manual="selected" name="Expense"/>
+	<feature name="Category"/>
+	<feature name="Frequency"/>
+	<feature name="JournalReport"/>
+	<feature name="PSAK45"/>
+	<feature name="ArusKasReport"/>
+	<feature name="FinancialPosition"/>
+	<feature name="ActivityReport"/>
+	<feature name="Summary"/>
+	<feature automatic="selected" name="OrganizationInfo"/>
+	<feature automatic="selected" name="AboutUs"/>
+	<feature automatic="selected" name="Contacts"/>
+	<feature automatic="selected" name="BankAccount"/>
+	<feature name="Partners"/>
+	<feature name="Location"/>
+	<feature automatic="selected" manual="selected" name="auth.Auth"/>
+	<feature automatic="selected" name="auth.StorageType"/>
+	<feature manual="selected" name="auth.Hibernate"/>
+	<feature automatic="unselected" name="auth.Properties"/>
+	<feature automatic="selected" name="auth.TokenType"/>
+	<feature manual="selected" name="auth.Symmetric"/>
+	<feature automatic="selected" name="auth.HMAC"/>
+	<feature automatic="unselected" name="auth.Asymmetric"/>
+	<feature automatic="unselected" name="auth.ECDSA"/>
+	<feature automatic="unselected" name="auth.RSA"/>
+	<feature automatic="selected" name="auth.LoginType"/>
+	<feature manual="selected" name="auth.Password"/>
+	<feature automatic="selected" name="auth.OAuth2"/>
+	<feature name="auth.Auth0"/>
+	<feature name="auth.Facebook"/>
+	<feature manual="selected" name="auth.Google"/>
+	<feature name="auth.CAS"/>
+	<feature name="auth.LDAP"/>
+	<feature automatic="selected" name="auth.UserManagement"/>
+	<feature automatic="selected" name="auth.Classic"/>
+	<feature automatic="selected" name="auth.Social"/>
+	<feature automatic="selected" name="auth.RoleManagement"/>
+	<feature manual="selected" name="auth.MultipleResource"/>
+	<feature name="auth.DefaultLogin"/>
+	<feature automatic="selected" manual="selected" name="Donation"/>
+	<feature automatic="selected" manual="selected" name="Online"/>
+	<feature manual="selected" name="ViaWebsite"/>
+	<feature automatic="unselected" name="ViaPaymentGateway"/>
+	<feature manual="selected" name="Confirmation"/>
+	<feature manual="selected" name="Blog"/>
+	<feature automatic="selected" manual="selected" name="Beneficiary"/>
+	<feature automatic="unselected" name="PesertaDidik"/>
+	<feature manual="selected" name="PenghuniSementara"/>
+	<feature manual="selected" name="ProgramReport"/>
+</configuration>
