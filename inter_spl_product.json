@@ -1,0 +1,7 @@
+{
+    "DonasiBerbagi": ["PaymentGateway:Creak"],
+    "BisaKita": ["PaymentGateway:Whoosh"],
+    "Basic": ["PaymentGateway:Rustle"],
+    "CharitySchool": ["PaymentGateway:Crinkle"],
+    "GoodsDonation": ["PaymentGateway:Squeak"]
+}
