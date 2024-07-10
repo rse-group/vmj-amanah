@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+	<feature automatic="selected" name="AISCO"/>
+	<feature automatic="selected" name="Program"/>
+	<feature automatic="selected" name="Activity"/>
+	<feature name="Operational"/>
+	<feature manual="selected" name="GoodsProgram"/>
+	<feature automatic="selected" name="FinancialReport"/>
+	<feature automatic="selected" name="Income"/>
+	<feature automatic="selected" manual="selected" name="Expense"/>
+	<feature name="Category"/>
+	<feature name="Frequency"/>
+	<feature automatic="selected" manual="selected" name="JournalReport"/>
+	<feature automatic="selected" manual="selected" name="PSAK45"/>
+	<feature manual="selected" name="ArusKasReport"/>
+	<feature manual="selected" name="FinancialPosition"/>
+	<feature manual="selected" name="ActivityReport"/>
+	<feature manual="selected" name="Summary"/>
+	<feature automatic="selected" name="OrganizationInfo"/>
+	<feature automatic="selected" name="AboutUs"/>
+	<feature automatic="selected" name="Contacts"/>
+	<feature automatic="selected" name="BankAccount"/>
+	<feature name="Partners"/>
+	<feature name="Location"/>
+	<feature automatic="selected" manual="selected" name="Donation"/>
+	<feature name="Online"/>
+	<feature name="ViaWebsite"/>
+	<feature name="ViaPaymentGateway"/>
+	<feature manual="selected" name="Confirmation"/>
+	<feature name="DonasiLoggedIn"/>
+	<feature manual="selected" name="GoodsDonation"/>
+</configuration>

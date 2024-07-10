@@ -1,0 +1,9 @@
+namespace Volunteers
+
+features
+	Volunteers {abstract true}
+		mandatory
+			Volunteer
+		optional
+			Community
+
