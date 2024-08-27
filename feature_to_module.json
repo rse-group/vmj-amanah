@@ -1,0 +1,17 @@
+{
+	"Program": ["aisco.program.core"],
+	"Activity": ["aisco.program.activity"],
+	"Operational": ["aisco.program.operational"],
+	"FinancialReport": ["aisco.chartofaccount.core","aisco.financialreport.core"],
+	"Income": ["aisco.financialreport.income"],
+	"Expense": ["aisco.financialreport.expense"],
+	"JournalReport": ["aisco.automaticreport.core","aisco.chartofaccount.core"],
+	"PSAK45": ["aisco.automaticreport.twolevel", "aisco.automaticreport.periodic"],
+	"FinancialPosition": ["aisco.automaticreport.financialposition"],
+	"ActivityReport": ["aisco.automaticreport.activityreport"],
+	"Periodic": ["aisco.automaticreport.periodic"],
+	"Summary": ["aisco.summary.core"],
+	"Donation": ["aisco.donation.core"],
+	"Confirmation": ["aisco.donation.confirmation"],
+	"ViaPaymentGateway": ["aisco.donation.pgateway"]
+}
