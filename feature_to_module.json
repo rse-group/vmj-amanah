@@ -2,6 +2,7 @@
 	"Program": ["aisco.program.core"],
 	"Activity": ["aisco.program.activity"],
 	"Operational": ["aisco.program.operational"],
+	"GoodsProgram": ["aisco.program.goodsprogram"],
 	"FinancialReport": ["aisco.chartofaccount.core","aisco.financialreport.core"],
 	"Income": ["aisco.financialreport.income"],
 	"Expense": ["aisco.financialreport.expense"],
@@ -13,5 +14,7 @@
 	"Summary": ["aisco.summary.core"],
 	"Donation": ["aisco.donation.core"],
 	"Confirmation": ["aisco.donation.confirmation"],
-	"ViaPaymentGateway": ["aisco.donation.pgateway"]
+	"ViaPaymentGateway": ["aisco.donation.viapaymentgateway"],
+	"DonasiLoggedIn": ["aisco.donation.donasiloggedin"],
+	"GoodsDonation": ["aisco.donation.goodsdonation"]
 }

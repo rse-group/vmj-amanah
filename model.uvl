@@ -1,5 +1,8 @@
 namespace AISCO
 
+imports
+	interfaces.PaymentGateway as PG
+
 features
 	AISCO {abstract true}
 		mandatory
@@ -8,6 +11,7 @@ features
 					Activity
 				optional
 					Operational
+					GoodsProgram
 			FinancialReport {abstract true}
 				mandatory
 					Income
@@ -38,7 +42,13 @@ features
 						alternative
 							ViaWebsite
 							ViaPaymentGateway
+								mandatory
+									PG.PaymentGateway
 					Confirmation
+					GoodsDonation
 
 constraints
+	GoodsProgram <=> GoodsDonation
 	PSAK45 => Income & Expense
+
+                        

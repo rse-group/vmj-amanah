@@ -19,7 +19,7 @@ module aisco.product.charityschool {
     requires aisco.donation.pgateway;
 
     requires blogging.product.standard;
-    requires prices.auth.vmj;
-    requires prices.auth.vmj.model;
+    requires vmj.auth;
+    requires vmj.auth.model;
     requires com.fasterxml.jackson.databind;
 }

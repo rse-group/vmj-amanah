@@ -24,10 +24,10 @@ import aisco.donation.core.Donation;
 import blog.page.BlogFactory;
 import blog.page.core.Blog;
 
-import prices.auth.vmj.model.UserFactory;
-import prices.auth.vmj.model.RoleFactory;
-import prices.auth.vmj.model.core.User;
-import prices.auth.vmj.model.core.Role;
+import vmj.auth.model.UserFactory;
+import vmj.auth.model.RoleFactory;
+import vmj.auth.model.core.User;
+import vmj.auth.model.core.Role;
 
 public class {{product_name}} {
 	public static void main(String[] args) {
@@ -45,9 +45,9 @@ public class {{product_name}} {
 			VMJDatabaseMapper.generateTable("aisco.program.operational.ProgramImpl", true);
 			VMJDatabaseMapper.generateTable("aisco.chartofaccount.core.ChartOfAccountImpl", false);
 
-			VMJDatabaseMapper.generateTable("prices.auth.vmj.model.passworded.UserImpl", false);
-			VMJDatabaseMapper.generateTable("prices.auth.vmj.model.core.RoleImpl", false);
-			VMJDatabaseMapper.generateTable("prices.auth.vmj.model.core.UserRoleImpl", false);
+			VMJDatabaseMapper.generateTable("vmj.auth.model.passworded.UserImpl", false);
+			VMJDatabaseMapper.generateTable("vmj.auth.model.core.RoleImpl", false);
+			VMJDatabaseMapper.generateTable("vmj.auth.model.core.UserRoleImpl", false);
 
 			{% for feature in features %}
 			{{vmj_mapping.get(feature, {}).get("table")}}
@@ -95,14 +95,14 @@ public class {{product_name}} {
 		/**
 		 * AUTH BASE MODELS
 		 */
-		vmjServer.createTableCRUDEndpoint("users", "auth_user", "prices.auth.vmj.model.core.UserImpl",
-				VMJDatabaseMapper.getTableColumnsNames("prices.auth.vmj.model.core.UserImpl", false));
-		vmjServer.createTableCRUDEndpoint("users", "auth_user_passworded", "prices.auth.vmj.model.passworded.UserImpl",
-				VMJDatabaseMapper.getTableColumnsNames("prices.auth.vmj.model.passworded.UserImpl", true));
-		vmjServer.createTableCRUDEndpoint("roles", "auth_role", "prices.auth.vmj.model.core.RoleImpl",
-				VMJDatabaseMapper.getTableColumnsNames("prices.auth.vmj.model.core.RoleImpl", false));
-		vmjServer.createTableCRUDEndpoint("user-roles", "auth_user_role", "prices.auth.vmj.model.core.UserRoleImpl",
-				VMJDatabaseMapper.getTableColumnsNames("prices.auth.vmj.model.core.UserRoleImpl", false));
+		vmjServer.createTableCRUDEndpoint("users", "auth_user", "vmj.auth.model.core.UserImpl",
+				VMJDatabaseMapper.getTableColumnsNames("vmj.auth.model.core.UserImpl", false));
+		vmjServer.createTableCRUDEndpoint("users", "auth_user_passworded", "vmj.auth.model.passworded.UserImpl",
+				VMJDatabaseMapper.getTableColumnsNames("vmj.auth.model.passworded.UserImpl", true));
+		vmjServer.createTableCRUDEndpoint("roles", "auth_role", "vmj.auth.model.core.RoleImpl",
+				VMJDatabaseMapper.getTableColumnsNames("vmj.auth.model.core.RoleImpl", false));
+		vmjServer.createTableCRUDEndpoint("user-roles", "auth_user_role", "vmj.auth.model.core.UserRoleImpl",
+				VMJDatabaseMapper.getTableColumnsNames("vmj.auth.model.core.UserRoleImpl", false));
 
 		System.out.println();
 
@@ -134,14 +134,14 @@ public class {{product_name}} {
 		/**
 		 * AUTH BASE MODELS ABS
 		 */
-		vmjServer.createTableCRUDEndpoint("users", "auth_user", "prices.auth.vmj.model.core.UserImpl",
-				VMJDatabaseMapper.getTableColumnsNames("prices.auth.vmj.model.core.UserImpl", false));
-		vmjServer.createTableCRUDEndpoint("users", "auth_user_passworded", "prices.auth.vmj.model.passworded.UserImpl",
-				VMJDatabaseMapper.getTableColumnsNames("prices.auth.vmj.model.passworded.UserImpl", true));
-		vmjServer.createTableCRUDEndpoint("roles", "auth_role", "prices.auth.vmj.model.core.RoleImpl",
-				VMJDatabaseMapper.getTableColumnsNames("prices.auth.vmj.model.core.RoleImpl", false));
-		vmjServer.createTableCRUDEndpoint("user-roles", "auth_user_role", "prices.auth.vmj.model.core.UserRoleImpl",
-				VMJDatabaseMapper.getTableColumnsNames("prices.auth.vmj.model.core.UserRoleImpl", false));
+		vmjServer.createTableCRUDEndpoint("users", "auth_user", "vmj.auth.model.core.UserImpl",
+				VMJDatabaseMapper.getTableColumnsNames("vmj.auth.model.core.UserImpl", false));
+		vmjServer.createTableCRUDEndpoint("users", "auth_user_passworded", "vmj.auth.model.passworded.UserImpl",
+				VMJDatabaseMapper.getTableColumnsNames("vmj.auth.model.passworded.UserImpl", true));
+		vmjServer.createTableCRUDEndpoint("roles", "auth_role", "vmj.auth.model.core.RoleImpl",
+				VMJDatabaseMapper.getTableColumnsNames("vmj.auth.model.core.RoleImpl", false));
+		vmjServer.createTableCRUDEndpoint("user-roles", "auth_user_role", "vmj.auth.model.core.UserRoleImpl",
+				VMJDatabaseMapper.getTableColumnsNames("vmj.auth.model.core.UserRoleImpl", false));
 
 		System.out.println();
 
@@ -170,9 +170,9 @@ public class {{product_name}} {
 		Blog shareBlog = BlogFactory.createBlog("blog.page.share.BlogImpl",
 				BlogFactory.createBlog("blog.page.core.BlogImpl"));
 
-		User user = UserFactory.createUser("prices.auth.vmj.model.core.UserImpl");
-		User passwordedUser = UserFactory.createUser("prices.auth.vmj.model.passworded.UserImpl", user);
-		Role role = RoleFactory.createRole("prices.auth.vmj.model.core.RoleImpl");
+		User user = UserFactory.createUser("vmj.auth.model.core.UserImpl");
+		User passwordedUser = UserFactory.createUser("vmj.auth.model.passworded.UserImpl", user);
+		Role role = RoleFactory.createRole("vmj.auth.model.core.RoleImpl");
 
 		{% for feature in features %}
 		{{vmj_mapping.get(feature, {}).get("delta_instance")}}

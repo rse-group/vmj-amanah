@@ -4,7 +4,7 @@
 	<feature automatic="selected" name="Program"/>
 	<feature automatic="selected" name="Activity"/>
 	<feature name="Operational"/>
-	<feature name="WithVolunteer"/>
+	<feature name="GoodsProgram"/>
 	<feature automatic="selected" name="FinancialReport"/>
 	<feature automatic="selected" name="Income"/>
 	<feature automatic="selected" manual="selected" name="Expense"/>
@@ -16,18 +16,17 @@
 	<feature name="FinancialPosition"/>
 	<feature name="ActivityReport"/>
 	<feature name="Summary"/>
+	<feature automatic="selected" name="OrganizationInfo"/>
+	<feature automatic="selected" name="AboutUs"/>
+	<feature automatic="selected" name="Contacts"/>
+	<feature automatic="selected" name="BankAccount"/>
+	<feature name="Partners"/>
+	<feature name="Location"/>
 	<feature automatic="selected" name="Donation"/>
 	<feature name="Online"/>
 	<feature name="ViaWebsite"/>
 	<feature name="ViaPaymentGateway"/>
 	<feature manual="selected" name="Confirmation"/>
-	<feature automatic="selected" name="OrganizationInfo"/>
-	<feature automatic="selected" name="AboutUs"/>
-	<feature automatic="selected" name="Contacts"/>
-	<feature name="Partners"/>
-	<feature name="Location"/>
-	<feature automatic="selected" name="BankAccount"/>
-	<feature name="vl.Volunteers"/>
-	<feature name="vl.Volunteer"/>
-	<feature name="vl.Community"/>
+	<feature name="DonasiLoggedIn"/>
+	<feature name="GoodsDonation"/>
 </configuration>
