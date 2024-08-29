@@ -3,8 +3,8 @@
 	<name>RumahAmara</name>
 	<comment></comment>
 	<projects>
-		<project>auth-winvmj</project>
-		<project>paymentgateway</project>
+		<project>auth-spl</project>
+		<project>PG-Eclipse</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
