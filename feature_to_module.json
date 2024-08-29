@@ -18,5 +18,10 @@
 	"ViaPaymentGateway": ["aisco.donation.viapaymentgateway"],
 	"viaDisbursement":["aisco.withdraw.viadisbursement"],
 	"DonasiLoggedIn": ["aisco.donation.donasiloggedin"],
-	"GoodsDonation": ["aisco.donation.goodsdonation"]
+	"GoodsDonation": ["aisco.donation.goodsdonation"],
+	"Blog": ["aisco.blog.core"],
+	"Beneficiary": ["aisco.beneficiary.core"],
+	"PenghuniSementara": ["aisco.beneficiary.penghunisementara"],
+	"PesertaDidik": ["aisco.beneficiary.pesertadidik"],
+	"ProgramReport": ["aisco.programreport.core"]
 }

@@ -7,10 +7,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import vmj.auth.core.AuthPayload;
-// import vmj.auth.core.StorageStrategy;
-// import vmj.auth.storagestrategy.HibernateStrategy;
-// import vmj.auth.storagestrategy.PropertiesStrategy;
 import vmj.auth.model.core.*;
+import vmj.auth.model.core.UserComponent;
+
 import vmj.routing.route.Route;
 import vmj.routing.route.VMJExchange;
 import vmj.routing.route.exceptions.*;
@@ -89,26 +88,10 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         
         return donationConfirmation;
     }
-    
     public Donation createDonation(VMJExchange vmjExchange, String objectName) {
         Map<String, Object> payload = vmjExchange.getPayload();
         String status = "PENDING";
         String senderAccount = "";
-        String recieverAccount = "";
-        String proofOfTransfer = "";
-
-        Map<String, byte[]> uploadedFile = (HashMap<String, byte[]>) payload.get("proofoftransfer");
-        proofOfTransfer = "data:" + (new String(uploadedFile.get("type"))).split(" ")[1].replaceAll("\\s+", "")
-                + ";base64," + Base64.getEncoder().encodeToString(uploadedFile.get("content"));
-        int fileSize = uploadedFile.get("content").length;
-        if (fileSize > 4000000)
-            throw new FileSizeException(4.0, ((double) fileSize) / 1000000, "megabyte");
-        try {
-            String type = URLConnection
-                    .guessContentTypeFromStream(new ByteArrayInputStream(uploadedFile.get("content")));
-            if (type == null || !type.startsWith("image"))
-                throw new FileTypeException("image");
-        } catch (IOException e) {
             throw new FileNotFoundException();
         }
 
@@ -191,7 +174,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         return listStatus;
     }
 
-     @Restricted(permissionName="UpdateCOD")
+    @Restricted(permissionName="UpdateCOD")
     @Route(url = "call/confirmation/updatestatus")
     public HashMap<String, Object> updateStatusDonation(VMJExchange vmjExchange) {
         List<String> keys = new ArrayList<String>(Arrays.asList("id", "status"));

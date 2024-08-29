@@ -182,7 +182,7 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         String idStr = (String) payload.get("id");
         UUID id = UUID.fromString(idStr);
         donationRepository.deleteObject(id);
-        return getAllIndividualDonation(vmjExchange);
+        return getAllDonation(vmjExchange);
 	}
 
 }

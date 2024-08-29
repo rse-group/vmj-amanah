@@ -42,12 +42,4 @@ public abstract class ProgramResourceDecorator extends ProgramResourceComponent 
     public List<HashMap<String,Object>> deleteProgram(VMJExchange vmjExchange) {
         return record.deleteProgram(vmjExchange);
     }
-    
-//    public long calculateDonation(Program program) {
-//    	return record.calculateDonation(program);
-//    }
-    
-//    public double calculatePercentage() {
-//    	return record.calculatePercentage();
-//    }
 }

@@ -11,12 +11,9 @@ import vmj.routing.route.VMJExchange;
 
 import java.util.*;
 
-
 import vmj.auth.annotations.Restricted;
 import vmj.auth.annotations.RestrictCRUD;
 import vmj.auth.enums.CRUDMethod;
-
-import paymentgateway.product.flip;
 
 @RestrictCRUD(permissionName = "ModifyDonationImpl", allowedMethods = {CRUDMethod.POST, CRUDMethod.PUT, CRUDMethod.DELETE})
 public class DonationImpl extends DonationComponent {

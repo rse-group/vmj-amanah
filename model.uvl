@@ -2,6 +2,7 @@ namespace AISCO
 
 imports
 	interfaces.PaymentGateway as PG
+	interfaces.Auth as auth
 
 features
 	AISCO {abstract true}
@@ -49,6 +50,14 @@ features
 				mandatory
 					viaDisbursement
 			PG.PaymentGateway
+			Blog
+			Beneficiary {abstract true}
+				alternative
+					PesertaDidik
+					PenghuniSementara
+			ProgramReport
+		optional
+			auth.Auth
 
 constraints
 	PSAK45 => Income & Expense

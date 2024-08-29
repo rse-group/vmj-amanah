@@ -28,6 +28,7 @@ public abstract class DonationComponent implements Donation
     protected long amount;
     protected String paymentMethod;
 	protected String date;
+	// protected String objectName = DonationComponent.class.getName();
     protected String objectName = DonationImpl.class.getName();
 	
 	@ManyToOne(targetEntity=aisco.program.core.ProgramComponent.class)

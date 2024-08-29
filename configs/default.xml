@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+	<feature automatic="selected" name="AISCO"/>
+	<feature automatic="selected" name="Program"/>
+	<feature automatic="selected" name="Activity"/>
+	<feature name="Operational"/>
+	<feature automatic="selected" name="FinancialReport"/>
+	<feature automatic="selected" name="Income"/>
+	<feature name="Expense"/>
+	<feature name="Category"/>
+	<feature name="Frequency"/>
+	<feature name="JournalReport"/>
+	<feature name="PSAK45"/>
+	<feature name="ArusKasReport"/>
+	<feature name="FinancialPosition"/>
+	<feature name="ActivityReport"/>
+	<feature name="Summary"/>
+	<feature automatic="selected" name="OrganizationInfo"/>
+	<feature automatic="selected" name="AboutUs"/>
+	<feature automatic="selected" name="Contacts"/>
+	<feature automatic="selected" name="BankAccount"/>
+	<feature name="Partners"/>
+	<feature name="Location"/>
+	<feature name="auth.Auth"/>
+	<feature name="auth.StorageType"/>
+	<feature name="auth.Hibernate"/>
+	<feature name="auth.Properties"/>
+	<feature name="auth.TokenType"/>
+	<feature name="auth.Symmetric"/>
+	<feature name="auth.HMAC"/>
+	<feature name="auth.Asymmetric"/>
+	<feature name="auth.ECDSA"/>
+	<feature name="auth.RSA"/>
+	<feature name="auth.LoginType"/>
+	<feature name="auth.Password"/>
+	<feature name="auth.OAuth2"/>
+	<feature name="auth.Auth0"/>
+	<feature name="auth.Facebook"/>
+	<feature name="auth.Google"/>
+	<feature name="auth.CAS"/>
+	<feature name="auth.LDAP"/>
+	<feature name="auth.UserManagement"/>
+	<feature name="auth.Classic"/>
+	<feature name="auth.Social"/>
+	<feature name="auth.RoleManagement"/>
+	<feature name="auth.MultipleResource"/>
+	<feature name="auth.DefaultLogin"/>
+	<feature name="Donation"/>
+	<feature name="Online"/>
+	<feature name="ViaWebsite"/>
+	<feature name="ViaPaymentGateway"/>
+	<feature name="Confirmation"/>
+	<feature name="Blog"/>
+	<feature name="Beneficiary"/>
+	<feature name="PesertaDidik"/>
+	<feature name="PenghuniSementara"/>
+	<feature name="ProgramReport"/>
+</configuration>

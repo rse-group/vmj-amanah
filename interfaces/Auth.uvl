@@ -1,0 +1,40 @@
+namespace Auth
+
+features
+	Auth {abstract true}
+		mandatory
+			StorageType {abstract true}
+				alternative
+					Hibernate
+					Properties
+			TokenType {abstract true}
+				alternative
+					Symmetric {abstract true}
+						mandatory
+							HMAC
+					Asymmetric {abstract true}
+						alternative
+							ECDSA
+							RSA
+			LoginType {abstract true}
+				or
+					Password
+					OAuth2 {abstract true}
+						or
+							Auth0
+							Facebook
+							Google
+					CAS
+					LDAP
+			UserManagement {abstract true}
+				optional
+					Classic
+					Social
+			RoleManagement {abstract true}
+				optional
+					MultipleResource
+					DefaultLogin
+
+constraints
+	Social <=> OAuth2
+	Classic <=> Password
