@@ -20,17 +20,17 @@
 	<feature automatic="selected" name="AboutUs"/>
 	<feature automatic="selected" name="Contacts"/>
 	<feature automatic="selected" name="BankAccount"/>
-	<feature name="Partners"/>
-	<feature name="Location"/>
-	<feature automatic="selected" manual="selected" name="Donation"/>
+	<feature manual="selected" name="Partners"/>
+	<feature manual="selected" name="Location"/>
+	<feature automatic="selected" name="Donation"/>
 	<feature automatic="selected" name="Online"/>
 	<feature automatic="unselected" name="ViaWebsite"/>
 	<feature manual="selected" name="ViaPaymentGateway"/>
 	<feature name="Confirmation"/>
 	<feature name="DonasiLoggedIn"/>
-	<feature manual="selected" name="GoodsDonation"/>
-	<feature name="Withdraw"/>
-	<feature name="viaDisbursement"/>
+	<feature name="GoodsDonation"/>
+	<feature automatic="selected" name="Withdraw"/>
+	<feature manual="selected" name="viaDisbursement"/>
 	<feature name="PG.PaymentGateway"/>
 	<feature name="PG.Vendor"/>
 	<feature name="PG.Flip"/>

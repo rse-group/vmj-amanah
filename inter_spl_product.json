@@ -3,5 +3,5 @@
     "BisaKita": ["PaymentGateway:Whoosh"],
     "Basic": ["PaymentGateway:Rustle"],
     "CharitySchool": ["PaymentGateway:Crinkle"],
-    "GoodsDonation": ["PaymentGateway:Squeak"]
+    "GoodsDonation": ["PaymentGateway:MultiLevelDelta"]
 }

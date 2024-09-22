@@ -3,7 +3,7 @@
 	<name>amanah-greg-demo-2</name>
 	<comment></comment>
 	<projects>
-		<project>paymentgateway</project>
+		<project>vmj-payment-gateway</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

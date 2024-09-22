@@ -17,6 +17,9 @@ import aisco.financialreport.FinancialReportFactory;
 import aisco.chartofaccount.core.ChartOfAccount;
 import aisco.chartofaccount.core.ChartOfAccountComponent;
 
+import paymentgateway.disbursement.core.DisbursementServiceComponent;
+import paymentgateway.disbursement.core.Disbursement;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.JsonObject;
@@ -46,9 +49,15 @@ public class WithdrawResourceImpl extends WithdrawResourceDecorator {
 	private final int DISBURSEMENT_COA_CODE = 60000;
 	private final List<String> PAYMENT_SUCCESS_STATUS = new ArrayList<>(Arrays.asList("SUCCESSFUL"));
 	private final List<String> PAYMENT_FAILED_STATUS = new ArrayList<>(Arrays.asList("FAILED"));
+	private final paymentgateway.disbursement.specialmoneytransfer.DisbursementServiceImpl specialDisbursementServiceImpl;
+    private final paymentgateway.disbursement.internationalmoneytransfer.DisbursementServiceImpl internationalDisbursementServiceImpl;
+    private final paymentgateway.disbursement.agentmoneytransfer.DisbursementServiceImpl agentDisbursementServiceImpl;
 	
-    public WithdrawResourceImpl (WithdrawResourceComponent record) {
+    public WithdrawResourceImpl (WithdrawResourceComponent record, DisbursementServiceComponent recordService) {
 		super(record);
+		this.specialDisbursementServiceImpl = new paymentgateway.disbursement.specialmoneytransfer.DisbursementServiceImpl(recordService);
+        this.internationalDisbursementServiceImpl = new paymentgateway.disbursement.internationalmoneytransfer.DisbursementServiceImpl(recordService);
+        this.agentDisbursementServiceImpl = new paymentgateway.disbursement.agentmoneytransfer.DisbursementServiceImpl(recordService);
     }
 
 
@@ -68,6 +77,8 @@ public class WithdrawResourceImpl extends WithdrawResourceDecorator {
 
     public Withdraw createWithdraw(VMJExchange vmjExchange){
     	Map<String, Object> requestData = new HashMap<>();
+    	
+    	System.out.println(requestData);
     	
     	String status = "PENDING";
 		String vendorName = (String) vmjExchange.getRequestBodyForm("vendor_name");
@@ -101,103 +112,29 @@ public class WithdrawResourceImpl extends WithdrawResourceDecorator {
         String hostAddress = EnvUtilization.getEnvVariableHostAddress("AMANAH_HOST_BE");
         int portNum = EnvUtilization.getEnvVariablePortNumber("AMANAH_PORT_BE");
 		
-		if (disbursementMethod.equals("moneytransfer")) {
-	        HttpClient client = HttpClient.newHttpClient();
-	        String url = String.format("http://%s:%d/call/money-transfer", hostAddress, portNum);
-	        HttpRequest request = HttpRequest.newBuilder()
-	                .uri(URI.create(url))
-	                .header("Content-Type", "application/json")
-	                .POST(BodyPublishers.ofString(requestString))
-	                .build();
-
-	        try {
-	            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-	            int statusCode = response.statusCode();
-	            String responseBody = response.body();
-	            HttpHeaders headers = response.headers();
-	           
-	            Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
-	            Map<String, Object> rawResponseMap = gson.fromJson(responseBody, mapType);
-	            Map<String, Object> dataMap = (Map<String, Object>) rawResponseMap.get("data");
-	            status = (String) dataMap.get("status");
-
-	            double idDouble = (Double) dataMap.get("id");
-	            int idInt = (int) idDouble;
-	            disbursementId = String.valueOf(idInt);
-	            
-	        } catch (Exception e) {
-	            System.err.println("Error: " + e.getMessage());
-	        }
-		}
 		
-		else if (disbursementMethod.equals("agentmoneytransfer")) {
-	        HttpClient client = HttpClient.newHttpClient();
-	        String url = String.format("http://%s:%d/call/agent-money-transfer", hostAddress, portNum);
-	        HttpRequest request = HttpRequest.newBuilder()
-	                .uri(URI.create(url))
-	                .header("Content-Type", "application/json")
-	                .POST(BodyPublishers.ofString(requestString))
-	                .build();
-
-	        try {
-	            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-	            int statusCode = response.statusCode();
-	            String responseBody = response.body();
-	            HttpHeaders headers = response.headers();
-	           
-	            Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
-	            Map<String, Object> rawResponseMap = gson.fromJson(responseBody, mapType);
-	            Map<String, Object> dataMap = (Map<String, Object>) rawResponseMap.get("data");
-	            
-	            agentMoneyTransferDirection = (String) dataMap.get("direction");
-	            
-	            double idDouble = (Double) dataMap.get("id");
-	            int idInt = (int) idDouble;
-	            disbursementId = String.valueOf(idInt);
-
-	          
+		if (disbursementMethod.equals("agentmoneytransfer")) {
+	       try {
+	        	
+				Disbursement result = agentDisbursementServiceImpl.createDisbursement(requestData);				
+				Map<String, Object> dataMap = result.toHashMap();
+				
+				agentMoneyTransferDirection = (String) dataMap.get("direction");
+	            disbursementId = String.valueOf(dataMap.get("id"));
 	        } catch (Exception e) {
 	            System.err.println("Error: " + e.getMessage());
 	        }
 		}
 
 		else if (disbursementMethod.equals("internationalmoneytransfer")) {
-	        HttpClient client = HttpClient.newHttpClient();
-	        String url = String.format("http://%s:%d/call/international-money-transfer", hostAddress, portNum);
-	        HttpRequest request = HttpRequest.newBuilder()
-	                .uri(URI.create(url))
-	                .header("Content-Type", "application/json")
-	                .POST(BodyPublishers.ofString(requestString))
-	                .build();
-
 	        try {
-	            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-	            int statusCode = response.statusCode();
-	            String responseBody = response.body();
-	            HttpHeaders headers = response.headers();
-	            
-	           
-	            Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
-	            Map<String, Object> rawResponseMap = gson.fromJson(responseBody, mapType);
-	            Map<String, Object> dataMap = (Map<String, Object>) rawResponseMap.get("data");
-	            
-	            double idDouble = (Double) dataMap.get("id");
-	            int idInt = (int) idDouble;
-	            disbursementId = String.valueOf(idInt);
-	            
-	            double idDoubleEx = (Double) dataMap.get("exchange_rate");
-	            int idIntEx = (int) idDoubleEx;
-	            internationalMoneyTransferExchangeRate = String.valueOf(idIntEx);
-	            
-	            double idDoubleFee = (Double) dataMap.get("fee");
-	            int idIntFee = (int) idDoubleFee;
-	            internationalMoneyTransferFee = String.valueOf(idIntFee);
-	            
-	            double idDoubleSe = (Double) dataMap.get("amount_in_sender_country");
-	            int idIntSe = (int) idDoubleSe;
-	            internationalMoneyTransferAmountInSenderCountry = String.valueOf(idIntSe);
-	            
-	          
+				Disbursement result = internationalDisbursementServiceImpl.createDisbursement(requestData);
+				Map<String, Object> dataMap = result.toHashMap();
+	             
+	            disbursementId = String.valueOf(dataMap.get("id"));
+	            internationalMoneyTransferExchangeRate = String.valueOf(dataMap.get("exchange_rate"));
+	            internationalMoneyTransferFee = String.valueOf(dataMap.get("fee"));
+	            internationalMoneyTransferAmountInSenderCountry = String.valueOf(dataMap.get("amount_in_sender_currency"));
 				internationalMoneyTransferSourceCountry = (String) dataMap.get("source_country");
 				internationalMoneyTransferDestinationCountry = (String) dataMap.get("destination_country");
 				internationalMoneyTransferBeneficiaryCurrencyCode = (String) dataMap.get("beneficiary_currency_code");
@@ -208,41 +145,16 @@ public class WithdrawResourceImpl extends WithdrawResourceDecorator {
 		}
 
 		else if (disbursementMethod.equals("specialmoneytransfer")) {
-	        HttpClient client = HttpClient.newHttpClient();
-	        String url = String.format("http://%s:%d/call/special-money-transfer", hostAddress, portNum);
-	        HttpRequest request = HttpRequest.newBuilder()
-	                .uri(URI.create(url))
-	                .header("Content-Type", "application/json")
-	                .POST(BodyPublishers.ofString(requestString))
-	                .build();
-
 	        try {
-	            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-	            int statusCode = response.statusCode();
-	            String responseBody = response.body();
-	            HttpHeaders headers = response.headers();
-	           
-	            Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
-	            Map<String, Object> rawResponseMap = gson.fromJson(responseBody, mapType);
-	            Map<String, Object> dataMap = (Map<String, Object>) rawResponseMap.get("data");
+				Disbursement result = specialDisbursementServiceImpl.createDisbursement(requestData);
+				Map<String, Object> dataMap = result.toHashMap();
 	            
-	            
-	            int specialMoneyTransferSenderCountryInt = ((Double) dataMap.get("sender_country")).intValue();
-	            
-	            double idDoubleSc = (Double) dataMap.get("sender_country");
-	            int idIntSc = (int) idDoubleSc;
-	            specialMoneyTransferSenderCountry = String.valueOf(idIntSc);
-	            
-	            
+	            specialMoneyTransferSenderCountry = String.valueOf(dataMap.get("sender_country"));
 	            specialMoneyTransferSenderName = (String) dataMap.get("sender_name");
 				specialMoneyTransferSenderAddress = (String) dataMap.get("sender_address");
 				specialMoneyTransferSenderJob = (String) dataMap.get("sender_job");
 				specialMoneyTransferDirection = (String) dataMap.get("direction");
-
-				double idDouble = (Double) dataMap.get("id");
-	            int idInt = (int) idDouble;
-	            disbursementId = String.valueOf(idInt);
-	            
+	            disbursementId = String.valueOf(dataMap.get("id"));
 	        } catch (Exception e) {
 	            System.err.println("Error: " + e.getMessage());
 	        }
