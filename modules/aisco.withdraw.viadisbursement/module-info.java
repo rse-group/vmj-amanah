@@ -5,17 +5,12 @@ module aisco.withdraw.viadisbursement {
 	requires aisco.program.core;
 	requires aisco.financialreport.core;
 	
-	requires paymentgateway.config.core;
-    requires paymentgateway.config.flip;
+
     requires paymentgateway.disbursement.core;
-    requires paymentgateway.disbursement.international;
-    requires paymentgateway.disbursement.internationalmoneytransfervalidator;
-    requires paymentgateway.disbursement.internationalmoneytransfer;
-    requires paymentgateway.disbursement.special;
-    requires paymentgateway.disbursement.domesticmoneytransfervalidator;
-    requires paymentgateway.disbursement.specialmoneytransfer;
-    requires paymentgateway.disbursement.agent;
-    requires paymentgateway.disbursement.agentmoneytransfer;
+    requires paymentgateway.disbursement.specialdisbursement;
+    requires paymentgateway.disbursement.agentdisbursement;
+    requires paymentgateway.disbursement.internationaldisbursement;
+
     
     requires vmj.routing.route;
     // https://stackoverflow.com/questions/46488346/error32-13-error-cannot-access-referenceable-class-file-for-javax-naming-re/50568217

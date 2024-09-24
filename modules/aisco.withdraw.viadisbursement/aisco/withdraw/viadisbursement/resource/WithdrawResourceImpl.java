@@ -49,15 +49,15 @@ public class WithdrawResourceImpl extends WithdrawResourceDecorator {
 	private final int DISBURSEMENT_COA_CODE = 60000;
 	private final List<String> PAYMENT_SUCCESS_STATUS = new ArrayList<>(Arrays.asList("SUCCESSFUL"));
 	private final List<String> PAYMENT_FAILED_STATUS = new ArrayList<>(Arrays.asList("FAILED"));
-	private final paymentgateway.disbursement.specialmoneytransfer.DisbursementServiceImpl specialDisbursementServiceImpl;
-    private final paymentgateway.disbursement.internationalmoneytransfer.DisbursementServiceImpl internationalDisbursementServiceImpl;
-    private final paymentgateway.disbursement.agentmoneytransfer.DisbursementServiceImpl agentDisbursementServiceImpl;
+	private final paymentgateway.disbursement.specialdisbursement.DisbursementServiceImpl specialDisbursementServiceImpl;
+    private final paymentgateway.disbursement.internationaldisbursement.DisbursementServiceImpl internationalDisbursementServiceImpl;
+    private final paymentgateway.disbursement.agentdisbursement.DisbursementServiceImpl agentDisbursementServiceImpl;
 	
     public WithdrawResourceImpl (WithdrawResourceComponent record, DisbursementServiceComponent recordService) {
 		super(record);
-		this.specialDisbursementServiceImpl = new paymentgateway.disbursement.specialmoneytransfer.DisbursementServiceImpl(recordService);
-        this.internationalDisbursementServiceImpl = new paymentgateway.disbursement.internationalmoneytransfer.DisbursementServiceImpl(recordService);
-        this.agentDisbursementServiceImpl = new paymentgateway.disbursement.agentmoneytransfer.DisbursementServiceImpl(recordService);
+		this.specialDisbursementServiceImpl = new paymentgateway.disbursement.specialdisbursement.DisbursementServiceImpl(recordService);
+        this.internationalDisbursementServiceImpl = new paymentgateway.disbursement.internationaldisbursement.DisbursementServiceImpl(recordService);
+        this.agentDisbursementServiceImpl = new paymentgateway.disbursement.agentdisbursement.DisbursementServiceImpl(recordService);
     }
 
 

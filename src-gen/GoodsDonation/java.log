@@ -1,0 +1,323 @@
+public vmj.auth.storages.StorageImpl()
+public vmj.auth.verifiers.VerifierImpl()
+Sep 24, 2024 5:31:04 PM org.hibernate.Version logVersion
+INFO: HHH000412: Hibernate ORM core version [WORKING]
+Sep 24, 2024 5:31:04 PM org.hibernate.cfg.Environment <clinit>
+INFO: HHH000205: Loaded properties from resource hibernate.properties: {hibernate.hbm2ddl.auto=update, hibernate.dialect=org.hibernate.dialect.PostgreSQL94Dialect, hibernate.driver_class=org.postgresql.Driver, hibernate.connection.password=****, hibernate.connection.username=postgres, hibernate.connection.url=jdbc:postgresql://localhost:5432/aisco_product_goodsdonation, hibernate.bytecode.use_reflection_optimizer=false, hibernate.show_sql=false}
+Sep 24, 2024 5:31:04 PM org.hibernate.annotations.common.reflection.java.JavaReflectionManager <clinit>
+INFO: HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+Sep 24, 2024 5:31:04 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+WARN: HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+Sep 24, 2024 5:31:04 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001005: using driver [null] at URL [jdbc:postgresql://localhost:5432/aisco_product_goodsdonation]
+Sep 24, 2024 5:31:04 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001001: Connection properties: {password=****, user=postgres}
+Sep 24, 2024 5:31:04 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001003: Autocommit mode: false
+Sep 24, 2024 5:31:04 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+INFO: HHH000115: Hibernate connection pool size: 20 (min=1)
+Sep 24, 2024 5:31:04 PM org.hibernate.dialect.Dialect <init>
+INFO: HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL94Dialect
+Sep 24, 2024 5:31:04 PM org.hibernate.cfg.AnnotationBinder bindClass
+WARN: HHH000503: A class should not be annotated with both @Inheritance and @MappedSuperclass. @Inheritance will be ignored for: paymentgateway.disbursement.core.DisbursementComponent.
+Sep 24, 2024 5:31:05 PM org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl getIsolatedConnection
+INFO: HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@31f77791] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+Sep 24, 2024 5:31:05 PM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
+INFO: HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+== CREATING OBJECTS AND BINDING ENDPOINTS ==
+public vmj.auth.model.core.UserResourceImpl()
+public vmj.auth.model.core.RoleResourceImpl()
+public vmj.auth.model.core.UserResourceImpl()
+public vmj.auth.model.passworded.UserResourceImpl(vmj.auth.model.core.UserResourceComponent)
+=======ProgramResourceFactory=========
+aisco.program.activity.ProgramResourceImpl
+Base:
+======================================
+=======ProgramResourceFactory=========
+aisco.program.goodsprogram.ProgramResourceImpl
+Base:
+======================================
+public aisco.financialreport.core.FinancialReportResourceImpl()
+public aisco.financialreport.income.FinancialReportResourceImpl(aisco.financialreport.core.FinancialReportResourceComponent)
+=======ProgramResourceFactory=========
+aisco.donation.core.DonationResourceImpl
+Base:
+public aisco.donation.core.DonationResourceImpl()
+=======ProgramResourceFactory=========
+aisco.withdraw.core.WithdrawResourceImpl
+Base:
+public aisco.withdraw.core.WithdrawResourceImpl()
+=======ProgramResourceFactory=========
+aisco.donation.viapaymentgateway.DonationResourceImpl
+Base:
+aisco.donation.core.DonationResourceImpl@7a04f730
+public aisco.donation.viapaymentgateway.DonationResourceImpl(aisco.donation.core.DonationResourceComponent)
+=======ProgramResourceFactory=========
+aisco.withdraw.viadisbursement.WithdrawResourceImpl
+Base:
+aisco.withdraw.core.WithdrawResourceImpl@349c4d1c
+paymentgateway.disbursement.core.DisbursementServiceImpl@21edd891
+public aisco.withdraw.viadisbursement.WithdrawResourceImpl(aisco.withdraw.core.WithdrawResourceComponent,paymentgateway.disbursement.core.DisbursementServiceComponent)
+viadisbursementWithdrawResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viapaymentgateway/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/delete
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/receivedisbursementcallback
+viapaymentgatewayDonationResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viapaymentgateway/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viapaymentgateway/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viapaymentgateway/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viapaymentgateway/delete
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/receivecallback
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viapaymentgateway/save
+withdrawWithdrawResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/withdraw/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/withdraw/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/withdraw/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/withdraw/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/withdraw/delete
+donationDonationResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/donation/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/donation/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/donation/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/donation/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/donation/delete
+incomeFinancialReportResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/income/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/income/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/income/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/income/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/income/delete
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/income/accumulatedonation
+financialreportFinancialReportResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/financialreport/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/financialreport/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/financialreport/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/financialreport/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/financialreport/delete
+chartofaccountChartOfAccountResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/chart-of-account/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/chart-of-account/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/chart-of-account/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/chart-of-account/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/chart-of-account/delete
+goodsprogramProgramResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/goodsprogram/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/goodsprogram/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/goodsprogram/delete
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/goodsprogram/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/goodsprogram/update
+activityProgramResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/activity/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/activity/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/activity/delete
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/activity/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/activity/update
+agentdisbursementDisbursementResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement/agent
+domesticdisbursementvalidatorDisbursementResource2 endpoints binding
+agentDisbursementResource endpoints binding
+specialdisbursementDisbursementResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement/special
+internationaldisbursementvalidatorDisbursementResource2 endpoints binding
+domesticdisbursementvalidatorDisbursementResource1 endpoints binding
+specialDisbursementResource endpoints binding
+internationaldisbursementDisbursementResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement/international
+internationaldisbursementvalidatorDisbursementResource1 endpoints binding
+internationalDisbursementResource endpoints binding
+disbursementDisbursementResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement/callback
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement/delete
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement
+authResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/auth/user/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/user/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/auth/login/pwd
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/auth/forgot-password
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/auth/forgot-password-token
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/role/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/role/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/role/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/role/delete
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/role/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/user/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/auth/register
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/user/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/user/changerole
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/user/list
+{    "name" : "xxx",    "email": "xxx@user.com",    "phone": "08456456",    "date": "2020-04-09",    "description": "hellohello",    "idprogram": "ec07a3c7-91f3-4a16-b9dc-b7dba8654476",    "disbursementMethod": "specialmoneytransfer",    "vendor_name": "Flip",    "account_number": "98359135235",    "amount": "100000",    "bank_code": "bca",    "sender_name": "SENDER TEST USER",    "sender_country": "100252",    "sender_address": "A Address",    "sender_job": "private_employee",    "direction": "DOMESTIC_SPECIAL_TRANSFER"}
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+{}
+Sep 24, 2024 5:31:17 PM paymentgateway.disbursement.special.DisbursementServiceImpl sendTransaction
+INFO: Header: {Authorization=Basic SkRKNUpERXpKRTFEU1Zsc1ltSnROMVY0WkU5aVYwc3ljUzkwYW5WM2FUVnpkVTFyVGpGUWR6SkVSbFV2ZFhFM09WQkZhek5hYnk1SmJVRlg=, Cookie=_csrf=I_hH_U80Wpc07Yx-pV_HBDI4KO64F3ES, idempotency-key=d132b5b8-ad93-4616-ba6c-bc46b5d5c69f, X-TIMESTAMP=, Content-Type=application/x-www-form-urlencoded}
+Sep 24, 2024 5:31:17 PM paymentgateway.disbursement.special.DisbursementServiceImpl sendTransaction
+INFO: Config URL: https://bigflip.id/big_sandbox_api/v2/special-disbursement
+Sep 24, 2024 5:31:17 PM paymentgateway.disbursement.special.DisbursementServiceImpl sendTransaction
+INFO: Raw Response: {"id":213927,"user_id":9307076,"amount":100000,"status":"PENDING","reason":"","timestamp":"2024-09-24 17:31:17","bank_code":"bca","account_number":"98359135235","recipient_name":"Dummy Name","sender_bank":null,"remark":"","receipt":"","time_served":"(not set)","bundle_id":0,"company_id":75841,"recipient_city":394,"created_from":"API","direction":"DOMESTIC_SPECIAL_TRANSFER","sender":{"sender_name":"SENDER TEST USER","sender_place_of_birth":0,"sender_date_of_birth":"","sender_address":"A Address","sender_identity_type":"bank_acc","sender_identity_number":"98359135235","sender_country":100252,"sender_job":"private_employee"},"fee":2400}
+100000
+100000
+aisco.withdraw.core.WithdrawImpl
+class aisco.withdraw.core.WithdrawImpl
+public aisco.withdraw.core.WithdrawImpl(long,java.lang.String,aisco.program.core.ProgramComponent,java.lang.String,java.lang.String,java.lang.String)
+Trying other constructor
+public aisco.withdraw.core.WithdrawImpl(long,java.lang.String,aisco.program.core.ProgramComponent,java.lang.String,java.lang.String)
+Trying other constructor
+public aisco.withdraw.core.WithdrawImpl(java.util.UUID,long,java.lang.String,aisco.program.core.ProgramComponent,java.lang.String,java.lang.String,java.lang.String)
+aisco.withdraw.viadisbursement.WithdrawImpl
+class aisco.withdraw.viadisbursement.WithdrawImpl
+public aisco.withdraw.viadisbursement.WithdrawImpl(java.util.UUID,aisco.withdraw.core.WithdrawComponent,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+Trying other constructor
+public aisco.withdraw.viadisbursement.WithdrawImpl(aisco.withdraw.core.WithdrawComponent,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+aisco.withdraw.core.WithdrawImpl@31ebdf4a
+aisco.withdraw.viadisbursement.WithdrawImpl@3e87fd7d
