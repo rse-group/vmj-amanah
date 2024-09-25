@@ -1,13 +1,12 @@
-module aisco.withdraw.viadisbursement {
+module aisco.withdraw.viaagentdisbursement {
 	requires aisco.withdraw.core;
-    exports aisco.withdraw.viadisbursement;
+    exports aisco.withdraw.viaagentdisbursement;
 	
 	requires aisco.program.core;
 	requires aisco.financialreport.core;
-	
 
     requires paymentgateway.disbursement.core;
-
+    requires paymentgateway.disbursement.agentdisbursement;
     
     requires vmj.routing.route;
     // https://stackoverflow.com/questions/46488346/error32-13-error-cannot-access-referenceable-class-file-for-javax-naming-re/50568217
@@ -25,5 +24,5 @@ module aisco.withdraw.viadisbursement {
  	requires google.http.gson;
  	requires gson;
     
-    opens aisco.withdraw.viadisbursement to org.hibernate.orm.core, gson;
+    opens aisco.withdraw.viaagentdisbursement to org.hibernate.orm.core, gson;
 }

@@ -1,4 +1,4 @@
-package aisco.withdraw.viadisbursement;
+package aisco.withdraw.viaagentdisbursement;
 
 import aisco.withdraw.WithdrawFactory;
 import aisco.withdraw.core.Withdraw;
@@ -6,7 +6,7 @@ import aisco.withdraw.core.WithdrawDecorator;
 import aisco.withdraw.core.WithdrawResourceComponent;
 import aisco.withdraw.core.WithdrawResourceDecorator;
 
-import aisco.withdraw.viadisbursement.WithdrawImpl;
+import aisco.withdraw.viaagentdisbursement.WithdrawImpl;
 
 import aisco.program.core.Program;
 
@@ -19,8 +19,7 @@ import aisco.chartofaccount.core.ChartOfAccountComponent;
 
 import paymentgateway.disbursement.core.DisbursementServiceComponent;
 import paymentgateway.disbursement.core.Disbursement;
-import paymentgateway.disbursement.core.DisbursementServiceImpl;
-
+import paymentgateway.disbursement.agentdisbursement.DisbursementServiceImpl;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -51,15 +50,15 @@ public class WithdrawResourceImpl extends WithdrawResourceDecorator {
 	private final int DISBURSEMENT_COA_CODE = 60000;
 	private final List<String> PAYMENT_SUCCESS_STATUS = new ArrayList<>(Arrays.asList("SUCCESSFUL"));
 	private final List<String> PAYMENT_FAILED_STATUS = new ArrayList<>(Arrays.asList("FAILED"));
-	private DisbursementServiceImpl disbursementServiceImpl;
+    private DisbursementServiceImpl disbursementServiceImpl;
 	
-    public WithdrawResourceImpl (WithdrawResourceComponent record) {
+    public WithdrawResourceImpl (WithdrawResourceComponent record, DisbursementServiceComponent recordService) {
 		super(record);
-        this.disbursementServiceImpl = new DisbursementServiceImpl();
+        this.disbursementServiceImpl = new DisbursementServiceImpl(recordService);
     }
 
 
-    @Route(url="call/viadisbursement/save")
+    @Route(url="call/viaagentdisbursement/save")
     public HashMap<String,Object> saveWithdrawViaPaymentGateway(VMJExchange vmjExchange){
 		if (vmjExchange.getHttpMethod().equals("OPTIONS")) {
 			return null;
@@ -82,11 +81,12 @@ public class WithdrawResourceImpl extends WithdrawResourceDecorator {
 		UUID idProgram = UUID.fromString((String) vmjExchange.getRequestBodyForm("idprogram"));
 		Program program = programRepository.getObject(idProgram);
         String title = "Penarikan dana untuk Program " + program.getName();
+
+		String agentMoneyTransferDirection = "";
 		String disbursementId = "";
         
         requestData = vmjExchange.getPayload();
        
-    
         Gson gson = new Gson();
         String requestString = gson.toJson(requestData);
         
@@ -94,28 +94,25 @@ public class WithdrawResourceImpl extends WithdrawResourceDecorator {
         int portNum = EnvUtilization.getEnvVariablePortNumber("AMANAH_PORT_BE");
 		
 		
-        try {
-        	
+        try {	   
 			Disbursement result = disbursementServiceImpl.createDisbursement(requestData);				
 			Map<String, Object> dataMap = result.toHashMap();
 			
-			status = (String) dataMap.get("status");
+			agentMoneyTransferDirection = (String) dataMap.get("direction");
             disbursementId = String.valueOf(dataMap.get("id"));
-            
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
 		
 
-		
+	    
 		Withdraw withdraw  = record.createWithdraw(vmjExchange, WithdrawImpl.class.getName());
-		Withdraw viaDisbursement = WithdrawFactory.createWithdraw(
-				"aisco.withdraw.viadisbursement.WithdrawImpl", 
-				withdraw, 
-				status, 
-				vendorName,
-				disbursementId
-			);
+		Withdraw viaDisbursement = WithdrawFactory.createWithdraw("aisco.withdraw.viaagentdisbursement.WithdrawImpl", withdraw, status, vendorName,
+				agentMoneyTransferDirection,
+				disbursementId);
+		
+		System.out.println(withdraw);
+		System.out.println(viaDisbursement);
 		
 		return viaDisbursement;
 	}
@@ -182,54 +179,16 @@ public class WithdrawResourceImpl extends WithdrawResourceDecorator {
 	}
 
 	// @Restriced(permission = "")
-    @Route(url="call/viadisbursement/detail")
+    @Route(url="call/viaagentdisbursement/detail")
     public HashMap<String, Object> getWithdraw(VMJExchange vmjExchange){
 		return record.getWithdraw(vmjExchange);
 	}
     
-//    private String checkWithdrawPaymentStatus(WithdrawImpl withdrawViaPaymentGateway) {
-//    	String paymentId = withdrawViaPaymentGateway.getPaymentId();
-//        String vendorName = withdrawViaPaymentGateway.getVendorName();
-//        
-//        Map<String, Object> requestData = new HashMap<>();
-//        requestData.put("id", paymentId);
-//        requestData.put("vendor_name", vendorName);
-//        
-//        Gson gson = new Gson();
-//        String requestString = gson.toJson(requestData);
-//        
-//        HttpClient client = HttpClient.newHttpClient();
-//        HttpRequest request = HttpRequest.newBuilder()
-//                .uri(URI.create("http://%s:%d/call/paymentstatus"))
-//                .header("Content-Type", "application/json")
-//                .POST(BodyPublishers.ofString(requestString))
-//                .build();
-//
-//        try {
-//            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-//            int statusCode = response.statusCode();
-//            String responseBody = response.body();
-//            HttpHeaders headers = response.headers();
-//            System.out.println("Status Code: " + statusCode);
-//            System.out.println("Response Body: " + responseBody);
-//            System.out.println("Headers: " + headers);
-//            
-//            Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
-//            Map<String, Object> rawResponseMap = gson.fromJson(responseBody, mapType);
-//            Map<String, Object> dataMap = (Map<String, Object>) rawResponseMap.get("data");
-//            String status = (String) dataMap.get("status");
-//            return status;
-//           
-//        } catch (Exception e) {
-//            System.err.println("Error: " + e.getMessage());
-//            return "PENDING";
-//        }
-//    }
 
 	// @Restriced(permission = "")
-    @Route(url="call/viadisbursement/list")
+    @Route(url="call/viaagentdisbursement/list")
     public List<HashMap<String,Object>> getAllWithdraw(VMJExchange vmjExchange){
-		List<Withdraw> withdrawList = withdrawRepository.getAllObject("withdraw_viadisbursement");
+		List<Withdraw> withdrawList = withdrawRepository.getAllObject("withdraw_viaagentdisbursement");
 		System.out.println(withdrawList);
 		return transformWithdrawListToHashMap(withdrawList);
 	}
@@ -244,18 +203,19 @@ public class WithdrawResourceImpl extends WithdrawResourceDecorator {
 	}
 
 	// @Restriced(permission = "")
-    @Route(url="call/viadisbursement/delete")
+    @Route(url="call/viaagentdisbursement/delete")
     public List<HashMap<String,Object>> deleteWithdraw(VMJExchange vmjExchange){
 		return getAllWithdraw(vmjExchange);
 	}
     
-    @Route(url="call/receivedisbursementcallback")
+    
+    @Route(url="call/receiveagentdisbursementcallback")
     public void receiveDisbursementCallback(VMJExchange vmjExchange) {
     	Map<String, Object> payload = vmjExchange.getPayload();
     	String disbursementId = (String) payload.get("id");
     	String status = (String) payload.get("status");
     	
-    	List<Withdraw> withdrawList = withdrawRepository.getListObject("withdraw_viadisbursement", "disbursementid", disbursementId);
+    	List<Withdraw> withdrawList = withdrawRepository.getListObject("withdraw_viaagentdisbursement", "disbursementid", disbursementId);
     	Withdraw withdraw = withdrawList.get(0);
     	WithdrawImpl withdrawViaPaymentGateway = (WithdrawImpl) withdraw;
     	
