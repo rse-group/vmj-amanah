@@ -31,6 +31,9 @@
 	<feature name="GoodsDonation"/>
 	<feature automatic="selected" name="Withdraw"/>
 	<feature manual="selected" name="viaDisbursement"/>
+	<feature manual="selected" name="viaAgentDisbursement"/>
+	<feature manual="selected" name="viaInternationalDisbursement"/>
+	<feature manual="selected" name="viaSpecialDisbursement"/>
 	<feature name="PG.PaymentGateway"/>
 	<feature name="PG.Vendor"/>
 	<feature name="PG.Flip"/>

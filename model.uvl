@@ -45,9 +45,13 @@ features
 					Confirmation
 					DonasiLoggedIn
 					GoodsDonation
-			Withdraw
-				mandatory
+			Withdraw {abstract true}
+				or
 					viaDisbursement
+					viaAgentDisbursement
+					viaInternationalDisbursement
+					viaSpecialDisbursement
+
 			PG.PaymentGateway
 
 constraints
