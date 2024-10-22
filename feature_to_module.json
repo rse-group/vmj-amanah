@@ -17,26 +17,15 @@
 	"Confirmation": ["aisco.donation.confirmation"],
 	"ViaPaymentGateway": ["aisco.donation.viapaymentgateway"],
 	"viaDisbursement":[
-		"paymentgateway.disbursement.core",
 		"aisco.withdraw.viadisbursement"
 	],
 	"viaAgentDisbursement":[
-		"paymentgateway.disbursement.agent",
-		"paymentgateway.disbursement.domesticdisbursementvalidator",
-		"paymentgateway.disbursement.agentdisbursement",
 		"aisco.withdraw.viaagentdisbursement"
 	],
 	"viaInternationalDisbursement":[
-		"paymentgateway.disbursement.international",
-		"paymentgateway.disbursement.internationaldisbursementvalidator",
-		"paymentgateway.disbursement.internationaldisbursement",
 		"aisco.withdraw.viainternationaldisbursement"
 	],
 	"viaSpecialDisbursement":[
-		"paymentgateway.disbursement.special",
-		"paymentgateway.disbursement.domesticdisbursementvalidator",
-		"paymentgateway.disbursement.internationaldisbursementvalidator",
-		"paymentgateway.disbursement.specialdisbursement",
 		"aisco.withdraw.viaspecialdisbursement"
 	],
 	"DonasiLoggedIn": ["aisco.donation.donasiloggedin"],

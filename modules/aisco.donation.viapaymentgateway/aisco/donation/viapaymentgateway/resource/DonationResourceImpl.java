@@ -55,9 +55,18 @@ public class DonationResourceImpl extends DonationResourceDecorator {
 	private final int DONATION_COA_CODE = 42010;
 	private final List<String> PAYMENT_SUCCESS_STATUS = new ArrayList<>(Arrays.asList("SUCCESSFUL"));
 	private final List<String> PAYMENT_FAILED_STATUS = new ArrayList<>(Arrays.asList("FAILED"));
+	PaymentService creditcardPaymentService; 
+	
 	
     public DonationResourceImpl (DonationResourceComponent record) {
 		super(record);
+		creditcardPaymentService = 
+				PaymentServiceFactory.createPaymentService(
+					"paymentgateway.payment.creditcard.PaymentServiceImpl", 
+						PaymentServiceFactory.createPaymentService(
+							"paymentgateway.payment.core.PaymentServiceImpl"
+						);		
+				);	
     }
 
 
@@ -390,24 +399,11 @@ public class DonationResourceImpl extends DonationResourceDecorator {
 	        
 			
 		}else if (paymentMethod.equals("creditcard")) {
-	        HttpClient client = HttpClient.newHttpClient();
-			String url = String.format("http://%s:%d/call/creditcard", hostAddress, portNum);
-	        HttpRequest request = HttpRequest.newBuilder()
-	                .uri(URI.create(url))
-	                .header("Content-Type", "application/json")
-	                .POST(BodyPublishers.ofString(requestString))
-	                .build();
-
 	        try {
-	            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-	            int statusCode = response.statusCode();
-	            String responseBody = response.body();
-	            HttpHeaders headers = response.headers();
+	        	Payment result = creditcardPaymentService.createPayment(payload);
+				Map<String, Object> dataMap = result.toHashMap();
 	            
-	            Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
-	            Map<String, Object> rawResponseMap = gson.fromJson(responseBody, mapType);
-	            Map<String, Object> dataMap = (Map<String, Object>) rawResponseMap.get("data");
-	            creditCardRedirectUrl = (String) dataMap.get("redirect_url");
+				creditCardRedirectUrl = (String) dataMap.get("redirect_url");
 	            status = (String) dataMap.get("statusCreditPayment");
 	            
 	            int paymentIdInt = ((Double) dataMap.get("id")).intValue();
@@ -415,7 +411,6 @@ public class DonationResourceImpl extends DonationResourceDecorator {
 	        } catch (Exception e) {
 	            System.err.println("Error: " + e.getMessage());
 	        }
-			
 		}
 		
 		Donation donation  = record.createDonation(vmjExchange, DonationImpl.class.getName());

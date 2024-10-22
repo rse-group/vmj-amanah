@@ -1,0 +1,374 @@
+public vmj.auth.storages.StorageImpl()
+public vmj.auth.verifiers.VerifierImpl()
+Sep 25, 2024 4:27:02 PM org.hibernate.Version logVersion
+INFO: HHH000412: Hibernate ORM core version [WORKING]
+Sep 25, 2024 4:27:02 PM org.hibernate.cfg.Environment <clinit>
+INFO: HHH000205: Loaded properties from resource hibernate.properties: {hibernate.hbm2ddl.auto=update, hibernate.dialect=org.hibernate.dialect.PostgreSQL94Dialect, hibernate.driver_class=org.postgresql.Driver, hibernate.connection.password=****, hibernate.connection.username=postgres, hibernate.connection.url=jdbc:postgresql://localhost:5432/aisco_product_withdraw, hibernate.bytecode.use_reflection_optimizer=false, hibernate.show_sql=false}
+Sep 25, 2024 4:27:02 PM org.hibernate.annotations.common.reflection.java.JavaReflectionManager <clinit>
+INFO: HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+Sep 25, 2024 4:27:02 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+WARN: HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+Sep 25, 2024 4:27:02 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001005: using driver [null] at URL [jdbc:postgresql://localhost:5432/aisco_product_withdraw]
+Sep 25, 2024 4:27:02 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001001: Connection properties: {password=****, user=postgres}
+Sep 25, 2024 4:27:02 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001003: Autocommit mode: false
+Sep 25, 2024 4:27:02 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+INFO: HHH000115: Hibernate connection pool size: 20 (min=1)
+Sep 25, 2024 4:27:02 PM org.hibernate.dialect.Dialect <init>
+INFO: HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL94Dialect
+Sep 25, 2024 4:27:02 PM org.hibernate.cfg.AnnotationBinder bindClass
+WARN: HHH000503: A class should not be annotated with both @Inheritance and @MappedSuperclass. @Inheritance will be ignored for: paymentgateway.disbursement.core.DisbursementComponent.
+Sep 25, 2024 4:27:02 PM org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl getIsolatedConnection
+INFO: HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@5e9bbd9d] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+Sep 25, 2024 4:27:03 PM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
+INFO: HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+== CREATING OBJECTS AND BINDING ENDPOINTS ==
+public vmj.auth.model.core.UserResourceImpl()
+public vmj.auth.model.core.RoleResourceImpl()
+public vmj.auth.model.core.UserResourceImpl()
+public vmj.auth.model.passworded.UserResourceImpl(vmj.auth.model.core.UserResourceComponent)
+=======ProgramResourceFactory=========
+aisco.program.activity.ProgramResourceImpl
+Base:
+======================================
+=======ProgramResourceFactory=========
+aisco.program.goodsprogram.ProgramResourceImpl
+Base:
+======================================
+public aisco.financialreport.core.FinancialReportResourceImpl()
+public aisco.financialreport.income.FinancialReportResourceImpl(aisco.financialreport.core.FinancialReportResourceComponent)
+=======ProgramResourceFactory=========
+aisco.donation.core.DonationResourceImpl
+Base:
+public aisco.donation.core.DonationResourceImpl()
+=======ProgramResourceFactory=========
+aisco.withdraw.core.WithdrawResourceImpl
+Base:
+public aisco.withdraw.core.WithdrawResourceImpl()
+=======ProgramResourceFactory=========
+aisco.donation.viapaymentgateway.DonationResourceImpl
+Base:
+aisco.donation.core.DonationResourceImpl@c2cf597
+public aisco.donation.viapaymentgateway.DonationResourceImpl(aisco.donation.core.DonationResourceComponent)
+=======ProgramResourceFactory=========
+aisco.withdraw.viadisbursement.WithdrawResourceImpl
+Base:
+aisco.withdraw.core.WithdrawResourceImpl@5dbbb292
+public aisco.withdraw.viadisbursement.WithdrawResourceImpl(aisco.withdraw.core.WithdrawResourceComponent)
+=======ProgramResourceFactory=========
+aisco.withdraw.viaagentdisbursement.WithdrawResourceImpl
+Base:
+aisco.withdraw.core.WithdrawResourceImpl@5dbbb292
+paymentgateway.disbursement.agentdisbursement.DisbursementServiceImpl@27960b1e
+public aisco.withdraw.viaagentdisbursement.WithdrawResourceImpl(aisco.withdraw.core.WithdrawResourceComponent,paymentgateway.disbursement.core.DisbursementServiceComponent)
+=======ProgramResourceFactory=========
+aisco.withdraw.viainternationaldisbursement.WithdrawResourceImpl
+Base:
+aisco.withdraw.core.WithdrawResourceImpl@5dbbb292
+paymentgateway.disbursement.internationaldisbursement.DisbursementServiceImpl@2c3158e0
+public aisco.withdraw.viainternationaldisbursement.WithdrawResourceImpl(aisco.withdraw.core.WithdrawResourceComponent,paymentgateway.disbursement.core.DisbursementServiceComponent)
+=======ProgramResourceFactory=========
+aisco.withdraw.viaspecialdisbursement.WithdrawResourceImpl
+Base:
+aisco.withdraw.core.WithdrawResourceImpl@5dbbb292
+paymentgateway.disbursement.specialdisbursement.DisbursementServiceImpl@dbddbe3
+public aisco.withdraw.viaspecialdisbursement.WithdrawResourceImpl(aisco.withdraw.core.WithdrawResourceComponent,paymentgateway.disbursement.core.DisbursementServiceComponent)
+viadisbursementWithdrawResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/receivedisbursementcallback
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viapaymentgateway/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/delete
+viaagentdisbursementWithdrawResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viaagentdisbursement/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/receivedisbursementcallback
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viapaymentgateway/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/delete
+viainternationaldisbursementWithdrawResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viainternationaldisbursement/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/receivedisbursementcallback
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viapaymentgateway/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/delete
+viaspecialdisbursementWithdrawResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/receivedisbursementcallback
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viapaymentgateway/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viadisbursement/delete
+viapaymentgatewayDonationResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viapaymentgateway/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viapaymentgateway/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viapaymentgateway/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viapaymentgateway/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/viapaymentgateway/delete
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/receivecallback
+withdrawWithdrawResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/withdraw/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/withdraw/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/withdraw/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/withdraw/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/withdraw/delete
+donationDonationResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/donation/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/donation/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/donation/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/donation/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/donation/delete
+incomeFinancialReportResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/income/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/income/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/income/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/income/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/income/delete
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/income/accumulatedonation
+financialreportFinancialReportResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/financialreport/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/financialreport/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/financialreport/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/financialreport/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/financialreport/delete
+chartofaccountChartOfAccountResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/chart-of-account/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/chart-of-account/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/chart-of-account/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/chart-of-account/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/chart-of-account/delete
+goodsprogramProgramResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/goodsprogram/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/goodsprogram/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/goodsprogram/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/goodsprogram/delete
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/goodsprogram/detail
+activityProgramResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/activity/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/activity/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/activity/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/activity/delete
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/activity/detail
+agentdisbursementDisbursementResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement/agent
+domesticdisbursementvalidatorDisbursementResource2 endpoints binding
+agentDisbursementResource endpoints binding
+specialdisbursementDisbursementResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement/special
+internationaldisbursementvalidatorDisbursementResource2 endpoints binding
+domesticdisbursementvalidatorDisbursementResource1 endpoints binding
+specialDisbursementResource endpoints binding
+internationaldisbursementDisbursementResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement/international
+internationaldisbursementvalidatorDisbursementResource1 endpoints binding
+internationalDisbursementResource endpoints binding
+disbursementDisbursementResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement/callback
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement/delete
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/call/disbursement
+authResource endpoints binding
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/auth/forgot-password
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/auth/forgot-password-token
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/auth/user/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/user/delete
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/user/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/auth/login/pwd
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/role/save
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/role/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/role/delete
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/role/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/role/detail
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: false
+http://localhost:1026/auth/register
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/user/update
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/user/changerole
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/user/list
+Is Multi-Perms Annotation Present: false
+Is Single Perm Annotation Present: true
+http://localhost:1026/call/user/detail

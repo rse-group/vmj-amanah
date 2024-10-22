@@ -3,27 +3,18 @@ namespace PaymentGateway
 features
 	PaymentGateway {abstract true}
 		optional
-			Vendor {abstract true}
-				or
-					Flip
-					Midtrans
-					Oy
-			Disbursement {abstract true}
-				or
-					AbstractMoneyTransfer {abstract true}
-						or
-							InternationalMoneyTransfer
+			Disbursement
+				optional
+					International {abstract true}
+						optional
+							ExchangeRate
 								mandatory
-									FlipInternationalMoneyTransfer
-							SpecialMoneyTransfer
+									AutomaticExchangeRate
+							FixedCurrency
 								mandatory
-									FlipSpecialMoneyTransfer
-							AgentMoneyTransfer
-								mandatory
-									FlipAgentMoneyTransfer
-					MoneyTransfer
-						mandatory
-							FlipMoneyTransfer
+									IDR
+					Agent
+					SpecifiedRecipient
 			Payment {abstract true}
 				or
 					PaymentLink
@@ -57,8 +48,13 @@ features
 					DebitCard
 						mandatory
 							MidtransDebitCard
+			Vendor {abstract true}
+				or
+					Flip
+					Midtrans
+					Oy
 
 constraints
 	OyInvoice | OyPaymentRouting | OyPaymentLink | OyRetailOutlet | OyVirtualAccount | OyEWallet => Oy
 	MidtransCreditCard | MidtransDebitCard | MidtransPaymentLink | MidtransVirtualAccount | MidtransEWallet | MidtransRetailOutlet => Midtrans
-	FlipAgentMoneyTransfer | FlipSpecialMoneyTransfer | FlipInternationalMoneyTransfer | FlipMoneyTransfer => Flip
+	Agent | ExchangeRate | IDR | AutomaticExchangeRate => Flip

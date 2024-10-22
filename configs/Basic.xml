@@ -29,23 +29,24 @@
 	<feature name="Confirmation"/>
 	<feature name="DonasiLoggedIn"/>
 	<feature name="GoodsDonation"/>
-	<feature automatic="selected" name="Withdraw"/>
-	<feature manual="selected" name="viaDisbursement"/>
+	<feature name="Withdraw"/>
+	<feature name="viaDisbursement"/>
+	<feature name="viaAgentDisbursement"/>
+	<feature name="viaInternationalDisbursement"/>
+	<feature name="viaSpecialDisbursement"/>
 	<feature automatic="selected" name="PG.PaymentGateway"/>
-	<feature automatic="selected" name="PG.Vendor"/>
-	<feature automatic="selected" name="PG.Flip"/>
+	<feature name="PG.Vendor"/>
+	<feature name="PG.Flip"/>
 	<feature name="PG.Midtrans"/>
 	<feature name="PG.Oy"/>
-	<feature automatic="selected" name="PG.Disbursement"/>
-	<feature name="PG.AbstractMoneyTransfer"/>
-	<feature name="PG.InternationalMoneyTransfer"/>
-	<feature name="PG.FlipInternationalMoneyTransfer"/>
-	<feature name="PG.SpecialMoneyTransfer"/>
-	<feature name="PG.FlipSpecialMoneyTransfer"/>
-	<feature name="PG.AgentMoneyTransfer"/>
-	<feature name="PG.FlipAgentMoneyTransfer"/>
-	<feature name="PG.MoneyTransfer"/>
-	<feature name="PG.FlipMoneyTransfer"/>
+	<feature name="PG.Disbursement"/>
+	<feature name="PG.InternationalDisbursement"/>
+	<feature name="PG.FlipInternationalDisbursement"/>
+	<feature name="PG.SpecialDisbursement"/>
+	<feature name="PG.FlipSpecialDisbursement"/>
+	<feature name="PG.AgentDisbursement"/>
+	<feature name="PG.FlipAgentDisbursement"/>
+	<feature name="PG.FlipDisbursement"/>
 	<feature name="PG.Payment"/>
 	<feature name="PG.PaymentLink"/>
 	<feature name="PG.FlipPaymentLink"/>

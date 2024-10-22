@@ -3,7 +3,7 @@
 	<feature automatic="selected" name="AISCO"/>
 	<feature automatic="selected" name="Program"/>
 	<feature automatic="selected" name="Activity"/>
-	<feature name="Operational"/>
+	<feature manual="selected" name="Operational"/>
 	<feature manual="selected" name="GoodsProgram"/>
 	<feature automatic="selected" name="FinancialReport"/>
 	<feature automatic="selected" name="Income"/>
@@ -22,33 +22,27 @@
 	<feature automatic="selected" name="BankAccount"/>
 	<feature manual="selected" name="Partners"/>
 	<feature manual="selected" name="Location"/>
-	<feature automatic="selected" name="Donation"/>
-	<feature automatic="selected" name="Online"/>
-	<feature automatic="unselected" name="ViaWebsite"/>
-	<feature manual="selected" name="ViaPaymentGateway"/>
+	<feature name="Donation"/>
+	<feature name="Online"/>
+	<feature name="ViaWebsite"/>
+	<feature name="ViaPaymentGateway"/>
 	<feature name="Confirmation"/>
 	<feature name="DonasiLoggedIn"/>
 	<feature name="GoodsDonation"/>
 	<feature automatic="selected" name="Withdraw"/>
-	<feature manual="selected" name="viaDisbursement"/>
-	<feature manual="selected" name="viaAgentDisbursement"/>
+	<feature name="viaDisbursement"/>
+	<feature name="viaAgentDisbursement"/>
 	<feature manual="selected" name="viaInternationalDisbursement"/>
-	<feature manual="selected" name="viaSpecialDisbursement"/>
-	<feature name="PG.PaymentGateway"/>
-	<feature name="PG.Vendor"/>
-	<feature name="PG.Flip"/>
-	<feature name="PG.Midtrans"/>
-	<feature name="PG.Oy"/>
-	<feature name="PG.Disbursement"/>
-	<feature name="PG.AbstractMoneyTransfer"/>
-	<feature name="PG.InternationalMoneyTransfer"/>
-	<feature name="PG.FlipInternationalMoneyTransfer"/>
-	<feature name="PG.SpecialMoneyTransfer"/>
-	<feature name="PG.FlipSpecialMoneyTransfer"/>
-	<feature name="PG.AgentMoneyTransfer"/>
-	<feature name="PG.FlipAgentMoneyTransfer"/>
-	<feature name="PG.MoneyTransfer"/>
-	<feature name="PG.FlipMoneyTransfer"/>
+	<feature name="viaSpecialDisbursement"/>
+	<feature automatic="selected" name="PG.PaymentGateway"/>
+	<feature automatic="selected" name="PG.Disbursement"/>
+	<feature automatic="selected" name="PG.International"/>
+	<feature automatic="selected" name="PG.ExchangeRate"/>
+	<feature automatic="selected" name="PG.AutomaticExchangeRate"/>
+	<feature name="PG.FixedCurrency"/>
+	<feature name="PG.IDR"/>
+	<feature name="PG.Agent"/>
+	<feature name="PG.SpecifiedRecipient"/>
 	<feature name="PG.Payment"/>
 	<feature name="PG.PaymentLink"/>
 	<feature name="PG.FlipPaymentLink"/>
@@ -73,4 +67,8 @@
 	<feature name="PG.MidtransCreditCard"/>
 	<feature name="PG.DebitCard"/>
 	<feature name="PG.MidtransDebitCard"/>
+	<feature automatic="selected" name="PG.Vendor"/>
+	<feature automatic="selected" name="PG.Flip"/>
+	<feature manual="selected" name="PG.Midtrans"/>
+	<feature name="PG.Oy"/>
 </configuration>

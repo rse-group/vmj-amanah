@@ -1,5 +1,4 @@
 #!/bin/bash
-source ~/.zshrc  
 
 cleanup() {
     echo "Exiting script..."
@@ -9,7 +8,6 @@ cleanup() {
 
 trap cleanup SIGINT
 
-echo "Enter the path to the frontend directory: "
 read -p "Enter the path to the frontend directory: " frontend_dir
 
 echo "SELECT 'CREATE DATABASE aisco_product_goodsdonation' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'aisco_product_goodsdonation') \gexec" | psql "postgresql://postgres:postgres@localhost"

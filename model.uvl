@@ -51,8 +51,11 @@ features
 					viaAgentDisbursement
 					viaInternationalDisbursement
 					viaSpecialDisbursement
-
 			PG.PaymentGateway
 
 constraints
 	PSAK45 => Income & Expense
+	viaInternationalDisbursement => PG.ExchangeRate
+	viaDisbursement => PG.Disbursement
+	viaAgentDisbursement => PG.Agent
+	viaSpecialDisbursement => PG.FixedCurrency
