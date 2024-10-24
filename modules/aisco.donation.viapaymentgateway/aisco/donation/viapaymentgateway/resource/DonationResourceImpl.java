@@ -55,18 +55,71 @@ public class DonationResourceImpl extends DonationResourceDecorator {
 	private final int DONATION_COA_CODE = 42010;
 	private final List<String> PAYMENT_SUCCESS_STATUS = new ArrayList<>(Arrays.asList("SUCCESSFUL"));
 	private final List<String> PAYMENT_FAILED_STATUS = new ArrayList<>(Arrays.asList("FAILED"));
+	PaymentService paymentPaymentService; 
+	PaymentService paymentlinkPaymentService; 
+	PaymentService ewalletPaymentService; 
+	PaymentService virtualaccountPaymentService;
+	PaymentService paymentroutingPaymentService;
+	PaymentService invoicePaymentService;
+	PaymentService retailoutletPaymentService; 
+	PaymentService debitcardPaymentService; 
 	PaymentService creditcardPaymentService; 
 	
 	
     public DonationResourceImpl (DonationResourceComponent record) {
 		super(record);
-		creditcardPaymentService = 
+		this.paymentPaymentService = 
+				PaymentServiceFactory.createPaymentService(
+					"paymentgateway.payment.core.PaymentServiceImpl");
+		
+		this.paymentlinkPaymentService = 
+				PaymentServiceFactory.createPaymentService(
+					"paymentgateway.payment.paymentlink.PaymentServiceImpl", 
+						PaymentServiceFactory.createPaymentService(
+							"paymentgateway.payment.core.PaymentServiceImpl"));
+		
+		this.ewalletPaymentService = 
+				PaymentServiceFactory.createPaymentService(
+					"paymentgateway.payment.ewallet.PaymentServiceImpl", 
+						PaymentServiceFactory.createPaymentService(
+							"paymentgateway.payment.core.PaymentServiceImpl"));
+		
+		this.virtualaccountPaymentService = 
+				PaymentServiceFactory.createPaymentService(
+					"paymentgateway.payment.virtualaccount.PaymentServiceImpl", 
+						PaymentServiceFactory.createPaymentService(
+							"paymentgateway.payment.core.PaymentServiceImpl"));
+		
+		this.paymentroutingPaymentService = 
+				PaymentServiceFactory.createPaymentService(
+					"paymentgateway.payment.paymentrouting.PaymentServiceImpl", 
+						PaymentServiceFactory.createPaymentService(
+							"paymentgateway.payment.core.PaymentServiceImpl"));
+		
+		this.invoicePaymentService = 
+				PaymentServiceFactory.createPaymentService(
+					"paymentgateway.payment.invoice.PaymentServiceImpl", 
+						PaymentServiceFactory.createPaymentService(
+							"paymentgateway.payment.core.PaymentServiceImpl"));
+		
+		this.retailoutletPaymentService = 
+				PaymentServiceFactory.createPaymentService(
+					"paymentgateway.payment.retailoutlet.PaymentServiceImpl", 
+						PaymentServiceFactory.createPaymentService(
+							"paymentgateway.payment.core.PaymentServiceImpl"));
+		
+		this.debitcardPaymentService = 
+				PaymentServiceFactory.createPaymentService(
+					"paymentgateway.payment.debitcard.PaymentServiceImpl", 
+						PaymentServiceFactory.createPaymentService(
+							"paymentgateway.payment.core.PaymentServiceImpl"));
+		
+		this.creditcardPaymentService = 
 				PaymentServiceFactory.createPaymentService(
 					"paymentgateway.payment.creditcard.PaymentServiceImpl", 
 						PaymentServiceFactory.createPaymentService(
-							"paymentgateway.payment.core.PaymentServiceImpl"
-						);		
-				);	
+							"paymentgateway.payment.core.PaymentServiceImpl"));
+		
     }
 
 
@@ -121,39 +174,26 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         requestData.put("amount",amount);
         requestData.put("vendor_name", vendorName);
 
-		String hostAddress = EnvUtilization.getEnvVariableHostAddress("AMANAH_HOST_BE");
-        int portNum = EnvUtilization.getEnvVariablePortNumber("AMANAH_PORT_BE");
-
-    
-        Gson gson = new Gson();
-        String requestString = gson.toJson(requestData);
-		String url = String.format("http://%s:%d/call/paymentlink", hostAddress, portNum);
-        
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Content-Type", "application/json")
-                .POST(BodyPublishers.ofString(requestString))
-                .build();
+//		String hostAddress = EnvUtilization.getEnvVariableHostAddress("AMANAH_HOST_BE");
+//        int portNum = EnvUtilization.getEnvVariablePortNumber("AMANAH_PORT_BE");
+//
+//    
+//        Gson gson = new Gson();
+//        String requestString = gson.toJson(requestData);
+//		String url = String.format("http://%s:%d/call/paymentlink", hostAddress, portNum);
+//        
+//        HttpClient client = HttpClient.newHttpClient();
+//        HttpRequest request = HttpRequest.newBuilder()
+//                .uri(URI.create(url))
+//                .header("Content-Type", "application/json")
+//                .POST(BodyPublishers.ofString(requestString))
+//                .build();
 
         try {
-            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-            int statusCode = response.statusCode();
-            String responseBody = response.body();
-            HttpHeaders headers = response.headers();
-            System.out.println("Status Code: " + statusCode);
-            System.out.println("Response Body: " + responseBody);
-            System.out.println("Headers: " + headers);
-         
-            Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
-            System.out.println(mapType);
-            Map<String, Object> rawResponseMap = gson.fromJson(responseBody, mapType);
-            System.out.println(rawResponseMap);
-            Map<String, Object> dataMap = (Map<String, Object>) rawResponseMap.get("data");
-            System.out.println(dataMap);
-            
+        	Payment result = paymentlinkPaymentService.createPayment(requestData);
+			Map<String, Object> dataMap = result.toHashMap();
+        	
             paymentLink = (String) dataMap.get("paymentLink");
-            
             int paymentIdInt = ((Double) dataMap.get("id")).intValue();
         	paymentId = String.valueOf(paymentIdInt);
             
@@ -195,70 +235,33 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         String debitCardRedirectUrl = "";
         String creditCardRedirectUrl = "";
     
-        requestData = payload;
-        Gson gson = new Gson();
-        String requestString = gson.toJson(requestData);
-
 		String hostAddress = EnvUtilization.getEnvVariableHostAddress("AMANAH_HOST_BE");
         int portNum = EnvUtilization.getEnvVariablePortNumber("AMANAH_PORT_BE");
 		
 		if(paymentMethod.equals("paymentlink")){
-	        HttpClient client = HttpClient.newHttpClient();
-			String url = String.format("http://%s:%d/call/paymentlink", hostAddress, portNum);
-	        HttpRequest request = HttpRequest.newBuilder()
-	                .uri(URI.create(url))
-	                .header("Content-Type", "application/json")
-	                .POST(BodyPublishers.ofString(requestString))
-	                .build();
-
 	        try {
-	            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-	            int statusCode = response.statusCode();
-	            String responseBody = response.body();
-	            HttpHeaders headers = response.headers();
-	            System.out.println("Status Code: " + statusCode);
-	            System.out.println("Response Body: " + responseBody);
-	            System.out.println("Headers: " + headers);
-	         
-	            Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
-	            System.out.println(mapType);
-	            Map<String, Object> rawResponseMap = gson.fromJson(responseBody, mapType);
-	            System.out.println(rawResponseMap);
-	            Map<String, Object> dataMap = (Map<String, Object>) rawResponseMap.get("data");
-	            System.out.println(dataMap);
-	            
+	        	Payment result = paymentlinkPaymentService.createPayment(payload);
+				Map<String, Object> dataMap = result.toHashMap();
+	        	
 	            paymentLink = (String) dataMap.get("paymentLink");
-	            
 	            int paymentIdInt = ((Double) dataMap.get("id")).intValue();
-            	paymentId = String.valueOf(paymentIdInt);
-	            
+	        	paymentId = String.valueOf(paymentIdInt);
+	        	
 	        } catch (Exception e) {
 	            System.err.println("Error: " + e.getMessage());
 	        }
 			
 		}else if (paymentMethod.equals("ewallet")) {
-	        HttpClient client = HttpClient.newHttpClient();
-			String url = String.format("http://%s:%d/call/ewallet", hostAddress, portNum);
-	        HttpRequest request = HttpRequest.newBuilder()
-	                .uri(URI.create(url))
-	                .header("Content-Type", "application/json")
-	                .POST(BodyPublishers.ofString(requestString))
-	                .build();
-
 	        try {
+	        	Payment result = ewalletPaymentService.createPayment(payload);
+				Map<String, Object> dataMap = result.toHashMap();
+	        	
 	            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 	            int statusCode = response.statusCode();
 	            String responseBody = response.body();
 	            HttpHeaders headers = response.headers();
-	            System.out.println("Status Code: " + statusCode);
-	            System.out.println("Response Body: " + responseBody);
-	            System.out.println("Headers: " + headers);
 	            
-	            Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
-	            Map<String, Object> rawResponseMap = gson.fromJson(responseBody, mapType);
-	            Map<String, Object> dataMap = (Map<String, Object>) rawResponseMap.get("data");
 	            eWalletLink = (String) dataMap.get("eWalletUrl");
-
 	            int paymentIdInt = ((Double) dataMap.get("id")).intValue();
             	paymentId = String.valueOf(paymentIdInt);
 	        } catch (Exception e) {
@@ -320,25 +323,12 @@ public class DonationResourceImpl extends DonationResourceDecorator {
 	        }
 			
 		}else if (paymentMethod.equals("invoice")) {
-	        HttpClient client = HttpClient.newHttpClient();
-			String url = String.format("http://%s:%d/call/invoice", hostAddress, portNum);
-	        HttpRequest request = HttpRequest.newBuilder()
-	                .uri(URI.create(url))
-	                .header("Content-Type", "application/json")
-	                .POST(BodyPublishers.ofString(requestString))
-	                .build();
 
 	        try {
-	            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-	            int statusCode = response.statusCode();
-	            String responseBody = response.body();
-	            HttpHeaders headers = response.headers();
-	            
-	            Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
-	            Map<String, Object> rawResponseMap = gson.fromJson(responseBody, mapType);
-	            Map<String, Object> dataMap = (Map<String, Object>) rawResponseMap.get("data");
-	            invoiceTransactionUrl = (String) dataMap.get("transactionUrl");
-
+	        	Payment result = invoicePaymentService.createPayment(payload);
+				Map<String, Object> dataMap = result.toHashMap();
+				
+	        	invoiceTransactionUrl = (String) dataMap.get("transactionUrl");
 	            int paymentIdInt = ((Double) dataMap.get("id")).intValue();
             	paymentId = String.valueOf(paymentIdInt);
 	        } catch (Exception e) {
@@ -346,25 +336,10 @@ public class DonationResourceImpl extends DonationResourceDecorator {
 	        }
 			
 		}else if (paymentMethod.equals("retailoutlet")) {
-	        HttpClient client = HttpClient.newHttpClient();
-			String url = String.format("http://%s:%d/call/retailoutlet", hostAddress, portNum);
-	        HttpRequest request = HttpRequest.newBuilder()
-	                .uri(URI.create(url))
-	                .header("Content-Type", "application/json")
-	                .POST(BodyPublishers.ofString(requestString))
-	                .build();
-
 	        try {
-	            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-	            int statusCode = response.statusCode();
-	            String responseBody = response.body();
-	            HttpHeaders headers = response.headers();
-	            
-	            Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
-	            Map<String, Object> rawResponseMap = gson.fromJson(responseBody, mapType);
-	            Map<String, Object> dataMap = (Map<String, Object>) rawResponseMap.get("data");
+	        	Payment result = retailoutletPaymentService.createPayment(payload);
+				Map<String, Object> dataMap = result.toHashMap();
 	            retailPaymentCode = (String) dataMap.get("retailPaymentCode");
-
 	            int paymentIdInt = ((Double) dataMap.get("id")).intValue();
             	paymentId = String.valueOf(paymentIdInt);
 	        } catch (Exception e) {
@@ -372,23 +347,9 @@ public class DonationResourceImpl extends DonationResourceDecorator {
 	        }
 			
 		}else if (paymentMethod.equals("debitcard")) {
-	        HttpClient client = HttpClient.newHttpClient();
-			String url = String.format("http://%s:%d/call/debitcard", hostAddress, portNum);
-	        HttpRequest request = HttpRequest.newBuilder()
-	                .uri(URI.create(url))
-	                .header("Content-Type", "application/json")
-	                .POST(BodyPublishers.ofString(requestString))
-	                .build();
-
 	        try {
-	            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-	            int statusCode = response.statusCode();
-	            String responseBody = response.body();
-	            HttpHeaders headers = response.headers();
-	           
-	            Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
-	            Map<String, Object> rawResponseMap = gson.fromJson(responseBody, mapType);
-	            Map<String, Object> dataMap = (Map<String, Object>) rawResponseMap.get("data");
+	        	Payment result = debitcardPaymentService.createPayment(payload);
+				Map<String, Object> dataMap = result.toHashMap();
 	            debitCardRedirectUrl = (String) dataMap.get("directDebitUrl");
 
 	            int paymentIdInt = ((Double) dataMap.get("id")).intValue();
@@ -498,30 +459,9 @@ public class DonationResourceImpl extends DonationResourceDecorator {
         Gson gson = new Gson();
         String requestString = gson.toJson(requestData);
 
-		String hostAddress = EnvUtilization.getEnvVariableHostAddress("AMANAH_HOST_BE");
-        int portNum = EnvUtilization.getEnvVariablePortNumber("AMANAH_PORT_BE");
-        
-        HttpClient client = HttpClient.newHttpClient();
-		String url = String.format("http://%s:%d/call/paymentstatus", hostAddress, portNum);
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Content-Type", "application/json")
-                .POST(BodyPublishers.ofString(requestString))
-                .build();
-
         try {
-            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-            int statusCode = response.statusCode();
-            String responseBody = response.body();
-            HttpHeaders headers = response.headers();
-            System.out.println("Status Code: " + statusCode);
-            System.out.println("Response Body: " + responseBody);
-            System.out.println("Headers: " + headers);
-            
-            Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
-            Map<String, Object> rawResponseMap = gson.fromJson(responseBody, mapType);
-            Map<String, Object> dataMap = (Map<String, Object>) rawResponseMap.get("data");
-            String status = (String) dataMap.get("status");
+        	Map<String, Object> result = this.paymentPaymentService.checkPaymentStatus(requestData);
+            String status = (String) dataMap.get("result");
             return status;
            
         } catch (Exception e) {

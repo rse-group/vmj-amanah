@@ -18,8 +18,9 @@ import aisco.chartofaccount.core.ChartOfAccount;
 import aisco.chartofaccount.core.ChartOfAccountComponent;
 
 import paymentgateway.disbursement.core.DisbursementServiceComponent;
+import paymentgateway.disbursement.core.DisbursementService;
+import paymentgateway.disbursement.DisbursementServiceFactory;
 import paymentgateway.disbursement.core.Disbursement;
-import paymentgateway.disbursement.agentdisbursement.DisbursementServiceImpl;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -50,12 +51,15 @@ public class WithdrawResourceImpl extends WithdrawResourceDecorator {
 	private final int DISBURSEMENT_COA_CODE = 60000;
 	private final List<String> PAYMENT_SUCCESS_STATUS = new ArrayList<>(Arrays.asList("SUCCESSFUL"));
 	private final List<String> PAYMENT_FAILED_STATUS = new ArrayList<>(Arrays.asList("FAILED"));
-    private DisbursementServiceImpl disbursementServiceImpl;
+    private DisbursementService disbursementServiceImpl;
 	
-    public WithdrawResourceImpl (WithdrawResourceComponent record, DisbursementServiceComponent recordService) {
+    public WithdrawResourceImpl (WithdrawResourceComponent record) {
 		super(record);
-        this.disbursementServiceImpl = new DisbursementServiceImpl(recordService);
-    }
+		this.disbursementServiceImpl = DisbursementServiceFactory.createDisbursementService(
+        		"paymentgateway.disbursement.agentdisbursement.DisbursementServiceImpl",
+        			DisbursementServiceFactory.createDisbursementService(
+        	        	"paymentgateway.disbursement.core.DisbursementServiceImpl"));    
+	}
 
 
     @Route(url="call/viaagentdisbursement/save")

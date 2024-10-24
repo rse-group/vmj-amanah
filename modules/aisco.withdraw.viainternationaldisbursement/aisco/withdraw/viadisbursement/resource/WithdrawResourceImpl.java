@@ -21,7 +21,6 @@ import paymentgateway.disbursement.core.DisbursementServiceComponent;
 import paymentgateway.disbursement.core.DisbursementService;
 import paymentgateway.disbursement.DisbursementServiceFactory;
 import paymentgateway.disbursement.core.Disbursement;
-import paymentgateway.disbursement.internationaldisbursement.DisbursementServiceImpl;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -54,7 +53,7 @@ public class WithdrawResourceImpl extends WithdrawResourceDecorator {
 	private final List<String> PAYMENT_FAILED_STATUS = new ArrayList<>(Arrays.asList("FAILED"));
 	private DisbursementService disbursementServiceImpl;
 	
-    public WithdrawResourceImpl (WithdrawResourceComponent record, DisbursementServiceComponent recordService) {
+    public WithdrawResourceImpl (WithdrawResourceComponent record) {
 		super(record);
 		
         this.disbursementServiceImpl = DisbursementServiceFactory.createDisbursementService(
