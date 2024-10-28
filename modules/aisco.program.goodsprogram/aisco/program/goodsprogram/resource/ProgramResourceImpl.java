@@ -33,14 +33,15 @@ public class ProgramResourceImpl extends ProgramResourceComponent {
 	}
 
     public Program createProgram(VMJExchange vmjExchange){
-    	String name = (String) vmjExchange.getRequestBodyForm("name");
-        String description = (String) vmjExchange.getRequestBodyForm("description");
-        String target = (String) vmjExchange.getRequestBodyForm("target");
-        String partner = (String) vmjExchange.getRequestBodyForm("partner");
+    	Map<String, Object> payload = vmjExchange.getPayload();
+    	String name = (String) payload.get("name");
+        String description = (String) payload.get("description");
+        String target = (String) payload.get("target");
+        String partner = (String) payload.get("partner");
         String logoUrl = "";
-        String executionDate = (String) vmjExchange.getRequestBodyForm("executionDate");
+        String executionDate = (String) payload.get("executionDate");
         
-        Map<String, byte[]> uploadedFile = (HashMap<String, byte[]>) vmjExchange.getRequestBodyForm("logoUrl");
+        Map<String, byte[]> uploadedFile = (HashMap<String, byte[]>) payload.get("logoUrl");
         logoUrl = "data:" + (new String(uploadedFile.get("type"))).split(" ")[1].replaceAll("\\s+", "")
                 + ";base64," + Base64.getEncoder().encodeToString(uploadedFile.get("content"));
         int fileSize = uploadedFile.get("content").length;
@@ -54,8 +55,8 @@ public class ProgramResourceImpl extends ProgramResourceComponent {
         } catch (IOException e) {
             throw new FileNotFoundException();
         }
-		String goodsName = (String) vmjExchange.getRequestBodyForm("goodsName");
-		String unit = (String) vmjExchange.getRequestBodyForm("unit");
+		String goodsName = (String) payload.get("goodsName");
+		String unit = (String) payload.get("unit");
 		
 		Program program = ProgramFactory.createProgram("aisco.program.core.ProgramImpl", name, description, target, partner, logoUrl, executionDate);
     	Program programGoodsProgram = ProgramFactory.createProgram("aisco.program.goodsprogram.ProgramImpl", program, goodsName, unit);

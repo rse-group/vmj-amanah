@@ -22,10 +22,10 @@
 	<feature automatic="selected" name="BankAccount"/>
 	<feature manual="selected" name="Partners"/>
 	<feature manual="selected" name="Location"/>
-	<feature name="Donation"/>
-	<feature name="Online"/>
-	<feature name="ViaWebsite"/>
-	<feature name="ViaPaymentGateway"/>
+	<feature automatic="selected" name="Donation"/>
+	<feature automatic="selected" name="Online"/>
+	<feature automatic="unselected" name="ViaWebsite"/>
+	<feature manual="selected" name="ViaPaymentGateway"/>
 	<feature name="Confirmation"/>
 	<feature name="DonasiLoggedIn"/>
 	<feature name="GoodsDonation"/>

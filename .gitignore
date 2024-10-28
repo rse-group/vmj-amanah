@@ -1,5 +1,5 @@
 bin/
 bin-comp/
-# src-gen/
-# src/
+src-gen/
+src/
 .project

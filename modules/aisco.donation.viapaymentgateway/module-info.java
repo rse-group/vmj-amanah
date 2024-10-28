@@ -4,6 +4,8 @@ module aisco.donation.viapaymentgateway {
     
     requires aisco.financialreport.core;
     
+	requires paymentgateway.payment.core;
+    
     requires aisco.chartofaccount.core;
     
     requires aisco.program.core;

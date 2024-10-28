@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>winvmj-project-amanah</name>
+	<name>amanah-greg-demo-2</name>
 	<comment></comment>
 	<projects>
-		<project>winvmj-project-amanah</project>
+		<project>paymentgateway</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

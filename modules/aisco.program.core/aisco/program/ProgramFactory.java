@@ -49,6 +49,7 @@ public class ProgramFactory {
             System.exit(40);
         } catch (Exception e) {
             LOGGER.severe("Failed to create instance of Program.");
+            LOGGER.severe(e.toString());
             LOGGER.severe("Given FQN: " + fullyQualifiedName);
             System.exit(50);
         }
